@@ -1,2 +1,2 @@
 # fe
-Lunches front-end
+Lunches front-end project
