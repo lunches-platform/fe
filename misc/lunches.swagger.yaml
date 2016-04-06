@@ -1,0 +1,88 @@
+swagger: '2.0'
+
+info:
+  version: "2.0.0"
+  title: Lunches Platform API
+paths:
+  /menus/{date}:
+    get:
+      description: |
+        Gets `Menu` object for the specified date.
+      parameters:
+        -
+          name: date
+          in: path
+          required: true
+          type: string
+          format: date
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Menu'
+definitions:
+  Id:
+    type: integer
+    format: int64
+
+  MealType:
+    type: number
+    enum: ['meat', 'garnish', 'salad', 'first']
+
+  Size:
+    type: string
+    enum:  ['small', 'medium', 'big']
+
+  Price:
+    type: number
+    format: float
+
+  Product:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Id'
+        example: 29
+      title:
+        type: string
+        example: 'Салат из свежих огурцов'
+      type:
+        $ref: '#/definitions/MealType'
+
+  Menu:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Id'
+        example: 6
+      sizes:
+        type: array
+        items:
+          $ref: '#/definitions/Size'
+        example: ['small', 'medium', 'big']
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+        example: [32, 536, 534, 932]
+      variations:
+        type: array
+        items:
+          $ref: '#/definitions/Variation'
+
+  Variation:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Id'
+        example: 94
+      size:
+        $ref: '#/definitions/Size'
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Id'
+        example: [8924, 83, 904, 1248]
+      price:
+        $ref: '#/definitions/Price'
+        example: 45.00
