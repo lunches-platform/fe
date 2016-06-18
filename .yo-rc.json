@@ -1,0 +1,22 @@
+{
+  "generator-fountain-angular1": {
+    "version": "0.5.4",
+    "props": {
+      "framework": "angular1",
+      "modules": "webpack",
+      "js": "typescript",
+      "css": "scss",
+      "resolved": "/Users/username/.nvm/versions/node/v6.2.1/lib/node_modules/generator-fountain-webapp/node_modules/generator-fountain-angular1/generators/app/index.js",
+      "namespace": "fountain-angular1",
+      "argv": {
+        "remain": [],
+        "cooked": [],
+        "original": []
+      },
+      "skip-cache": false,
+      "skip-install": false,
+      "sample": "todoMVC",
+      "router": "uirouter"
+    }
+  }
+}
