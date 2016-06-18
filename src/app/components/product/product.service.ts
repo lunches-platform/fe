@@ -12,23 +12,6 @@ export class ProductService {
     'ngInject';
   }
 
-  fetchAll() {
-    return this.$q.resolve([
-      {
-        id: 1,
-        name: 'Куриная котлета',
-        ingredients: ['Курица', 'Яйцо'],
-        weight: 200
-      },
-      {
-        id: 2,
-        name: 'Гречка с грибами',
-        ingredients: ['Гречка', 'грибы'],
-        weight: 300
-      }
-    ]);
-  }
-
   // addProduct(text: string, products: Product[]) {
   //   return [
   //     {

@@ -1,24 +1,18 @@
-import {ProductService, Product} from '../product/product.service';
+import {DayMenu} from './day-menu.service';
 
 class DayMenuController {
-  products: any[];
+  menu: DayMenu;
 
-  /** @ngInject */
-  constructor(public productService: ProductService) {
-    this.fetchProducts();
-  }
-
-  private fetchProducts() {
-    this.productService.fetchAll()
-      .then((products: Product[]) => {
-        console.log('products', products);
-        this.products = products;
-      });
+  constructor() {
+    'ngInject';
   }
 }
 
 export const DayMenuComponent = {
   templateUrl: 'app/components/day-menu/day-menu.html',
   controller: DayMenuController,
-  controllerAs: 'vm'
+  controllerAs: 'vm',
+  bindings: {
+    menu: '<'
+  }
 };

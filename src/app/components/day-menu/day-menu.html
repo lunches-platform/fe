@@ -1,5 +1,7 @@
-<section class="main">
-  <ul class="product-list">
-    <product ng-repeat="product in vm.products" product="product"/>
-  </ul>
-</section>
+<div class="day-menu">
+  <div class="title">Обед на {{ vm.menu.date }}</div>
+  <div class="products">
+    <product ng-repeat="product in vm.menu.products" product="product"/>
+  </div>
+  <hr />
+</div>

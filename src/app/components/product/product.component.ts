@@ -5,8 +5,6 @@ class ProductControler {
 
   constructor() {
     'ngInject';
-
-    console.log(this.product);
   }
   // editing: boolean = false;
   // onSave: Function;
