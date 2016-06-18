@@ -1,4 +1,4 @@
-import {Product as ProductItem} from '../products/products';
+import {Product as ProductItem} from './product.service';
 
 class ProductControler {
   product: ProductItem;
@@ -32,8 +32,8 @@ class ProductControler {
   // }
 }
 
-export const Product = {
-  templateUrl: 'app/components/Product.html',
+export const ProductComponent = {
+  templateUrl: 'app/components/product/product.html',
   controller: ProductControler,
   controllerAs: 'vm',
   bindings: {

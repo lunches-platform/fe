@@ -7,7 +7,7 @@ export class Product {
   ingredients: string[];
 }
 
-export class ProductsService {
+export class ProductService {
   constructor(private $q: ng.IQService) {
     'ngInject';
   }
