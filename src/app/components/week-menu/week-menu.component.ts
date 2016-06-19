@@ -2,7 +2,8 @@ import {DayMenu} from '../day-menu/day-menu.service';
 import {WeekMenuService} from './week-menu.service';
 
 class WeekMenuController {
-  menus: DayMenu[];
+  // menus: DayMenu[];
+  menus;
 
   constructor(private weekMenuService: WeekMenuService) {
     'ngInject';
@@ -12,9 +13,11 @@ class WeekMenuController {
 
   private fetchData() {
     this.weekMenuService.fetchAll()
-      .then((menus: DayMenu[]) => {
+      // .then((menus: DayMenu[]) => {
+      .then((menus) => {
         this.menus = menus;
-      });
+      })
+    ;
   }
 }
 

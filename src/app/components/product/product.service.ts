@@ -3,7 +3,8 @@
 export class Product {
   id: number;
   name: string;
-  weight: number;
+  price: number;
+  // weight: number;
   ingredients: string[];
 }
 
