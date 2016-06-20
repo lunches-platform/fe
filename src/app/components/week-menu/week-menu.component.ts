@@ -1,14 +1,30 @@
-import {DayMenu} from '../day-menu/day-menu.service';
 import {WeekMenuService} from './week-menu.service';
+import {Basket} from '../../models/basket.service';
+import {cloneDeep} from 'lodash';
 
 class WeekMenuController {
+  // bindings
+  basket: Basket;
+  triggerBasketChange: Function;
+
   // menus: DayMenu[];
   menus;
 
   constructor(private weekMenuService: WeekMenuService) {
     'ngInject';
 
+    this.initBasket();
     this.fetchData();
+  }
+
+  onBasketChanged(basket: Basket) {
+    this.basket = basket;
+
+    this.triggerBasketChange({ basket: cloneDeep(this.basket) });
+  }
+
+  private initBasket() {
+    this.basket = cloneDeep(this.basket);
   }
 
   private fetchData() {
@@ -26,6 +42,7 @@ export const WeekMenuComponent = {
   controller: WeekMenuController,
   controllerAs: 'vm',
   bindings: {
-    menu: '<'
+    basket: '<',
+    triggerBasketChange: '&onBasketChanged'
   }
 };

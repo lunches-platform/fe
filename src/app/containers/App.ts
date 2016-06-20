@@ -1,17 +1,23 @@
-import {SHOW_ALL} from '../constants/TodoFilters';
-import {initialTodo, Todo} from '../todos/todos';
+import {Basket} from '../models/basket.service';
 
-class AppController {
-  todos: Todo[];
-  filter: string;
+export class AppController {
+  basket: Basket;
 
   constructor() {
-    this.todos = [initialTodo];
-    this.filter = SHOW_ALL;
+    this.initBasket();
+  }
+
+  onBasketChanged(basket: Basket) {
+    this.basket = basket;
+  }
+
+  private initBasket() {
+    this.basket = new Basket();
   }
 }
 
 export const App = {
   templateUrl: 'app/containers/App.html',
-  controller: AppController
+  controller: AppController,
+  controllerAs: 'vm'
 };

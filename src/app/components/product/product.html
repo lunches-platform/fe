@@ -1,9 +1,9 @@
 <div class="product">
   <div class="title">
-    <span class="checkbox"><input type="checkbox"></span>
+    <span class="checkbox"><input type="checkbox" ng-model="vm.checked" ng-change="vm.onToggle()"></span>
     <span class="text">{{ vm.product.name }}</span>
   </div>
   <div class="details">
-    <span class="price">{{ vm.product.price }} грн</span> <span class="ingredients">{{ vm.product.ingredients.join(', ') }}</span>
+    <span class="price">{{ vm.product.weight }} гр</span> <span class="ingredients">{{ vm.product.ingredients.join(', ') }}</span>
   </div>
 </div>

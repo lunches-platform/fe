@@ -1,10 +1,19 @@
 import {Product as ProductItem} from './product.service';
+import {cloneDeep} from 'lodash';
 
 class ProductControler {
   product: ProductItem;
+  onToggled: Function;
+  checked: boolean;
 
   constructor() {
     'ngInject';
+
+    this.product = cloneDeep(this.product);
+  }
+
+  onToggle() {
+    this.onToggled({ product: cloneDeep(this.product), checked: this.checked });
   }
   // editing: boolean = false;
   // onSave: Function;
@@ -36,6 +45,7 @@ export const ProductComponent = {
   controllerAs: 'vm',
   bindings: {
     product: '<',
+    onToggled: '&'
   //   onDestroy: '&',
   //   onChange: '&',
   //   onSave: '&'

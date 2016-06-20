@@ -4,7 +4,7 @@ export class Product {
   id: number;
   name: string;
   price: number;
-  // weight: number;
+  weight: number;
   ingredients: string[];
 }
 
