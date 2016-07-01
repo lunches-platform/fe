@@ -8,7 +8,7 @@ export class OrderItem {
   constructor(
     public product: Product,
     public size: ISize,
-    public amount: number
+    public quantity: number
   ) {
   }
 }
@@ -29,10 +29,10 @@ export class OrderService {
     'ngInject';
   }
 
-  addProductTo(existingOrder: Order, productToBeAdded: Product, size: ISize, amount: number): Order {
+  addProductTo(existingOrder: Order, productToBeAdded: Product, size: ISize, quantity: number): Order {
     let order = cloneDeep(existingOrder);
 
-    order.items.push(new OrderItem(productToBeAdded, size, amount));
+    order.items.push(new OrderItem(productToBeAdded, size, quantity));
 
     return order;
   }
@@ -62,19 +62,19 @@ export class OrderService {
   }
 
   calcPriceFor(item: OrderItem): number {
-    return item.product.pricePer100 / 100 * this.calcWeightFor(item.product, item.size, item.amount);
+    return item.product.pricePer100 / 100 * this.calcWeightFor(item.product, item.size, item.quantity);
   }
 
-  calcWeightFor(product: Product, size: ISize, amount: number): number {
-    return product.sizeToWeight[size.id] * amount;
+  calcWeightFor(product: Product, size: ISize, quantity: number): number {
+    return product.sizeToWeight[size.id] * quantity;
   }
 
   updateSizeForProductIn(order: Order, product: Product, size: ISize): Order {
     return this.updateOrderItemProperty(order, product, 'size', size);
   }
 
-  updateAmountForProductIn(order: Order, product: Product, amount: number): Order {
-    return this.updateOrderItemProperty(order, product, 'amount', amount);
+  updateQuantityForProductIn(order: Order, product: Product, quantity: number): Order {
+    return this.updateOrderItemProperty(order, product, 'quantity', quantity);
   }
 
   private updateOrderItemProperty(_order: Order, product: Product, key: string, value: ISize | number) {

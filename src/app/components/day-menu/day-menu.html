@@ -4,9 +4,9 @@
     <l-product
       ng-repeat="product in vm.menu.products"
       product="product"
-      on-toggled="vm.onProductToggled(product, checked, size, amount)"
+      on-toggled="vm.onProductToggled(product, checked, size, quantity)"
       on-size-changed="vm.onSizeChanged(product, size)"
-      on-amount-changed="vm.onAmountChanged(product, amount)"
+      on-quantity-changed="vm.onQuantityChanged(product, quantity)"
     />
   </div>
   <button class="order-button" ng-click="vm.putToBasket()">Беру</button>

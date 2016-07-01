@@ -27,9 +27,9 @@ class DayMenuController {
     return this.lOrderService.calcPriceForAllProductsIn(this.order);
   }
 
-  onProductToggled(product: Product, checked: boolean, size: ISize, amount: number) {
+  onProductToggled(product: Product, checked: boolean, size: ISize, quantity: number) {
     if (checked) {
-      this.order = this.lOrderService.addProductTo(this.order, product, size, amount);
+      this.order = this.lOrderService.addProductTo(this.order, product, size, quantity);
     } else {
       this.order = this.lOrderService.removeProductFrom(this.order, product);
     }
@@ -39,8 +39,8 @@ class DayMenuController {
     this.order = this.lOrderService.updateSizeForProductIn(this.order, product, size);
   }
 
-  onAmountChanged(product: Product, amount: number) {
-    this.order = this.lOrderService.updateAmountForProductIn(this.order, product, amount);
+  onQuantityChanged(product: Product, quantity: number) {
+    this.order = this.lOrderService.updateQuantityForProductIn(this.order, product, quantity);
   }
 
   putToBasket() {

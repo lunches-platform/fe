@@ -4,15 +4,15 @@ import {ISize} from '../size-selector/size-selector.component';
 import {cloneDeep} from 'lodash';
 
 interface ITriggerToggleEvent {
-  (arg: { product: ProductItem, checked: boolean, size: ISize, amount: number }): void;
+  (arg: { product: ProductItem, checked: boolean, size: ISize, quantity: number }): void;
 }
 
 interface ITriggerSizeChangeEvent {
   (arg: { product: ProductItem, size: ISize }): void;
 }
 
-interface ITriggerAmountChangeEvent {
-  (arg: { product: ProductItem, amount: number }): void;
+interface ITriggerQuantityChangeEvent {
+  (arg: { product: ProductItem, quantity: number }): void;
 }
 
 // todo: add types
@@ -20,12 +20,12 @@ class ProductControler {
   product: ProductItem;
   triggerToggle: ITriggerToggleEvent;
   triggerSizeChange: ITriggerSizeChangeEvent;
-  triggerAmountChange: ITriggerAmountChangeEvent;
+  triggerQuantityChange: ITriggerQuantityChangeEvent;
   checked = false;
 
   defaultSize: ISize;
   selectedSize: ISize;
-  selectedAmount = 1;
+  selectedQuantity = 1;
 
   constructor(private lOrderService: OrderService) {
     'ngInject';
@@ -35,7 +35,7 @@ class ProductControler {
   }
 
   calcWeight(): number {
-    return this.lOrderService.calcWeightFor(this.product, this.selectedSize, this.selectedAmount);
+    return this.lOrderService.calcWeightFor(this.product, this.selectedSize, this.selectedQuantity);
   }
 
   onToggle() {
@@ -43,7 +43,7 @@ class ProductControler {
       product: this.product,
       checked: this.checked,
       size: this.selectedSize,
-      amount: this.selectedAmount
+      quantity: this.selectedQuantity
     });
   }
 
@@ -56,12 +56,12 @@ class ProductControler {
     });
   }
 
-  onAmountChanged(amount: number) {
-    this.selectedAmount = amount;
+  onQuantityChanged(quantity: number) {
+    this.selectedQuantity = quantity;
 
-    this.triggerAmountChange({
+    this.triggerQuantityChange({
       product: this.product,
-      amount: amount
+      quantity: quantity
     });
   }
 
@@ -83,6 +83,6 @@ export const ProductComponent = {
     product: '<',
     triggerToggle: '&onToggled',
     triggerSizeChange: '&onSizeChanged',
-    triggerAmountChange: '&onAmountChanged'
+    triggerQuantityChange: '&onQuantityChanged'
   }
 };
