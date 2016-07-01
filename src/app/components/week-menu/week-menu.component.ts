@@ -10,7 +10,7 @@ class WeekMenuController {
   // menus: DayMenu[];
   menus;
 
-  constructor(private weekMenuService: WeekMenuService) {
+  constructor(private lWeekMenuService: WeekMenuService) {
     'ngInject';
 
     this.initBasket();
@@ -28,7 +28,7 @@ class WeekMenuController {
   }
 
   private fetchData() {
-    this.weekMenuService.fetchAll()
+    this.lWeekMenuService.fetchAll()
       // .then((menus: DayMenu[]) => {
       .then((menus) => {
         this.menus = menus;

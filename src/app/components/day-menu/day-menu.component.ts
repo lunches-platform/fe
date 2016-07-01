@@ -11,9 +11,9 @@ class DayMenuController {
   onBasketChanged: Function;
 
   constructor(
-    private dayMenuService: DayMenuService,
-    private orderService: OrderService,
-    private basketService: BasketService
+    private lDayMenuService: DayMenuService,
+    private lOrderService: OrderService,
+    private lBasketService: BasketService
   ) {
     'ngInject';
 
@@ -23,19 +23,19 @@ class DayMenuController {
   }
 
   calcPrice() {
-    return this.orderService.calcPriceForAllProductsIn(this.orderItem);
+    return this.lOrderService.calcPriceForAllProductsIn(this.orderItem);
   }
 
   onProductToggled(product: Product, checked: boolean) {
     if (checked) {
-      this.orderItem = this.orderService.addProductTo(this.orderItem, product);
+      this.orderItem = this.lOrderService.addProductTo(this.orderItem, product);
     } else {
-      this.orderItem = this.orderService.removeProductFrom(this.orderItem, product);
+      this.orderItem = this.lOrderService.removeProductFrom(this.orderItem, product);
     }
   }
 
   onSizeChanged(product: Product, size: any) {
-    this.orderItem = this.orderService.updateProductIn(this.orderItem, product);
+    this.orderItem = this.lOrderService.updateProductIn(this.orderItem, product);
   }
 
   order() {
@@ -43,7 +43,7 @@ class DayMenuController {
       return;
     }
 
-    this.basket = this.basketService.putTo(this.basket, this.orderItem);
+    this.basket = this.lBasketService.putTo(this.basket, this.orderItem);
     this.onBasketChanged({basket: cloneDeep(this.basket)});
   }
 

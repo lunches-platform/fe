@@ -10,7 +10,7 @@ class ProductControler {
 
   defaultSize: any;
 
-  constructor(private productService: ProductService) {
+  constructor(private lProductService: ProductService) {
     'ngInject';
 
     this.product = cloneDeep(this.product);
@@ -24,7 +24,7 @@ class ProductControler {
   }
 
   onSizeSelected(size: any) {
-    const updatedProduct = cloneDeep(this.productService.setSizeFor(this.product, size));
+    const updatedProduct = cloneDeep(this.lProductService.setSizeFor(this.product, size));
 
     this.onSizeChanged({
       product: updatedProduct,

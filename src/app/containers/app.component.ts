@@ -16,8 +16,8 @@ export class AppController {
   }
 }
 
-export const App = {
-  templateUrl: 'app/containers/App.html',
+export const AppComponent = {
+  templateUrl: 'app/containers/app.html',
   controller: AppController,
   controllerAs: 'vm'
 };
