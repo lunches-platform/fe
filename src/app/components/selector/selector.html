@@ -1,0 +1,5 @@
+<div class="l-selector-component">
+<select
+  ng-options="item.title for item in vm.items track by item.id"
+  ng-model="vm.selected" />
+</div>
