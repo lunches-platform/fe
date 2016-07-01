@@ -1,19 +1,42 @@
-import {Product as ProductItem} from './product.service';
+import {Product as ProductItem, ProductService} from './product.service';
 import {cloneDeep} from 'lodash';
 
+// todo: add types
 class ProductControler {
   product: ProductItem;
-  onToggled: Function;
+  onToggled: any;
+  onSizeChanged: any;
   checked: boolean;
 
-  constructor() {
+  defaultSize: any;
+
+  constructor(private productService: ProductService) {
     'ngInject';
 
     this.product = cloneDeep(this.product);
+    this.initDefaultSize();
   }
 
   onToggle() {
-    this.onToggled({ product: cloneDeep(this.product), checked: this.checked });
+    const p = cloneDeep(this.product);
+
+    this.onToggled({ product: p, checked: this.checked });
+  }
+
+  onSizeSelected(size: any) {
+    const updatedProduct = cloneDeep(this.productService.setSizeFor(this.product, size));
+
+    this.onSizeChanged({
+      product: updatedProduct,
+      size: cloneDeep(size)
+    });
+  }
+
+  private initDefaultSize() {
+    this.defaultSize = {
+      id: 'small',
+      title: 'Small'
+    };
   }
   // editing: boolean = false;
   // onSave: Function;
@@ -45,7 +68,8 @@ export const ProductComponent = {
   controllerAs: 'vm',
   bindings: {
     product: '<',
-    onToggled: '&'
+    onToggled: '&',
+    onSizeChanged: '&'
   //   onDestroy: '&',
   //   onChange: '&',
   //   onSave: '&'

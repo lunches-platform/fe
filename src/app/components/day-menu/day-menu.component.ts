@@ -23,7 +23,7 @@ class DayMenuController {
   }
 
   calcPrice() {
-    return this.dayMenuService.calcPriceForAllProductsIn(this.menu);
+    return this.orderService.calcPriceForAllProductsIn(this.orderItem);
   }
 
   onProductToggled(product: Product, checked: boolean) {
@@ -32,6 +32,10 @@ class DayMenuController {
     } else {
       this.orderItem = this.orderService.removeProductFrom(this.orderItem, product);
     }
+  }
+
+  onSizeChanged(product: Product, size: any) {
+    this.orderItem = this.orderService.updateProductIn(this.orderItem, product);
   }
 
   order() {

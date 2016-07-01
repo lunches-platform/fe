@@ -1,7 +1,11 @@
 <div class="day-menu">
   <div class="title">Обед на {{ vm.menu.date }}</div>
   <div class="products">
-    <product ng-repeat="product in vm.menu.products" product="product" on-toggled="vm.onProductToggled(product, checked)" />
+    <product
+      ng-repeat="product in vm.menu.products"
+      product="product"
+      on-toggled="vm.onProductToggled(product, checked)"
+      on-size-changed="vm.onSizeChanged(product, size)" />
   </div>
   <button class="order-button" ng-click="vm.order()">Беру</button>
   <span class="price">{{ vm.calcPrice() }} грн</span>

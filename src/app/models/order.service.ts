@@ -1,5 +1,5 @@
 import {Product} from '../components/product/product.service';
-import {cloneDeep, find} from 'lodash';
+import {cloneDeep, findIndex} from 'lodash';
 
 export class OrderItem {
   id: number;
@@ -40,7 +40,36 @@ export class OrderService {
   }
 
   contains(orderItem: OrderItem, product: Product): boolean {
-    return Boolean(find(orderItem.products, ['id', product.id]));
+    return Boolean();
+  }
+
+  calcPriceForAllProductsIn(orderItem: OrderItem) {
+    return this.calcPriceFor(orderItem.products);
+  }
+
+  calcPriceFor(products: Product[]) {
+    return products.reduce((sum, product) => {
+      return sum + product.price;
+    }, 0);
+  }
+
+  updateProductIn(existingOrderItem: OrderItem, product: Product): OrderItem {
+    let orderItem: OrderItem = cloneDeep(existingOrderItem);
+    let products: Product[] = orderItem.products;
+
+    let productIndex = findIndex(products, ['id', product.id]);
+
+    if (productIndex !== -1) {
+      orderItem.products = this.replaceProduct(products, product, productIndex);
+    }
+
+    return orderItem;
+  }
+
+  private replaceProduct(products: Product[], product: Product, index: number): Product[] {
+    let productsCopy = cloneDeep(products);
+    productsCopy.splice(index, 1, product);
+    return productsCopy;
   }
 }
 

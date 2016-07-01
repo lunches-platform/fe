@@ -12,14 +12,5 @@ export class DayMenuService {
     'ngInject';
   }
 
-  calcPriceForAllProductsIn(menu: DayMenu) {
-    return this.calcPriceFor(menu.products);
-  }
-
-  calcPriceFor(products: Product[]) {
-    return products.reduce((sum, product) => {
-      return sum + product.price;
-    }, 0);
-  }
 }
 

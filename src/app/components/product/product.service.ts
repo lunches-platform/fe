@@ -1,9 +1,23 @@
-// import {assign} from '../assign';
+import {cloneDeep} from 'lodash';
 
+const sizeWeightMap = {
+  small: 150,
+  mid: 220,
+  big: 400
+};
+
+const sizePriceMap = {
+  small: 35,
+  mid: 45,
+  big: 70
+};
+
+// todo: add types
 export class Product {
   id: number;
   name: string;
   price: number;
+  size: any;
   weight: number;
   ingredients: string[];
 }
@@ -11,6 +25,17 @@ export class Product {
 export class ProductService {
   constructor(private $q: ng.IQService) {
     'ngInject';
+  }
+
+  setSizeFor(product: Product, size: any): Product {
+    const p = cloneDeep(product);
+    p.size = size;
+
+    // recalculate weight and price also
+    p.weight = sizeWeightMap[size.id];
+    p.price = sizePriceMap[size.id];
+
+    return p;
   }
 
   // addProduct(text: string, products: Product[]) {
