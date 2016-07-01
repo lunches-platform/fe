@@ -1,7 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
 import * as angular from 'angular';
-import 'todomvc-app-css/index.css';
 
 import {TodoService} from './app/todos/todos';
 import {App} from './app/containers/App';
