@@ -9,6 +9,7 @@ import {WeekMenuComponent} from './app/components/week-menu/week-menu.component'
 import {DayMenuComponent} from './app/components/day-menu/day-menu.component';
 import {ProductComponent} from './app/components/product/product.component';
 import {SelectorComponent} from './app/components/selector/selector.component';
+import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
 
 import {WeekMenuService} from './app/components/week-menu/week-menu.service';
 import {DayMenuService} from './app/components/day-menu/day-menu.service';
@@ -31,6 +32,7 @@ angular
   .component('dayMenu', DayMenuComponent)
   .component('product', ProductComponent)
   .component('lSelector', SelectorComponent)
+  .component('lSizeSelector', SizeSelectorComponent)
 
   .service('weekMenuService', WeekMenuService)
   .service('dayMenuService', DayMenuService)
