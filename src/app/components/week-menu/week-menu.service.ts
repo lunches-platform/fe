@@ -46,15 +46,23 @@ export class WeekMenuService {
         id: 1,
         name: 'Куриная котлета',
         ingredients: ['Курица', 'Яйцо'],
-        weight: 200,
-        price: 45
+        weight: 150,
+        price: 35,
+        size: {
+          id: 'small',
+          title: 'Small'
+        }
       },
       {
         id: 2,
         name: 'Гречка с грибами',
         ingredients: ['Гречка', 'грибы'],
-        weight: 300,
-        price: 75
+        weight: 220,
+        price: 45,
+        size: {
+          id: 'mid',
+          title: 'Medium'
+        }
       }
     ];
 
@@ -65,6 +73,7 @@ export class WeekMenuService {
       p.weight = product.weight;
       p.ingredients = product.ingredients;
       p.price = product.price;
+      p.size = product.size;
       return p;
     });
 

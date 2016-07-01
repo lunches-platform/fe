@@ -1,11 +1,13 @@
 import {cloneDeep} from 'lodash';
 
+// todo: get from BE
 const sizeWeightMap = {
   small: 150,
   mid: 220,
   big: 400
 };
 
+// todo: get from BE
 const sizePriceMap = {
   small: 35,
   mid: 45,
