@@ -1,10 +1,10 @@
-interface IOnQuantityChanged {
+interface IOnQuantityChangedEvent {
   (arg: { quantity: number }): void;
 }
 
-class QuantitySelectorController {
+export class QuantitySelectorController {
   // output bindings
-  onQuantityChanged: IOnQuantityChanged;
+  triggerQuantityChange: IOnQuantityChangedEvent;
 
   // internal bindings
   quantity = 1;
@@ -19,7 +19,7 @@ class QuantitySelectorController {
       newQuantity = this.maxQuantity;
     }
 
-    this.updateSelectedQuantity(newQuantity);
+    this.updateQuantity(newQuantity);
   }
 
   decreaseQuantity() {
@@ -29,14 +29,14 @@ class QuantitySelectorController {
       newQuantity = this.minQuantity;
     }
 
-    this.updateSelectedQuantity(newQuantity);
+    this.updateQuantity(newQuantity);
   }
 
-  private updateSelectedQuantity(newQuantity: number) {
+  private updateQuantity(newQuantity: number) {
     if (newQuantity !== this.quantity) {
       this.quantity = newQuantity;
 
-      this.onQuantityChanged({quantity: this.quantity});
+      this.triggerQuantityChange({quantity: this.quantity});
     }
   }
 }
@@ -46,7 +46,7 @@ export const QuantitySelectorComponent = {
   controller: QuantitySelectorController,
   controllerAs: 'vm',
   bindings: {
-    onQuantityChanged: '&'
+    triggerQuantityChange: '&onQuantityChanged'
   }
 };
 
