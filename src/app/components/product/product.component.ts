@@ -9,12 +9,13 @@ class ProductControler {
   checked: boolean;
 
   defaultSize: any;
+  selectedSize: any;
 
   constructor(private lProductService: ProductService) {
     'ngInject';
 
     this.product = cloneDeep(this.product);
-    this.initDefaultSize();
+    this.initSelectedSize();
   }
 
   onToggle() {
@@ -24,19 +25,21 @@ class ProductControler {
   }
 
   onSizeSelected(size: any) {
-    const updatedProduct = cloneDeep(this.lProductService.setSizeFor(this.product, size));
+    this.product = cloneDeep(this.lProductService.setSizeFor(this.product, size));
 
     this.onSizeChanged({
-      product: updatedProduct,
+      product: this.product,
       size: cloneDeep(size)
     });
   }
 
-  private initDefaultSize() {
+  private initSelectedSize() {
     this.defaultSize = {
       id: 'small',
       title: 'Small'
     };
+
+    this.selectedSize = this.product.size || this.defaultSize;
   }
   // editing: boolean = false;
   // onSave: Function;

@@ -4,9 +4,9 @@
     <span class="text">{{ vm.product.name }}</span>
   </div>
   <div class="details">
-    <span class="weight">{{ vm.product.weight }} гр</span> <span class="ingredients">{{ vm.product.ingredients.join(', ') }}</span>
+    <span class="weight" ng-if="vm.checked">{{ vm.product.weight }} гр</span> <span class="ingredients">{{ vm.product.ingredients.join(', ') }}</span>
   </div>
   <div class="size">
-    <l-size-selector ng-if="vm.checked" default-size="vm.defaultSize" on-size-selected="vm.onSizeSelected(size)"/>
+    <l-size-selector ng-if="vm.checked" selected-size="vm.selectedSize" on-size-selected="vm.onSizeSelected(size)"/>
   </div>
 </div>
