@@ -1,13 +1,25 @@
 import {Product} from '../components/product/product.service';
-import {cloneDeep, findIndex} from 'lodash';
+import {ISize} from '../components/size-selector/size-selector.component';
+import {cloneDeep, find} from 'lodash';
 
 export class OrderItem {
-  id: number;
+  id: string;
+
+  constructor(
+    public product: Product,
+    public size: ISize,
+    public amount: number
+  ) {
+  }
+}
+
+export class Order {
+  id: string;
   date: string;
-  price: number;
-  products: Product[] = [];
+  items: OrderItem[] = [];
 
   constructor() {
+    // todo: get current date
     this.date = '2015-04-12 14:42:73';
   }
 }
@@ -17,59 +29,64 @@ export class OrderService {
     'ngInject';
   }
 
-  addProductTo(existingOrderItem: OrderItem, productToBeAdded: Product): OrderItem {
-    let orderItem: OrderItem = cloneDeep(existingOrderItem);
+  addProductTo(existingOrder: Order, productToBeAdded: Product, size: ISize, amount: number): Order {
+    let order = cloneDeep(existingOrder);
 
-    if (!this.contains(orderItem, productToBeAdded)) {
-      orderItem.products.push(productToBeAdded);
-    }
+    order.items.push(new OrderItem(productToBeAdded, size, amount));
 
-    return orderItem;
+    return order;
   }
 
-  removeProductFrom(existingOrderItem: OrderItem, productToBeRemoved: Product): OrderItem {
-    let orderItem: OrderItem = cloneDeep(existingOrderItem);
+  removeProductFrom(existingOrder: Order, productToBeRemoved: Product): Order {
+    let order = cloneDeep(existingOrder);
 
-    if (this.contains(orderItem, productToBeRemoved)) {
-      orderItem.products = orderItem.products.filter(existingProduct => {
-        return existingProduct.id !== productToBeRemoved.id;
+    let orderItem = this.findOrderItemFor(productToBeRemoved, order);
+
+    if (orderItem) {
+      order.items = order.items.filter(existingOrderItem => {
+        return existingOrderItem.product.id !== productToBeRemoved.id;
       });
     }
 
-    return orderItem;
+    return order;
   }
 
-  contains(orderItem: OrderItem, product: Product): boolean {
-    return Boolean();
+  findOrderItemFor(product: Product, order: Order): OrderItem {
+    return find(order.items, ['product.id', product.id]);
   }
 
-  calcPriceForAllProductsIn(orderItem: OrderItem) {
-    return this.calcPriceFor(orderItem.products);
-  }
-
-  calcPriceFor(products: Product[]) {
-    return products.reduce((sum, product) => {
-      return sum + product.price;
+  calcPriceForAllProductsIn(order: Order): number {
+    return order.items.reduce((sum, item) => {
+      return sum + this.calcPriceFor(item);
     }, 0);
   }
 
-  updateProductIn(existingOrderItem: OrderItem, product: Product): OrderItem {
-    let orderItem: OrderItem = cloneDeep(existingOrderItem);
-    let products: Product[] = orderItem.products;
-
-    let productIndex = findIndex(products, ['id', product.id]);
-
-    if (productIndex !== -1) {
-      orderItem.products = this.replaceProduct(products, product, productIndex);
-    }
-
-    return orderItem;
+  calcPriceFor(item: OrderItem): number {
+    return item.product.pricePer100 / 100 * this.calcWeightFor(item.product, item.size, item.amount);
   }
 
-  private replaceProduct(products: Product[], product: Product, index: number): Product[] {
-    let productsCopy = cloneDeep(products);
-    productsCopy.splice(index, 1, product);
-    return productsCopy;
+  calcWeightFor(product: Product, size: ISize, amount: number): number {
+    return product.sizeToWeight[size.id] * amount;
+  }
+
+  updateSizeForProductIn(order: Order, product: Product, size: ISize): Order {
+    return this.updateOrderItemProperty(order, product, 'size', size);
+  }
+
+  updateAmountForProductIn(order: Order, product: Product, amount: number): Order {
+    return this.updateOrderItemProperty(order, product, 'amount', amount);
+  }
+
+  private updateOrderItemProperty(_order: Order, product: Product, key: string, value: ISize | number) {
+    let order = cloneDeep(_order);
+
+    let orderItem = find(order.items, ['product.id', product.id]);
+
+    if (orderItem) {
+      orderItem[key] = cloneDeep(value);
+    }
+
+    return order;
   }
 }
 

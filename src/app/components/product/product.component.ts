@@ -1,35 +1,67 @@
-import {Product as ProductItem, ProductService} from './product.service';
+import {Product as ProductItem} from './product.service';
+import {OrderService} from '../../models/order.service';
+import {ISize} from '../size-selector/size-selector.component';
 import {cloneDeep} from 'lodash';
+
+interface ITriggerToggleEvent {
+  (arg: { product: ProductItem, checked: boolean, size: ISize, amount: number }): void;
+}
+
+interface ITriggerSizeChangeEvent {
+  (arg: { product: ProductItem, size: ISize }): void;
+}
+
+interface ITriggerAmountChangeEvent {
+  (arg: { product: ProductItem, amount: number }): void;
+}
 
 // todo: add types
 class ProductControler {
   product: ProductItem;
-  onToggled: any;
-  onSizeChanged: any;
-  checked: boolean;
+  triggerToggle: ITriggerToggleEvent;
+  triggerSizeChange: ITriggerSizeChangeEvent;
+  triggerAmountChange: ITriggerAmountChangeEvent;
+  checked = false;
 
-  defaultSize: any;
-  selectedSize: any;
+  defaultSize: ISize;
+  selectedSize: ISize;
+  selectedAmount = 1;
 
-  constructor(private lProductService: ProductService) {
+  constructor(private lOrderService: OrderService) {
     'ngInject';
 
     this.product = cloneDeep(this.product);
     this.initSelectedSize();
   }
 
-  onToggle() {
-    const p = cloneDeep(this.product);
-
-    this.onToggled({ product: p, checked: this.checked });
+  calcWeight(): number {
+    return this.lOrderService.calcWeightFor(this.product, this.selectedSize, this.selectedAmount);
   }
 
-  onSizeSelected(size: any) {
-    this.product = cloneDeep(this.lProductService.setSizeFor(this.product, size));
-
-    this.onSizeChanged({
+  onToggle() {
+    this.triggerToggle({
       product: this.product,
-      size: cloneDeep(size)
+      checked: this.checked,
+      size: this.selectedSize,
+      amount: this.selectedAmount
+    });
+  }
+
+  onSizeSelected(size: ISize) {
+    this.selectedSize = size;
+
+    this.triggerSizeChange({
+      product: this.product,
+      size: size
+    });
+  }
+
+  onAmountChanged(amount: number) {
+    this.selectedAmount = amount;
+
+    this.triggerAmountChange({
+      product: this.product,
+      amount: amount
     });
   }
 
@@ -39,30 +71,8 @@ class ProductControler {
       title: 'Small'
     };
 
-    this.selectedSize = this.product.size || this.defaultSize;
+    this.selectedSize = this.defaultSize;
   }
-  // editing: boolean = false;
-  // onSave: Function;
-  // onDestroy: Function;
-  // todo: any;
-
-  // handleDoubleClick() {
-  //   this.editing = true;
-  // }
-
-  // handleSave(text: string) {
-  //   this.onSave({
-  //     todo: {
-  //       text,
-  //       id: this.todo.id
-  //     }
-  //   });
-  //   this.editing = false;
-  // }
-
-  // handleDestroy(id: number) {
-  //   this.onDestroy({id});
-  // }
 }
 
 export const ProductComponent = {
@@ -71,10 +81,8 @@ export const ProductComponent = {
   controllerAs: 'vm',
   bindings: {
     product: '<',
-    onToggled: '&',
-    onSizeChanged: '&'
-  //   onDestroy: '&',
-  //   onChange: '&',
-  //   onSave: '&'
+    triggerToggle: '&onToggled',
+    triggerSizeChange: '&onSizeChanged',
+    triggerAmountChange: '&onAmountChanged'
   }
 };

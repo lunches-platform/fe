@@ -1,7 +1,12 @@
 import {cloneDeep} from 'lodash';
 
+export interface ISize {
+  id: string;
+  title: string;
+}
+
 // todo: add types
-class SizeSelectorController {
+export class SizeSelectorController {
   // bindings
   onSizeSelected: any;
   inputSize: any;
@@ -14,7 +19,7 @@ class SizeSelectorController {
     this.initSizes();
   }
 
-  onSelected(size: any) {
+  onSelected(size: ISize) {
     this.onSizeSelected({size});
   }
 

@@ -1,13 +1,14 @@
 import {Product} from '../product/product.service';
 import {DayMenu, DayMenuService} from './day-menu.service';
-import {OrderItem, OrderService} from '../../models/order.service';
+import {Order, OrderService} from '../../models/order.service';
 import {Basket, BasketService} from '../../models/basket.service';
+import {ISize} from '../size-selector/size-selector.component';
 import {cloneDeep} from 'lodash';
 
 class DayMenuController {
   menu: DayMenu;
   basket: Basket;
-  orderItem: OrderItem;
+  order: Order;
   onBasketChanged: Function;
 
   constructor(
@@ -19,31 +20,35 @@ class DayMenuController {
 
     this.initBasket();
 
-    this.initOrderItem();
+    this.initOrder();
   }
 
   calcPrice() {
-    return this.lOrderService.calcPriceForAllProductsIn(this.orderItem);
+    return this.lOrderService.calcPriceForAllProductsIn(this.order);
   }
 
-  onProductToggled(product: Product, checked: boolean) {
+  onProductToggled(product: Product, checked: boolean, size: ISize, amount: number) {
     if (checked) {
-      this.orderItem = this.lOrderService.addProductTo(this.orderItem, product);
+      this.order = this.lOrderService.addProductTo(this.order, product, size, amount);
     } else {
-      this.orderItem = this.lOrderService.removeProductFrom(this.orderItem, product);
+      this.order = this.lOrderService.removeProductFrom(this.order, product);
     }
   }
 
-  onSizeChanged(product: Product, size: any) {
-    this.orderItem = this.lOrderService.updateProductIn(this.orderItem, product);
+  onSizeChanged(product: Product, size: ISize) {
+    this.order = this.lOrderService.updateSizeForProductIn(this.order, product, size);
   }
 
-  order() {
-    if (!this.orderItem.products.length) {
+  onAmountChanged(product: Product, amount: number) {
+    this.order = this.lOrderService.updateAmountForProductIn(this.order, product, amount);
+  }
+
+  putToBasket() {
+    if (!this.order.items.length) {
       return;
     }
 
-    this.basket = this.lBasketService.putTo(this.basket, this.orderItem);
+    this.basket = this.lBasketService.putTo(this.basket, this.order);
     this.onBasketChanged({basket: cloneDeep(this.basket)});
   }
 
@@ -51,8 +56,8 @@ class DayMenuController {
     this.basket = cloneDeep(this.basket);
   }
 
-  private initOrderItem() {
-    this.orderItem = new OrderItem();
+  private initOrder() {
+    this.order = new Order();
   }
 }
 

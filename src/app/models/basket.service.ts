@@ -1,8 +1,8 @@
-import {OrderItem} from './order.service';
+import {Order} from './order.service';
 import {cloneDeep} from 'lodash';
 
 export class Basket {
-  orderItems: OrderItem[] = [];
+  orders: Order[] = [];
 }
 
 export class BasketService {
@@ -10,10 +10,10 @@ export class BasketService {
     'ngInject';
   }
 
-  putTo(_basket: Basket, orderItem: OrderItem): Basket {
+  putTo(_basket: Basket, order: Order): Basket {
     let basket = cloneDeep(_basket);
 
-    basket.orderItems.push(orderItem);
+    basket.orders.push(order);
 
     return basket;
   }

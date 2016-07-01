@@ -3,10 +3,10 @@ import {Product} from '../product/product.service';
 import {DayMenu} from '../day-menu/day-menu.service';
 
 export interface IRes {
-    data: any[];
-    status: number;
-    statusText: string;
-    config: any;
+  data: any[];
+  status: number;
+  statusText: string;
+  config: any;
 }
 export class WeekMenuService {
   constructor(private $q: ng.IQService, private $http: ng.IHttpService) {
@@ -46,22 +46,22 @@ export class WeekMenuService {
         id: 1,
         name: 'Куриная котлета',
         ingredients: ['Курица', 'Яйцо'],
-        weight: 150,
-        price: 35,
-        size: {
-          id: 'small',
-          title: 'Small'
+        pricePer100: 12,
+        sizeToWeight: {
+          small: 90,
+          mid: 150,
+          big: 200
         }
       },
       {
         id: 2,
         name: 'Гречка с грибами',
         ingredients: ['Гречка', 'грибы'],
-        weight: 220,
-        price: 45,
-        size: {
-          id: 'mid',
-          title: 'Medium'
+        pricePer100: 9,
+        sizeToWeight: {
+          small: 120,
+          mid: 200,
+          big: 300
         }
       }
     ];
@@ -70,10 +70,9 @@ export class WeekMenuService {
       const p = new Product();
       p.id = product.id;
       p.name = product.name;
-      p.weight = product.weight;
       p.ingredients = product.ingredients;
-      p.price = product.price;
-      p.size = product.size;
+      p.sizeToWeight = product.sizeToWeight;
+      p.pricePer100 = product.pricePer100;
       return p;
     });
 

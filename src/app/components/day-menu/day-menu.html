@@ -4,10 +4,12 @@
     <l-product
       ng-repeat="product in vm.menu.products"
       product="product"
-      on-toggled="vm.onProductToggled(product, checked)"
-      on-size-changed="vm.onSizeChanged(product, size)" />
+      on-toggled="vm.onProductToggled(product, checked, size, amount)"
+      on-size-changed="vm.onSizeChanged(product, size)"
+      on-amount-changed="vm.onAmountChanged(product, amount)"
+    />
   </div>
-  <button class="order-button" ng-click="vm.order()">Беру</button>
+  <button class="order-button" ng-click="vm.putToBasket()">Беру</button>
   <span class="price">{{ vm.calcPrice() }} грн</span>
   <hr />
 </div>
