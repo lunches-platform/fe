@@ -4,7 +4,7 @@ import {cloneDeep} from 'lodash';
 class SizeSelectorController {
   // bindings
   onSizeSelected: any;
-  defaultSize: any;
+  inputSize: any;
 
   selectedSize: any;
   sizes: any[];
@@ -19,7 +19,7 @@ class SizeSelectorController {
   }
 
   private initSelectedSize() {
-    this.selectedSize = cloneDeep(this.defaultSize);
+    this.selectedSize = cloneDeep(this.inputSize);
   }
 
   private initSizes() {
@@ -41,7 +41,7 @@ export const SizeSelectorComponent = {
   controller: SizeSelectorController,
   controllerAs: 'vm',
   bindings: {
-    defaultSize: '<',
+    inputSize: '<selectedSize',
     onSizeSelected: '&'
   }
 };
