@@ -2,7 +2,7 @@ import {Product} from '../components/product/product.service';
 import {ISize} from '../components/size-selector/size-selector.component';
 import {cloneDeep, find} from 'lodash';
 
-export class OrderItem {
+export class LineItem {
   id: string;
 
   constructor(
@@ -16,7 +16,7 @@ export class OrderItem {
 export class Order {
   id: string;
   date: string;
-  items: OrderItem[] = [];
+  items: LineItem[] = [];
 
   constructor() {
     // todo: get current date
@@ -32,7 +32,7 @@ export class OrderService {
   addProductTo(existingOrder: Order, productToBeAdded: Product, size: ISize, quantity: number): Order {
     let order = cloneDeep(existingOrder);
 
-    order.items.push(new OrderItem(productToBeAdded, size, quantity));
+    order.items.push(new LineItem(productToBeAdded, size, quantity));
 
     return order;
   }
@@ -40,18 +40,18 @@ export class OrderService {
   removeProductFrom(existingOrder: Order, productToBeRemoved: Product): Order {
     let order = cloneDeep(existingOrder);
 
-    let orderItem = this.findOrderItemFor(productToBeRemoved, order);
+    let lineItem = this.findLineItemFor(productToBeRemoved, order);
 
-    if (orderItem) {
-      order.items = order.items.filter(existingOrderItem => {
-        return existingOrderItem.product.id !== productToBeRemoved.id;
+    if (lineItem) {
+      order.items = order.items.filter(existingLineItem => {
+        return existingLineItem.product.id !== productToBeRemoved.id;
       });
     }
 
     return order;
   }
 
-  findOrderItemFor(product: Product, order: Order): OrderItem {
+  findLineItemFor(product: Product, order: Order): LineItem {
     return find(order.items, ['product.id', product.id]);
   }
 
@@ -61,7 +61,7 @@ export class OrderService {
     }, 0);
   }
 
-  calcPriceFor(item: OrderItem): number {
+  calcPriceFor(item: LineItem): number {
     return item.product.pricePer100 / 100 * this.calcWeightFor(item.product, item.size, item.quantity);
   }
 
@@ -70,20 +70,20 @@ export class OrderService {
   }
 
   updateSizeForProductIn(order: Order, product: Product, size: ISize): Order {
-    return this.updateOrderItemProperty(order, product, 'size', size);
+    return this.updateLineItemProperty(order, product, 'size', size);
   }
 
   updateQuantityForProductIn(order: Order, product: Product, quantity: number): Order {
-    return this.updateOrderItemProperty(order, product, 'quantity', quantity);
+    return this.updateLineItemProperty(order, product, 'quantity', quantity);
   }
 
-  private updateOrderItemProperty(_order: Order, product: Product, key: string, value: ISize | number) {
+  private updateLineItemProperty(_order: Order, product: Product, key: string, value: ISize | number) {
     let order = cloneDeep(_order);
 
-    let orderItem = find(order.items, ['product.id', product.id]);
+    let lineItem = find(order.items, ['product.id', product.id]);
 
-    if (orderItem) {
-      orderItem[key] = cloneDeep(value);
+    if (lineItem) {
+      lineItem[key] = cloneDeep(value);
     }
 
     return order;

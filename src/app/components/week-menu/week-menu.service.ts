@@ -1,6 +1,6 @@
 // import {assign} from '../assign';
 import {Product} from '../product/product.service';
-import {DayMenu} from '../day-menu/day-menu.service';
+import {Menu} from '../menu/menu.service';
 
 export interface IRes {
   data: any[];
@@ -13,7 +13,7 @@ export class WeekMenuService {
     'ngInject';
   }
 
-  // // fetchAll(): ng.IPromise<DayMenu[]> {
+  // // fetchAll(): ng.IPromise<Menu[]> {
   // fetchAll() {
   //   const url = 'http://dinners/api/menus';
   //   return this.$http.get(url)
@@ -21,7 +21,7 @@ export class WeekMenuService {
 
   //           console.log(res);
   //         return res.data.map(menu => {
-  //           const m = new DayMenu();
+  //           const m = new Menu();
   //           m.id = menu.id;
   //           m.date = menu.date;
   //           m.products = menu.products.map((product: Product) => {
@@ -40,7 +40,7 @@ export class WeekMenuService {
   //       ;
   // }
 
-  fetchAll(): ng.IPromise<DayMenu[]> {
+  fetchAll(): ng.IPromise<Menu[]> {
     const productsFixture = [
       {
         id: 1,

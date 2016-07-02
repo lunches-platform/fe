@@ -1,18 +1,18 @@
 import {Product} from '../product/product.service';
-import {DayMenu, DayMenuService} from './day-menu.service';
+import {Menu, MenuService} from './menu.service';
 import {Order, OrderService} from '../../models/order.service';
 import {Basket, BasketService} from '../../models/basket.service';
 import {ISize} from '../size-selector/size-selector.component';
 import {cloneDeep} from 'lodash';
 
-class DayMenuController {
-  menu: DayMenu;
+class MenuController {
+  menu: Menu;
   basket: Basket;
   order: Order;
   onBasketChanged: Function;
 
   constructor(
-    private lDayMenuService: DayMenuService,
+    private lMenuService: MenuService,
     private lOrderService: OrderService,
     private lBasketService: BasketService
   ) {
@@ -61,9 +61,9 @@ class DayMenuController {
   }
 }
 
-export const DayMenuComponent = {
-  templateUrl: 'app/components/day-menu/day-menu.html',
-  controller: DayMenuController,
+export const MenuComponent = {
+  templateUrl: 'app/components/menu/menu.html',
+  controller: MenuController,
   controllerAs: 'vm',
   bindings: {
     menu: '<',

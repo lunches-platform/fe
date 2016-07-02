@@ -7,7 +7,7 @@ class WeekMenuController {
   basket: Basket;
   triggerBasketChange: Function;
 
-  // menus: DayMenu[];
+  // menus: Menu[];
   menus;
 
   constructor(private lWeekMenuService: WeekMenuService) {
@@ -29,7 +29,7 @@ class WeekMenuController {
 
   private fetchData() {
     this.lWeekMenuService.fetchAll()
-      // .then((menus: DayMenu[]) => {
+      // .then((menus: Menu[]) => {
       .then((menus) => {
         this.menus = menus;
       })
