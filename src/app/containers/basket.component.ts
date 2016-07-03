@@ -15,6 +15,10 @@ export class BasketController {
   constructor(private $state: IBasketState, private $scope: ng.IScope, private lOrderService: OrderService) {
     'ngInject';
 
+    if (!this.isStateValid()) {
+      this.$state.go('week-menu');
+    }
+
     this.initOrder();
     this.initCustomer();
     this.initAddress();
@@ -46,6 +50,10 @@ export class BasketController {
 
   private initAddress() {
     this.$scope.$watch(() => this.address, this.onAddressChanged.bind(this));
+  }
+
+  private isStateValid() {
+    return this.$state.params.order;
   }
 }
 
