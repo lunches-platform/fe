@@ -17,6 +17,7 @@ export class Order {
   id: string;
   date: string;
   items: LineItem[] = [];
+  customer: string;
 
   constructor() {
     // todo: get current date
