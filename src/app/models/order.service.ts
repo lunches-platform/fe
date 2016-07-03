@@ -126,6 +126,8 @@ export class OrderService {
     });
 
     return {
+      customer: order.customer,
+      address: order.address,
       items: items
     };
   }
