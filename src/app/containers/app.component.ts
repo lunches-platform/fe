@@ -1,16 +1,22 @@
 import {Order} from '../models/order.service';
 import {cloneDeep} from 'lodash';
+import {IAppState} from '../../routes';
 
 export class AppController {
   order: Order;
 
-  constructor() {
+  constructor(private $state: IAppState) {
+    'ngInject';
+
     this.initOrder();
   }
 
   onOrderChanged(order: Order) {
     this.order = cloneDeep(order);
-    console.log(this.order);
+  }
+
+  goToBasket() {
+    this.$state.go('basket', {order: this.order});
   }
 
   private initOrder() {

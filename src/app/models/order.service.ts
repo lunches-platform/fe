@@ -18,6 +18,7 @@ export class Order {
   date: string;
   items: LineItem[] = [];
   customer: string;
+  address: string;
 
   constructor() {
     // todo: get current date
@@ -26,7 +27,7 @@ export class Order {
 }
 
 export class OrderService {
-  constructor(private $q: ng.IQService) {
+  constructor(private $q: ng.IQService, private $http: ng.IHttpService) {
     'ngInject';
   }
 
@@ -52,8 +53,20 @@ export class OrderService {
     return order;
   }
 
+  setCustomer(customer: string, _order: Order) {
+    let order = cloneDeep(_order);
+    order.customer = customer;
+    return order;
+  }
+
+  setAddress(address: string, _order: Order) {
+    let order = cloneDeep(_order);
+    order.address = address;
+    return order;
+  }
+
   findLineItemFor(product: Product, order: Order, menu: Menu): LineItem {
-    let menuItems = this.findLineItemsForIn(menu, order);
+    let menuItems = this.findLineItemsFor(menu, order);
 
     return find(menuItems, item => {
       return item.product.id === product.id;
@@ -61,22 +74,28 @@ export class OrderService {
 
   }
 
-  findLineItemsForIn(menu: Menu, order: Order): LineItem[] {
+  findLineItemsFor(menu: Menu, order: Order): LineItem[] {
     return order.items.filter(item => {
       return item.menu.id === menu.id;
     });
   }
 
-  calcPriceForIn(menu: Menu, order: Order): number {
-    let menuItems = this.findLineItemsForIn(menu, order);
+  calcPriceForMenu(menu: Menu, order: Order): number {
+    return this.calcPriceForLineItems(this.findLineItemsFor(menu, order));
+  }
 
-    return menuItems.reduce((sum, item) => {
-      return sum + this.calcPriceFor(item);
+  calcPriceForLineItems(items: LineItem[]): number {
+    return items.reduce((sum, item) => {
+      return sum + this.calcPriceForLineItem(item);
     }, 0);
   }
 
-  calcPriceFor(item: LineItem): number {
+  calcPriceForLineItem(item: LineItem): number {
     return item.product.pricePer100 / 100 * this.calcWeightFor(item.product, item.size, item.quantity);
+  }
+
+  calcPriceForOrder(order: Order): number {
+    return this.calcPriceForLineItems(order.items);
   }
 
   calcWeightFor(product: Product, size: ISize, quantity: number): number {
@@ -89,6 +108,27 @@ export class OrderService {
 
   updateQuantityForProductIn(order: Order, product: Product, quantity: number): Order {
     return this.updateLineItemProperty(order, product, 'quantity', quantity);
+  }
+
+  makeOrder(order: Order) {
+    const url = 'http://dinners/api/order';
+    console.log('POST ' + url);
+    console.log(JSON.stringify(this.prepareOrderForApi(order)));
+  }
+
+  private prepareOrderForApi(order: Order) {
+    let items = order.items.map(item => {
+      return {
+        product_id: item.product.id,
+        size: item.size.id,
+        quantity: item.quantity,
+        menu_id: item.menu.id
+      };
+    });
+
+    return {
+      items: items
+    };
   }
 
   private updateLineItemProperty(_order: Order, product: Product, key: string, value: ISize | number) {

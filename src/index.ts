@@ -3,6 +3,7 @@
 import * as angular from 'angular';
 
 import {AppComponent} from './app/containers/app.component';
+import {BasketComponent} from './app/containers/basket.component';
 
 import {WeekMenuComponent} from './app/components/week-menu/week-menu.component';
 import {MenuComponent} from './app/components/menu/menu.component';
@@ -32,6 +33,7 @@ angular
   .component('lSelector', SelectorComponent)
   .component('lSizeSelector', SizeSelectorComponent)
   .component('lQuantitySelector', QuantitySelectorComponent)
+  .component('lBasket', BasketComponent)
 
   .service('lWeekMenuService', WeekMenuService)
   .service('lMenuService', MenuService)

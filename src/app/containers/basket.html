@@ -1,0 +1,13 @@
+Всего к оплате: {{ vm.totalToPay() }}<br/>
+
+Ваше имя: <br/>
+<input type="text" ng-model="vm.customer" /><br/>
+
+Этаж: <br/>
+<input type="text" ng-model="vm.address" /><br/>
+
+Оплата<br/>
+- Занесите на ресепш ИЛИ<br/>
+- Переведите на карту 1234-5678-8765-4321 (Иванов Иван Иванович)<br/>
+
+<button ng-click="vm.makeOrder()">Оформить заказ</button>

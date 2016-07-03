@@ -28,7 +28,7 @@ export class MenuController {
   }
 
   calcPrice() {
-    return this.lOrderService.calcPriceForIn(this.menu, this.order);
+    return this.lOrderService.calcPriceForMenu(this.menu, this.order);
   }
 
   onProductToggled(product: Product, checked: boolean, size: ISize, quantity: number) {
