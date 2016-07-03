@@ -46,6 +46,9 @@ export class MenuController {
       this.order
     );
 
+    // reset form
+    this.initOrderForm();
+
     this.triggerOrderChange({order: this.order});
   }
 
