@@ -1,63 +1,60 @@
 import {Product} from '../product/product.service';
 import {Menu, MenuService} from './menu.service';
 import {Order, OrderService} from '../../models/order.service';
-import {Basket, BasketService} from '../../models/basket.service';
 import {ISize} from '../size-selector/size-selector.component';
 import {cloneDeep} from 'lodash';
 
-class MenuController {
+interface ITriggerOrderChangeEvent {
+  (arg: { order: Order }): void;
+}
+
+export class MenuController {
+  // input bindings
   menu: Menu;
-  basket: Basket;
   order: Order;
-  onBasketChanged: Function;
+
+  // output bindings
+  triggerOrderChange: ITriggerOrderChangeEvent;
+
+  // internal bindings
 
   constructor(
     private lMenuService: MenuService,
-    private lOrderService: OrderService,
-    private lBasketService: BasketService
+    private lOrderService: OrderService
   ) {
     'ngInject';
-
-    this.initBasket();
 
     this.initOrder();
   }
 
   calcPrice() {
-    return this.lOrderService.calcPriceForAllProductsIn(this.order);
+    return this.lOrderService.calcPriceForIn(this.menu, this.order);
   }
 
   onProductToggled(product: Product, checked: boolean, size: ISize, quantity: number) {
     if (checked) {
-      this.order = this.lOrderService.addProductTo(this.order, product, size, quantity);
+      this.order = this.lOrderService.addProductTo(this.order, this.menu, product, size, quantity);
     } else {
-      this.order = this.lOrderService.removeProductFrom(this.order, product);
+      this.order = this.lOrderService.removeProductFrom(this.order, this.menu, product);
     }
+
+    this.triggerOrderChange({order: this.order});
   }
 
   onSizeChanged(product: Product, size: ISize) {
     this.order = this.lOrderService.updateSizeForProductIn(this.order, product, size);
+
+    this.triggerOrderChange({order: this.order});
   }
 
   onQuantityChanged(product: Product, quantity: number) {
     this.order = this.lOrderService.updateQuantityForProductIn(this.order, product, quantity);
-  }
 
-  putToBasket() {
-    if (!this.order.items.length) {
-      return;
-    }
-
-    this.basket = this.lBasketService.putTo(this.basket, this.order);
-    this.onBasketChanged({basket: cloneDeep(this.basket)});
-  }
-
-  private initBasket() {
-    this.basket = cloneDeep(this.basket);
+    this.triggerOrderChange({order: this.order});
   }
 
   private initOrder() {
-    this.order = new Order();
+    this.order = cloneDeep(this.order);
   }
 }
 
@@ -67,7 +64,7 @@ export const MenuComponent = {
   controllerAs: 'vm',
   bindings: {
     menu: '<',
-    basket: '<',
-    onBasketChanged: '&'
+    order: '<',
+    triggerOrderChange: '&onOrderChanged'
   }
 };

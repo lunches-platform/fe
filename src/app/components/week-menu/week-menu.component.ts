@@ -1,36 +1,42 @@
 import {WeekMenuService} from './week-menu.service';
-import {Basket} from '../../models/basket.service';
+import {Menu} from '../menu/menu.service';
+import {Order} from '../../models/order.service';
 import {cloneDeep} from 'lodash';
 
-class WeekMenuController {
-  // bindings
-  basket: Basket;
-  triggerBasketChange: Function;
+interface ITriggerOrderChangeEvent {
+  (arg: { order: Order }): void;
+}
 
-  // menus: Menu[];
-  menus;
+export class WeekMenuController {
+  // input bindings
+  order: Order;
+
+  // output bindings
+  triggerOrderChange: ITriggerOrderChangeEvent;
+
+  // internal bindings
+  menus: Menu[];
 
   constructor(private lWeekMenuService: WeekMenuService) {
     'ngInject';
 
-    this.initBasket();
+    this.initOrder();
     this.fetchData();
   }
 
-  onBasketChanged(basket: Basket) {
-    this.basket = basket;
+  onOrderChanged(order: Order) {
+    this.order = cloneDeep(order);
 
-    this.triggerBasketChange({ basket: cloneDeep(this.basket) });
+    this.triggerOrderChange({ order: this.order });
   }
 
-  private initBasket() {
-    this.basket = cloneDeep(this.basket);
+  private initOrder() {
+    this.order = cloneDeep(this.order);
   }
 
   private fetchData() {
     this.lWeekMenuService.fetchAll()
-      // .then((menus: Menu[]) => {
-      .then((menus) => {
+      .then((menus: Menu[]) => {
         this.menus = menus;
       })
     ;
@@ -42,7 +48,7 @@ export const WeekMenuComponent = {
   controller: WeekMenuController,
   controllerAs: 'vm',
   bindings: {
-    basket: '<',
-    triggerBasketChange: '&onBasketChanged'
+    order: '<',
+    triggerOrderChange: '&onOrderChanged'
   }
 };

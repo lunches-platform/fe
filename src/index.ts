@@ -15,7 +15,6 @@ import {WeekMenuService} from './app/components/week-menu/week-menu.service';
 import {MenuService} from './app/components/menu/menu.service';
 import {ProductService} from './app/components/product/product.service';
 import {OrderService} from './app/models/order.service';
-import {BasketService} from './app/models/basket.service';
 
 import 'angular-ui-router';
 import routesConfig from './routes';
@@ -38,4 +37,4 @@ angular
   .service('lMenuService', MenuService)
   .service('lProductService', ProductService)
   .service('lOrderService', OrderService)
-  .service('lBasketService', BasketService);
+  ;

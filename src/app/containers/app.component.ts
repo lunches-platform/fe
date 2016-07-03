@@ -1,18 +1,20 @@
-import {Basket} from '../models/basket.service';
+import {Order} from '../models/order.service';
+import {cloneDeep} from 'lodash';
 
 export class AppController {
-  basket: Basket;
+  order: Order;
 
   constructor() {
-    this.initBasket();
+    this.initOrder();
   }
 
-  onBasketChanged(basket: Basket) {
-    this.basket = basket;
+  onOrderChanged(order: Order) {
+    this.order = cloneDeep(order);
+    console.log(this.order);
   }
 
-  private initBasket() {
-    this.basket = new Basket();
+  private initOrder() {
+    this.order = new Order();
   }
 }
 

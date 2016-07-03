@@ -1,14 +1,14 @@
 import {Product} from '../components/product/product.service';
 import {ISize} from '../components/size-selector/size-selector.component';
 import {cloneDeep, find} from 'lodash';
+import {Menu} from '../components/menu/menu.service';
 
 export class LineItem {
-  id: string;
-
   constructor(
     public product: Product,
     public size: ISize,
-    public quantity: number
+    public quantity: number,
+    public menu: Menu
   ) {
   }
 }
@@ -30,18 +30,18 @@ export class OrderService {
     'ngInject';
   }
 
-  addProductTo(existingOrder: Order, productToBeAdded: Product, size: ISize, quantity: number): Order {
+  addProductTo(existingOrder: Order, menu: Menu, productToBeAdded: Product, size: ISize, quantity: number): Order {
     let order = cloneDeep(existingOrder);
 
-    order.items.push(new LineItem(productToBeAdded, size, quantity));
+    order.items.push(new LineItem(productToBeAdded, size, quantity, menu));
 
     return order;
   }
 
-  removeProductFrom(existingOrder: Order, productToBeRemoved: Product): Order {
+  removeProductFrom(existingOrder: Order, menu: Menu, productToBeRemoved: Product): Order {
     let order = cloneDeep(existingOrder);
 
-    let lineItem = this.findLineItemFor(productToBeRemoved, order);
+    let lineItem = this.findLineItemFor(productToBeRemoved, order, menu);
 
     if (lineItem) {
       order.items = order.items.filter(existingLineItem => {
@@ -52,12 +52,25 @@ export class OrderService {
     return order;
   }
 
-  findLineItemFor(product: Product, order: Order): LineItem {
-    return find(order.items, ['product.id', product.id]);
+  findLineItemFor(product: Product, order: Order, menu: Menu): LineItem {
+    let menuItems = this.findLineItemsForIn(menu, order);
+
+    return find(menuItems, item => {
+      return item.product.id === product.id;
+    });
+
   }
 
-  calcPriceForAllProductsIn(order: Order): number {
-    return order.items.reduce((sum, item) => {
+  findLineItemsForIn(menu: Menu, order: Order): LineItem[] {
+    return order.items.filter(item => {
+      return item.menu.id === menu.id;
+    });
+  }
+
+  calcPriceForIn(menu: Menu, order: Order): number {
+    let menuItems = this.findLineItemsForIn(menu, order);
+
+    return menuItems.reduce((sum, item) => {
       return sum + this.calcPriceFor(item);
     }, 0);
   }
