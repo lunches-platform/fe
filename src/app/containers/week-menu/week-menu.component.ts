@@ -1,7 +1,8 @@
 import {WeekMenuService} from './week-menu.service';
-import {Menu} from '../menu/menu.service';
+import {Menu} from '../../components/menu/menu.service';
 import {Order} from '../../models/order.service';
 import {cloneDeep} from 'lodash';
+import {IWeekMenuState} from '../../../routes';
 
 interface ITriggerOrderChangeEvent {
   (arg: { order: Order }): void;
@@ -17,7 +18,7 @@ export class WeekMenuController {
   // internal bindings
   menus: Menu[];
 
-  constructor(private lWeekMenuService: WeekMenuService) {
+  constructor(private $state: IWeekMenuState, private lWeekMenuService: WeekMenuService) {
     'ngInject';
 
     this.initOrder();
@@ -26,12 +27,10 @@ export class WeekMenuController {
 
   onOrderChanged(order: Order) {
     this.order = cloneDeep(order);
-
-    this.triggerOrderChange({ order: this.order });
   }
 
-  private initOrder() {
-    this.order = cloneDeep(this.order);
+  goToBasket() {
+    this.$state.go('basket', {order: this.order});
   }
 
   private fetchData() {
@@ -41,14 +40,14 @@ export class WeekMenuController {
       })
     ;
   }
+
+  private initOrder() {
+    this.order = new Order();
+  }
 }
 
 export const WeekMenuComponent = {
-  templateUrl: 'app/components/week-menu/week-menu.html',
+  templateUrl: 'app/containers/week-menu/week-menu.html',
   controller: WeekMenuController,
-  controllerAs: 'vm',
-  bindings: {
-    order: '<',
-    triggerOrderChange: '&onOrderChanged'
-  }
+  controllerAs: 'vm'
 };

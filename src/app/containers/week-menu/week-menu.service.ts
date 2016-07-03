@@ -1,6 +1,6 @@
 // import {assign} from '../assign';
-import {Product} from '../product/product.service';
-import {Menu} from '../menu/menu.service';
+import {Product} from '../../components/product/product.service';
+import {Menu} from '../../components/menu/menu.service';
 
 export interface IRes {
   data: any[];

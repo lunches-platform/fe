@@ -2,17 +2,16 @@
 
 import * as angular from 'angular';
 
-import {AppComponent} from './app/containers/app.component';
 import {BasketComponent} from './app/containers/basket.component';
 
-import {WeekMenuComponent} from './app/components/week-menu/week-menu.component';
+import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
 import {MenuComponent} from './app/components/menu/menu.component';
 import {ProductComponent} from './app/components/product/product.component';
 import {SelectorComponent} from './app/components/selector/selector.component';
 import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
 import {QuantitySelectorComponent} from './app/components/quantity-selector/quantity-selector.component';
 
-import {WeekMenuService} from './app/components/week-menu/week-menu.service';
+import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
 import {MenuService} from './app/components/menu/menu.service';
 import {ProductService} from './app/components/product/product.service';
 import {OrderService} from './app/models/order.service';
@@ -25,7 +24,6 @@ import './index.scss';
 angular
   .module('app', ['ui.router'])
   .config(routesConfig)
-  .component('lApp', AppComponent)
 
   .component('lWeekMenu', WeekMenuComponent)
   .component('lMenu', MenuComponent)

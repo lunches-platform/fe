@@ -4,7 +4,7 @@ import {Order} from './app/models/order.service';
 
 export default routesConfig;
 
-export interface IAppState extends ng.ui.IStateService {
+export interface IWeekMenuState extends ng.ui.IStateService {
 }
 
 export interface IBasketState extends ng.ui.IStateService {
@@ -21,9 +21,9 @@ function routesConfig($stateProvider: angular.ui.IStateProvider, $urlRouterProvi
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    .state('app', {
+    .state('week-menu', {
       url: '/',
-      template: '<l-app/>'
+      template: '<l-week-menu/>'
     })
     .state('basket', {
       url: '/basket',
