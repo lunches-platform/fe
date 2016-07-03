@@ -28,14 +28,14 @@ export class MenuController {
   }
 
   calcPrice() {
-    return this.lOrderService.calcPriceForMenu(this.menu, this.order);
+    return this.lOrderService.calcPriceForDate(this.menu.date, this.order);
   }
 
   onProductToggled(product: Product, checked: boolean, size: ISize, quantity: number) {
     if (checked) {
-      this.order = this.lOrderService.addProductTo(this.order, this.menu, product, size, quantity);
+      this.order = this.lOrderService.addProductTo(this.order, this.menu.date, product, size, quantity);
     } else {
-      this.order = this.lOrderService.removeProductFrom(this.order, this.menu, product);
+      this.order = this.lOrderService.removeProductFrom(this.order, this.menu.date, product);
     }
 
     this.triggerOrderChange({order: this.order});

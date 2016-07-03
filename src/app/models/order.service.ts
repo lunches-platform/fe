@@ -1,14 +1,13 @@
 import {Product} from '../components/product/product.service';
 import {ISize} from '../components/size-selector/size-selector.component';
 import {cloneDeep, find} from 'lodash';
-import {Menu} from '../components/menu/menu.service';
 
 export class LineItem {
   constructor(
     public product: Product,
     public size: ISize,
     public quantity: number,
-    public menu: Menu
+    public date: string
   ) {
   }
 }
@@ -31,18 +30,18 @@ export class OrderService {
     'ngInject';
   }
 
-  addProductTo(existingOrder: Order, menu: Menu, productToBeAdded: Product, size: ISize, quantity: number): Order {
+  addProductTo(existingOrder: Order, date: string, productToBeAdded: Product, size: ISize, quantity: number): Order {
     let order = cloneDeep(existingOrder);
 
-    order.items.push(new LineItem(productToBeAdded, size, quantity, menu));
+    order.items.push(new LineItem(productToBeAdded, size, quantity, date));
 
     return order;
   }
 
-  removeProductFrom(existingOrder: Order, menu: Menu, productToBeRemoved: Product): Order {
+  removeProductFrom(existingOrder: Order, date: string, productToBeRemoved: Product): Order {
     let order = cloneDeep(existingOrder);
 
-    let lineItem = this.findLineItemFor(productToBeRemoved, order, menu);
+    let lineItem = this.findLineItemFor(productToBeRemoved, order, date);
 
     if (lineItem) {
       order.items = order.items.filter(existingLineItem => {
@@ -65,23 +64,23 @@ export class OrderService {
     return order;
   }
 
-  findLineItemFor(product: Product, order: Order, menu: Menu): LineItem {
-    let menuItems = this.findLineItemsFor(menu, order);
+  findLineItemFor(product: Product, order: Order, date: string): LineItem {
+    let items = this.findLineItemsFor(date, order);
 
-    return find(menuItems, item => {
+    return find(items, item => {
       return item.product.id === product.id;
     });
 
   }
 
-  findLineItemsFor(menu: Menu, order: Order): LineItem[] {
+  findLineItemsFor(date: string, order: Order): LineItem[] {
     return order.items.filter(item => {
-      return item.menu.id === menu.id;
+      return item.date === date;
     });
   }
 
-  calcPriceForMenu(menu: Menu, order: Order): number {
-    return this.calcPriceForLineItems(this.findLineItemsFor(menu, order));
+  calcPriceForDate(date: string, order: Order): number {
+    return this.calcPriceForLineItems(this.findLineItemsFor(date, order));
   }
 
   calcPriceForLineItems(items: LineItem[]): number {
@@ -122,7 +121,7 @@ export class OrderService {
         product_id: item.product.id,
         size: item.size.id,
         quantity: item.quantity,
-        menu_id: item.menu.id
+        date: item.date
       };
     });
 
