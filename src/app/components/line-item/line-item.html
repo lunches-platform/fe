@@ -1,0 +1,15 @@
+<div class="l-line-item">
+  <div class="title">
+    <span class="checkbox"><input type="checkbox" ng-model="vm.lineItem.checked" ng-change="vm.onToggled()"></span>
+    <span class="text">{{ vm.lineItem.product.name }}</span>
+  </div>
+  <div class="details">
+    <span class="weight" ng-if="vm.lineItem.checked">{{ vm.calcWeight() }}гр</span> <span class="ingredients">{{ vm.lineItem.product.ingredients.join(', ') }}</span>
+  </div>
+  <div class="size">
+    <l-size-selector ng-if="vm.lineItem.checked" selected-size="vm.lineItem.size" on-size-selected="vm.onSizeSelected(size)" />
+  </div>
+  <div class="quantity">
+    <l-quantity-selector ng-if="vm.lineItem.checked" on-quantity-changed="vm.onQuantityChanged(quantity)" />
+  </div>
+</div>

@@ -1,8 +1,8 @@
-import {Product} from '../product/product.service';
-import {Menu, MenuService} from './menu.service';
+import {Menu} from './menu.service';
 import {Order, OrderService} from '../../models/order.service';
-import {ISize} from '../size-selector/size-selector.component';
-import {cloneDeep} from 'lodash';
+import {OrderForm, OrderFormService} from './order.form';
+import {LineItem, LineItemService} from '../line-item/line-item.service';
+import {cloneDeep, filter} from 'lodash';
 
 interface ITriggerOrderChangeEvent {
   (arg: { order: Order }): void;
@@ -17,44 +17,48 @@ export class MenuController {
   triggerOrderChange: ITriggerOrderChangeEvent;
 
   // internal bindings
+  orderForm: OrderForm;
 
   constructor(
-    private lMenuService: MenuService,
-    private lOrderService: OrderService
+    private lOrderService: OrderService,
+    private lOrderFormService: OrderFormService,
+    private lLineItemService: LineItemService
   ) {
     'ngInject';
 
     this.initOrder();
+    this.initOrderForm();
   }
 
   calcPrice() {
-    return this.lOrderService.calcPriceForDate(this.menu.date, this.order);
+    return this.lLineItemService.calcPriceForAll(
+      filter(this.orderForm.items, ['checked', true])
+    );
   }
 
-  onProductToggled(product: Product, checked: boolean, size: ISize, quantity: number) {
-    if (checked) {
-      this.order = this.lOrderService.addProductTo(this.order, this.menu.date, product, size, quantity);
-    } else {
-      this.order = this.lOrderService.removeProductFrom(this.order, this.menu.date, product);
-    }
-
-    this.triggerOrderChange({order: this.order});
+  onItemChanged(item: LineItem) {
+    this.orderForm = this.lOrderFormService.updateItem(item, this.orderForm);
   }
 
-  onSizeChanged(product: Product, size: ISize) {
-    this.order = this.lOrderService.updateSizeForProductIn(this.order, product, size);
-
-    this.triggerOrderChange({order: this.order});
-  }
-
-  onQuantityChanged(product: Product, quantity: number) {
-    this.order = this.lOrderService.updateQuantityForProductIn(this.order, product, quantity);
+  addToOrder() {
+    this.order = this.lOrderService.addLineItems(
+      filter(this.orderForm.items, ['checked', true]),
+      this.order
+    );
 
     this.triggerOrderChange({order: this.order});
   }
 
   private initOrder() {
     this.order = cloneDeep(this.order);
+  }
+
+  private initOrderForm() {
+    this.orderForm = new OrderForm();
+
+    this.orderForm = this.lOrderFormService.addItems(this.menu.products.map(product => {
+      return new LineItem(product, this.menu.date);
+    }), this.orderForm);
   }
 }
 

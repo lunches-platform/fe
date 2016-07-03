@@ -1,6 +1,7 @@
-import {Product} from '../../components/product/product.service';
+import {Product} from '../../components/line-item/line-item.service';
 import {Menu} from '../../components/menu/menu.service';
 import * as moment from 'moment';
+import {IQService, IHttpService} from 'angular';
 
 export interface IRes {
   data: any[];
@@ -9,7 +10,7 @@ export interface IRes {
   config: any;
 }
 export class WeekMenuService {
-  constructor(private $q: ng.IQService, private $http: ng.IHttpService) {
+  constructor(private $q: IQService, private $http: IHttpService) {
     'ngInject';
   }
 
@@ -49,9 +50,10 @@ export class WeekMenuService {
         pricePer100: 12,
         sizeToWeight: {
           small: 90,
-          mid: 150,
+          medium: 150,
           big: 200
-        }
+        },
+
       },
       {
         id: 2,
@@ -60,7 +62,7 @@ export class WeekMenuService {
         pricePer100: 9,
         sizeToWeight: {
           small: 120,
-          mid: 200,
+          medium: 200,
           big: 300
         }
       }

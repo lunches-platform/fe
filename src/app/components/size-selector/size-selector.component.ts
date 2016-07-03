@@ -9,10 +9,10 @@ export interface ISize {
 export class SizeSelectorController {
   // bindings
   onSizeSelected: any;
-  inputSize: any;
+  inputSize: ISize;
 
-  selectedSize: any;
-  sizes: any[];
+  selectedSize: ISize;
+  sizes: ISize[];
 
   constructor() {
     this.initSelectedSize();
@@ -32,7 +32,7 @@ export class SizeSelectorController {
       id: 'small',
       title: 'Small'
     }, {
-      id: 'mid',
+      id: 'medium',
       title: 'Middle'
     }, {
       id: 'big',

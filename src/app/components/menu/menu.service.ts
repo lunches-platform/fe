@@ -1,5 +1,4 @@
-import {IQService} from 'angular';
-import {Product} from '../product/product.service';
+import {Product} from '../line-item/line-item.service';
 import {Moment} from 'moment';
 
 export class Menu {
@@ -7,11 +6,3 @@ export class Menu {
   date: Moment;
   products: Product[];
 }
-
-export class MenuService {
-  constructor(private $q: IQService) {
-    'ngInject';
-  }
-
-}
-

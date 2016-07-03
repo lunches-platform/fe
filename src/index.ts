@@ -6,15 +6,15 @@ import {BasketComponent} from './app/containers/basket.component';
 
 import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
 import {MenuComponent} from './app/components/menu/menu.component';
-import {ProductComponent} from './app/components/product/product.component';
+import {LineItemComponent} from './app/components/line-item/line-item.component';
 import {SelectorComponent} from './app/components/selector/selector.component';
 import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
 import {QuantitySelectorComponent} from './app/components/quantity-selector/quantity-selector.component';
 
 import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
-import {MenuService} from './app/components/menu/menu.service';
-import {ProductService} from './app/components/product/product.service';
+import {LineItemService} from './app/components/line-item/line-item.service';
 import {OrderService} from './app/models/order.service';
+import {OrderFormService} from './app/components/menu/order.form';
 
 import {DateFilter} from './app/filters/date.filter';
 
@@ -31,16 +31,16 @@ angular
 
   .component('lWeekMenu', WeekMenuComponent)
   .component('lMenu', MenuComponent)
-  .component('lProduct', ProductComponent)
+  .component('lLineItem', LineItemComponent)
   .component('lSelector', SelectorComponent)
   .component('lSizeSelector', SizeSelectorComponent)
   .component('lQuantitySelector', QuantitySelectorComponent)
   .component('lBasket', BasketComponent)
 
   .service('lWeekMenuService', WeekMenuService)
-  .service('lMenuService', MenuService)
-  .service('lProductService', ProductService)
+  .service('lLineItemService', LineItemService)
   .service('lOrderService', OrderService)
+  .service('lOrderFormService', OrderFormService)
 
   .filter('lDate', DateFilter)
   ;

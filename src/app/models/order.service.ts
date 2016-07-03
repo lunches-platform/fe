@@ -1,17 +1,10 @@
-import {Product} from '../components/product/product.service';
+// todo: move Product out from line-item service
+import {Product, LineItem, LineItemService} from '../components/line-item/line-item.service';
 import {ISize} from '../components/size-selector/size-selector.component';
-import {cloneDeep, find} from 'lodash';
-import {Moment} from 'moment';
 
-export class LineItem {
-  constructor(
-    public product: Product,
-    public size: ISize,
-    public quantity: number,
-    public date: Moment
-  ) {
-  }
-}
+import {cloneDeep, find} from 'lodash';
+import {IHttpService} from 'angular';
+import {Moment} from 'moment';
 
 export class Order {
   items: LineItem[] = [];
@@ -20,28 +13,16 @@ export class Order {
 }
 
 export class OrderService {
-  constructor(private $q: ng.IQService, private $http: ng.IHttpService) {
+  constructor(private $http: IHttpService, private lLineItemService: LineItemService) {
     'ngInject';
   }
 
-  addProductTo(existingOrder: Order, date: Moment, productToBeAdded: Product, size: ISize, quantity: number): Order {
-    let order = cloneDeep(existingOrder);
+  addLineItems(items: LineItem[], _order: Order): Order {
+    let order = cloneDeep(_order);
 
-    order.items.push(new LineItem(productToBeAdded, size, quantity, date));
-
-    return order;
-  }
-
-  removeProductFrom(existingOrder: Order, date: Moment, productToBeRemoved: Product): Order {
-    let order = cloneDeep(existingOrder);
-
-    let lineItem = this.findLineItemFor(productToBeRemoved, order, date);
-
-    if (lineItem) {
-      order.items = order.items.filter(existingLineItem => {
-        return existingLineItem.product.id !== productToBeRemoved.id;
-      });
-    }
+    items.forEach(item => {
+      order.items.push(item);
+    });
 
     return order;
   }
@@ -73,26 +54,8 @@ export class OrderService {
     });
   }
 
-  calcPriceForDate(date: Moment, order: Order): number {
-    return this.calcPriceForLineItems(this.findLineItemsFor(date, order));
-  }
-
-  calcPriceForLineItems(items: LineItem[]): number {
-    return items.reduce((sum, item) => {
-      return sum + this.calcPriceForLineItem(item);
-    }, 0);
-  }
-
-  calcPriceForLineItem(item: LineItem): number {
-    return item.product.pricePer100 / 100 * this.calcWeightFor(item.product, item.size, item.quantity);
-  }
-
   calcPriceForOrder(order: Order): number {
-    return this.calcPriceForLineItems(order.items);
-  }
-
-  calcWeightFor(product: Product, size: ISize, quantity: number): number {
-    return product.sizeToWeight[size.id] * quantity;
+    return this.lLineItemService.calcPriceForAll(order.items);
   }
 
   updateSizeForProductIn(order: Order, product: Product, size: ISize): Order {
