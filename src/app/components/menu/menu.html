@@ -1,5 +1,5 @@
 <div class="l-menu">
-  <div class="title">Обед на {{ vm.menu.date }}</div>
+  <div class="title">Меню на {{ vm.menu.date | lDate }}</div>
   <div class="products">
     <l-product
       ng-repeat="product in vm.menu.products"

@@ -1,6 +1,6 @@
-// import {assign} from '../assign';
 import {Product} from '../../components/product/product.service';
 import {Menu} from '../../components/menu/menu.service';
+import * as moment from 'moment';
 
 export interface IRes {
   data: any[];
@@ -79,27 +79,27 @@ export class WeekMenuService {
     return this.$q.resolve([
       {
         id: 1,
-        date: '2016-02-14',
+        date: moment.utc('2016-02-15'),
         products: products
       },
       {
         id: 2,
-        date: '2016-02-15',
+        date: moment.utc('2016-02-16'),
         products: products
       },
       {
         id: 3,
-        date: '2016-02-16',
+        date: moment.utc('2016-02-17'),
         products: products
       },
       {
         id: 4,
-        date: '2016-02-17',
+        date: moment.utc('2016-02-18'),
         products: products
       },
       {
         id: 5,
-        date: '2016-02-18',
+        date: moment.utc('2016-02-19'),
         products: products
       }
     ]);

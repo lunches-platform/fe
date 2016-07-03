@@ -1,28 +1,22 @@
 import {Product} from '../components/product/product.service';
 import {ISize} from '../components/size-selector/size-selector.component';
 import {cloneDeep, find} from 'lodash';
+import {Moment} from 'moment';
 
 export class LineItem {
   constructor(
     public product: Product,
     public size: ISize,
     public quantity: number,
-    public date: string
+    public date: Moment
   ) {
   }
 }
 
 export class Order {
-  id: string;
-  date: string;
   items: LineItem[] = [];
   customer: string;
   address: string;
-
-  constructor() {
-    // todo: get current date
-    this.date = '2015-04-12 14:42:73';
-  }
 }
 
 export class OrderService {
@@ -30,7 +24,7 @@ export class OrderService {
     'ngInject';
   }
 
-  addProductTo(existingOrder: Order, date: string, productToBeAdded: Product, size: ISize, quantity: number): Order {
+  addProductTo(existingOrder: Order, date: Moment, productToBeAdded: Product, size: ISize, quantity: number): Order {
     let order = cloneDeep(existingOrder);
 
     order.items.push(new LineItem(productToBeAdded, size, quantity, date));
@@ -38,7 +32,7 @@ export class OrderService {
     return order;
   }
 
-  removeProductFrom(existingOrder: Order, date: string, productToBeRemoved: Product): Order {
+  removeProductFrom(existingOrder: Order, date: Moment, productToBeRemoved: Product): Order {
     let order = cloneDeep(existingOrder);
 
     let lineItem = this.findLineItemFor(productToBeRemoved, order, date);
@@ -64,7 +58,7 @@ export class OrderService {
     return order;
   }
 
-  findLineItemFor(product: Product, order: Order, date: string): LineItem {
+  findLineItemFor(product: Product, order: Order, date: Moment): LineItem {
     let items = this.findLineItemsFor(date, order);
 
     return find(items, item => {
@@ -73,13 +67,13 @@ export class OrderService {
 
   }
 
-  findLineItemsFor(date: string, order: Order): LineItem[] {
+  findLineItemsFor(date: Moment, order: Order): LineItem[] {
     return order.items.filter(item => {
-      return item.date === date;
+      return item.date.isSame(date, 'day');
     });
   }
 
-  calcPriceForDate(date: string, order: Order): number {
+  calcPriceForDate(date: Moment, order: Order): number {
     return this.calcPriceForLineItems(this.findLineItemsFor(date, order));
   }
 
@@ -121,7 +115,7 @@ export class OrderService {
         product_id: item.product.id,
         size: item.size.id,
         quantity: item.quantity,
-        date: item.date
+        date: item.date.format()
       };
     });
 

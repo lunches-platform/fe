@@ -16,14 +16,18 @@ import {MenuService} from './app/components/menu/menu.service';
 import {ProductService} from './app/components/product/product.service';
 import {OrderService} from './app/models/order.service';
 
+import {DateFilter} from './app/filters/date.filter';
+
 import 'angular-ui-router';
 import routesConfig from './routes';
+import localeConfig from './config';
 
 import './index.scss';
 
 angular
   .module('app', ['ui.router'])
   .config(routesConfig)
+  .config(localeConfig)
 
   .component('lWeekMenu', WeekMenuComponent)
   .component('lMenu', MenuComponent)
@@ -37,4 +41,6 @@ angular
   .service('lMenuService', MenuService)
   .service('lProductService', ProductService)
   .service('lOrderService', OrderService)
+
+  .filter('lDate', DateFilter)
   ;

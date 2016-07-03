@@ -1,14 +1,15 @@
-// import {assign} from '../assign';
+import {IQService} from 'angular';
 import {Product} from '../product/product.service';
+import {Moment} from 'moment';
 
 export class Menu {
   id: number;
-  date: string;
+  date: Moment;
   products: Product[];
 }
 
 export class MenuService {
-  constructor(private $q: ng.IQService) {
+  constructor(private $q: IQService) {
     'ngInject';
   }
 
