@@ -19,13 +19,15 @@ import {OrderFormService} from './app/components/menu/order.form';
 import {DateFilter} from './app/filters/date.filter';
 
 import 'angular-ui-router';
+import 'angular-material';
+import 'angular-material/angular-material.css';
 import routesConfig from './routes';
 import localeConfig from './config';
 
 import './index.scss';
 
 angular
-  .module('app', ['ui.router'])
+  .module('app', ['ui.router', 'ngMaterial'])
   .config(routesConfig)
   .config(localeConfig)
 
