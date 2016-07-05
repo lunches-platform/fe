@@ -1,6 +1,7 @@
 import {Order, OrderService} from '../models/order.service';
 import {cloneDeep} from 'lodash';
 import {IBasketState} from '../../routes';
+import {IScope} from 'angular';
 
 export class BasketController {
   // input bindings
@@ -12,7 +13,7 @@ export class BasketController {
   customer: string;
   address: string;
 
-  constructor(private $state: IBasketState, private $scope: ng.IScope, private lOrderService: OrderService) {
+  constructor(private $state: IBasketState, private $scope: IScope, private lOrderService: OrderService) {
     'ngInject';
 
     if (!this.isStateValid()) {

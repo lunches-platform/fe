@@ -1,7 +1,7 @@
 import {Product} from '../../components/line-item/line-item.service';
 import {Menu} from '../../components/menu/menu.service';
 import * as moment from 'moment';
-import {IQService, IHttpService} from 'angular';
+import {IQService, IHttpService, IPromise} from 'angular';
 
 export interface IRes {
   data: any[];
@@ -14,7 +14,7 @@ export class WeekMenuService {
     'ngInject';
   }
 
-  // // fetchAll(): ng.IPromise<Menu[]> {
+  // // fetchAll(): IPromise<Menu[]> {
   // fetchAll() {
   //   const url = 'http://dinners/api/menus';
   //   return this.$http.get(url)
@@ -41,7 +41,7 @@ export class WeekMenuService {
   //       ;
   // }
 
-  fetchAll(): ng.IPromise<Menu[]> {
+  fetchAll(): IPromise<Menu[]> {
     const productsFixture = [
       {
         id: 1,

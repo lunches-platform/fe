@@ -1,4 +1,5 @@
 import {cloneDeep} from 'lodash';
+import {IScope} from 'angular';
 
 // todo: add types
 class SelectorController {
@@ -7,7 +8,7 @@ class SelectorController {
   items: any[];
   onSelected: any;
 
-  constructor(private $scope: ng.IScope) {
+  constructor(private $scope: IScope) {
     'ngInject';
 
     this.initSelected();
