@@ -5,12 +5,12 @@
     </md-checkbox>
   </div>
   <div class="details">
-    <span class="weight" ng-if="vm.lineItem.checked">{{ vm.calcWeight() }}гр</span> <span class="ingredients">{{ vm.lineItem.product.ingredients.join(', ') }}</span>
+    <span class="md-caption">{{ vm.calcWeight() }}гр</span> <span class="md-caption">{{ vm.lineItem.product.ingredients.join(', ') }}</span>
   </div>
   <div class="size">
-    <l-size-selector ng-if="vm.lineItem.checked" selected-size="vm.lineItem.size" on-size-selected="vm.onSizeSelected(size)" />
+    <l-size-selector ng-if="vm.checked" selected-size="vm.lineItem.size" on-size-selected="vm.onSizeSelected(size)" />
   </div>
   <div class="quantity">
-    <l-quantity-selector ng-if="vm.lineItem.checked" on-quantity-changed="vm.onQuantityChanged(quantity)" />
+    <l-quantity-selector ng-if="vm.checked" on-quantity-changed="vm.onQuantityChanged(quantity)" />
   </div>
 </div>
