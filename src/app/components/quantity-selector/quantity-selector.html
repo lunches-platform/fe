@@ -1,5 +1,5 @@
-<div class="l-quantity-selector-component">
+<div class="l-quantity-selector-component" layout="row">
   <md-button class="md-icon-button" ng-click="vm.decreaseQuantity()"><md-icon aria-label="decrease quantity">remove</md-icon></md-button>
-  <span>{{ vm.quantity }}</span>
+  <span class="md-subhead quantity-label">{{ vm.quantity }}</span>
   <md-button class="md-icon-button" ng-click="vm.increaseQuantity()"><md-icon aria-label="increase quantity">add</md-icon></md-button>
 </div>
