@@ -1,11 +1,11 @@
-<div class="l-menu">
-  <h2 class="md-display-1 title">Меню на {{ vm.menu.date | lDate }}</h2>
-  <div class="products">
+<div layout="column" class="l-menu">
+  <h2 flex class="md-headline title">{{ vm.menu.date | lDate }}</h2>
+  <div flex class="products">
     <l-line-item ng-repeat="item in vm.orderForm.items" line-item="item" on-changed="vm.onItemChanged(item)" />
   </div>
-  <div layout="row">
+  <div flex layout="row">
     <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()">Добавить в корзину</md-button>
     <span class="md-headline price-label">{{ vm.calcPrice() }} грн</span>
   </div>
-  <hr />
+  <md-divider />
 </div>

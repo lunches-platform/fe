@@ -1,4 +1,4 @@
-<div class="l-week-menu">
-  <l-menu ng-repeat="menu in vm.menus" menu="menu" order="vm.order" on-order-changed="vm.onOrderChanged(order)"></l-menu>
-  <button ng-click="vm.goToBasket()">В корзину</button>
+<div class="l-week-menu" layout="column" layout-padding>
+  <l-menu flex ng-repeat="menu in vm.menus" menu="menu" order="vm.order" on-order-changed="vm.onOrderChanged(order)"></l-menu>
+  <md-button class="md-raised md-warn" ng-click="vm.goToBasket()">В корзину</md-button>
 </div>

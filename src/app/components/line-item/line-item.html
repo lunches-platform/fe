@@ -1,16 +1,13 @@
-<div class="l-line-item">
-  <div class="title">
+<div layout="row" class="l-line-item">
+  <div flex="noshrink" layout="column">
     <md-checkbox ng-model="vm.checked" aria-label="{{ vm.lineItem.product.name }}">
       {{ vm.lineItem.product.name }}
     </md-checkbox>
+    <div flex class="md-caption">{{ vm.calcWeight() }}гр</span> <span class="md-caption">{{ vm.lineItem.product.ingredients.join(', ') }}</div>
   </div>
-  <div class="details">
-    <span class="md-caption">{{ vm.calcWeight() }}гр</span> <span class="md-caption">{{ vm.lineItem.product.ingredients.join(', ') }}</span>
-  </div>
-  <div class="size">
-    <l-size-selector ng-if="vm.checked" selected-size="vm.lineItem.size" on-size-selected="vm.onSizeSelected(size)" />
-  </div>
-  <div class="quantity">
-    <l-quantity-selector ng-if="vm.checked" on-quantity-changed="vm.onQuantityChanged(quantity)" />
+  <div flex></div>
+  <div flex="noshrink" layout="row">
+    <l-quantity-selector flex ng-if="vm.checked" on-quantity-changed="vm.onQuantityChanged(quantity)"></l-quantity-selector>
+    <l-size-selector flex ng-if="vm.checked" selected-size="vm.lineItem.size" on-size-selected="vm.onSizeSelected(size)"></l-size-selector>
   </div>
 </div>
