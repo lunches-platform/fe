@@ -1,8 +1,13 @@
-/* todo: move styles to selector component: DEZ-766 */
+/* todo: move styles to <l-quantity-selector>: DEZ-766 */
 .l-quantity-selector-component {
   .quantity-label {
     margin: 8px 0;
   }
 }
+
+/* todo: move styles to <l-menu>: DEZ-767 */
+.l-menu {
+  .price-label {
+    margin: 6px 8px;
   }
 }

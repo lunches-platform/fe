@@ -1,9 +1,11 @@
 <div class="l-menu">
-  <div class="title">Меню на {{ vm.menu.date | lDate }}</div>
+  <h2 class="md-display-1 title">Меню на {{ vm.menu.date | lDate }}</h2>
   <div class="products">
     <l-line-item ng-repeat="item in vm.orderForm.items" line-item="item" on-changed="vm.onItemChanged(item)" />
   </div>
-  <button class="order-button" ng-click="vm.addToOrder()">Беру</button>
-  <span class="price">{{ vm.calcPrice() }} грн</span>
+  <div layout="row">
+    <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()">Добавить в корзину</md-button>
+    <span class="md-headline price-label">{{ vm.calcPrice() }} грн</span>
+  </div>
   <hr />
 </div>
