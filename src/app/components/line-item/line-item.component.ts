@@ -1,6 +1,7 @@
 import {LineItem} from './line-item.service';
 import {LineItemService} from './line-item.service';
 import {ISize} from '../size-selector/size-selector.component';
+import {IScope} from 'angular';
 import {cloneDeep} from 'lodash';
 
 interface ITriggerChangeEvent {
@@ -14,11 +15,15 @@ export class LineItemController {
   // output bindings
   triggerChangeEvent: ITriggerChangeEvent;
 
+  // internal bindings
+  checked: boolean;
+
   private defaultSize: ISize;
 
-  constructor(private lLineItemService: LineItemService) {
+  constructor(private $scope: IScope, private lLineItemService: LineItemService) {
     'ngInject';
 
+    this.initCheckedState();
     this.initLineItem();
     this.initSelectedSize();
   }
@@ -27,7 +32,8 @@ export class LineItemController {
     return this.lLineItemService.calcWeightFor(this.lineItem);
   }
 
-  onToggled(): void {
+  onToggled(checked: boolean): void {
+    this.lineItem = this.lLineItemService.setChecked(this.lineItem, checked);
     this.triggerChangeEvent({item: this.lineItem});
   }
 
@@ -54,6 +60,11 @@ export class LineItemController {
     };
 
     this.lineItem.size = this.lineItem.size || cloneDeep(this.defaultSize);
+  }
+
+  private initCheckedState() {
+    this.checked = this.lineItem.checked;
+    this.$scope.$watch(() => this.checked, this.onToggled.bind(this));
   }
 }
 

@@ -1,6 +1,6 @@
 import {ISize} from '../size-selector/size-selector.component';
 import {Moment} from 'moment';
-import {uniqueId} from 'lodash';
+import {uniqueId, clone} from 'lodash';
 
 export class Product {
   id: number;
@@ -44,6 +44,12 @@ export class LineItemService {
     return items.reduce((sum, item) => {
       return sum + this.calcPriceFor(item);
     }, 0);
+  }
+
+  setChecked(_item: LineItem, checked: boolean) {
+    let item = clone(_item);
+    item.checked = checked;
+    return item;
   }
 }
 

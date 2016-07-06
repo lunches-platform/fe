@@ -1,7 +1,8 @@
 <div class="l-line-item">
   <div class="title">
-    <span class="checkbox"><input type="checkbox" ng-model="vm.lineItem.checked" ng-change="vm.onToggled()"></span>
-    <span class="text">{{ vm.lineItem.product.name }}</span>
+    <md-checkbox ng-model="vm.checked" aria-label="{{ vm.lineItem.product.name }}">
+      {{ vm.lineItem.product.name }}
+    </md-checkbox>
   </div>
   <div class="details">
     <span class="weight" ng-if="vm.lineItem.checked">{{ vm.calcWeight() }}гр</span> <span class="ingredients">{{ vm.lineItem.product.ingredients.join(', ') }}</span>
