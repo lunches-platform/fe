@@ -38,6 +38,11 @@ module.exports = {
           'ng-annotate',
           'ts'
         ]
+      },
+      {
+        test: /\.html$/,
+        exclude: /index\.html$/,
+        loader: 'ng-cache?prefix=[dir]/[dir]'
       }
     ]
   },
