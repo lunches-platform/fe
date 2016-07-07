@@ -3,17 +3,25 @@ import {cloneDeep} from 'lodash';
 import {IBasketState} from '../../routes';
 import {IScope} from 'angular';
 
+type IToastService = angular.material.IToastService;
+
 export class BasketController {
   // input bindings
   order: Order;
-
-  // output bindings
 
   // internal bindings
   customer: string;
   address: string;
 
-  constructor(private $state: IBasketState, private $scope: IScope, private lOrderService: OrderService) {
+  private toastPosition = 'top right';
+  private toastHideDelay = 5000;
+
+  constructor(
+    private $state: IBasketState,
+    private $scope: IScope,
+    private $mdToast: IToastService,
+    private lOrderService: OrderService
+  ) {
     'ngInject';
 
     if (!this.isStateValid()) {
@@ -30,7 +38,25 @@ export class BasketController {
   }
 
   makeOrder(): void {
-    this.lOrderService.makeOrder(this.order);
+    this.lOrderService.makeOrder(this.order)
+      .then(res => {
+        this.showToast('Order has been placed!');
+      })
+      .catch(err => {
+        this.showToast('Error! Unable to place order');
+      })
+      .finally(() => {
+        this.$state.go('week-menu');
+      });
+  }
+
+  private showToast(msg: string): void {
+    this.$mdToast.show(
+      this.$mdToast.simple()
+        .textContent(msg)
+        .position(this.toastPosition)
+        .hideDelay(this.toastHideDelay)
+    );
   }
 
   private onCustomerChanged(customer: string) {
@@ -59,7 +85,8 @@ export class BasketController {
 }
 
 export const BasketComponent = {
-  templateUrl: 'app/containers/basket.html',
+  template: require('./basket.html'),
   controller: BasketController,
   controllerAs: 'vm'
 };
+
