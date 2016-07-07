@@ -3,12 +3,15 @@ import {Moment} from 'moment';
 import {uniqueId, clone} from 'lodash';
 
 export class Product {
-  id: number;
-  name: string;
-  ingredients: string[];
-  pricePer100: number;
-  sizeToWeight: ISizeToWeight;
-  type: 'garnish' | 'salad' | 'meat' | 'desert';
+  constructor(
+    public id: number,
+    public name: string,
+    public price: number,
+    public ingredients: string[],
+    public sizeToWeight: ISizeToWeight
+  ) {
+
+  }
 }
 
 export interface ISizeToWeight {
@@ -37,7 +40,7 @@ export class LineItemService {
   }
 
   calcPriceFor(item: LineItem): number {
-    return item.product.pricePer100 / 100 * this.calcWeightFor(item);
+    return item.product.price / 100 * this.calcWeightFor(item);
   }
 
   calcPriceForAll(items: LineItem[]): number {
