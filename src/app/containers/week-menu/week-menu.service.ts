@@ -1,7 +1,7 @@
 import {Product} from '../../components/line-item/line-item.service';
 import {Menu} from '../../components/menu/menu.service';
 import * as moment from 'moment';
-import {IQService, IHttpService, IPromise} from 'angular';
+import {IHttpService, IPromise} from 'angular';
 
 export interface IRes<T> {
   data: T[];
@@ -11,12 +11,12 @@ export interface IRes<T> {
 }
 
 export class WeekMenuService {
-  constructor(private $q: IQService, private $http: IHttpService) {
+  constructor(private $http: IHttpService) {
     'ngInject';
   }
 
-  fetchAll() {
-  // fetchAll(): IPromise<Menu[]> {
+  fetchAll(): IPromise<Menu[]> {
+    // todo: do not hardcode BE URL: DEZ-774
     const url = 'http://api.lunches.com.ua/menus/week/current';
     return this.$http.get(url)
       .then((res: IRes<Menu>) => {

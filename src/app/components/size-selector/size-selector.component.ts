@@ -1,16 +1,29 @@
 import {cloneDeep} from 'lodash';
 
+// todo: replace just with `id: string`. Get the title from translate file: DEZ-773
 export interface ISize {
   id: string;
   title: string;
 }
 
-// todo: add types
+export const SizeSelectorComponent = {
+  template: require('./size-selector.html'),
+  controller: SizeSelectorController,
+  controllerAs: 'vm',
+  bindings: {
+    inputSize: '<selectedSize',
+    triggerSizeEvent: '&onSizeSelected'
+  }
+};
+
 export class SizeSelectorController {
-  // bindings
-  onSizeSelected: any;
+  // input bindings
   inputSize: ISize;
 
+  // output bindings
+  triggerSizeSelectEvent: ITriggerSizeSelectEvent;
+
+  // internal bindings
   selectedSize: ISize;
   sizes: ISize[];
 
@@ -19,15 +32,15 @@ export class SizeSelectorController {
     this.initSizes();
   }
 
-  onSelected(size: ISize) {
-    this.onSizeSelected({size});
+  onSelected(size: ISize): void {
+    this.triggerSizeSelectEvent({size});
   }
 
-  private initSelectedSize() {
+  private initSelectedSize(): void {
     this.selectedSize = cloneDeep(this.inputSize);
   }
 
-  private initSizes() {
+  private initSizes(): void {
     this.sizes = [{
       id: 'small',
       title: 'Small'
@@ -41,13 +54,7 @@ export class SizeSelectorController {
   }
 }
 
-export const SizeSelectorComponent = {
-  templateUrl: 'app/components/size-selector/size-selector.html',
-  controller: SizeSelectorController,
-  controllerAs: 'vm',
-  bindings: {
-    inputSize: '<selectedSize',
-    onSizeSelected: '&'
-  }
-};
+interface ITriggerSizeSelectEvent {
+  (arg: { size: ISize }): void;
+}
 
