@@ -12,7 +12,9 @@ export class Order {
   address: string;
 }
 
+// todo: add types: https://github.com/lunches-platform/fe/issues/17
 export class OrderService {
+
   constructor(private $http: IHttpService, private lLineItemService: LineItemService) {
     'ngInject';
   }
@@ -67,9 +69,9 @@ export class OrderService {
   }
 
   makeOrder(order: Order) {
-    const url = 'http://dinners/api/order';
-    console.log('POST ' + url);
-    console.log(JSON.stringify(this.prepareOrderForApi(order)));
+    const url = 'http://api.lunches.com.ua/orders';
+    const body = this.prepareOrderForApi(order);
+    return this.$http.post(url, body);
   }
 
   private prepareOrderForApi(order: Order) {
