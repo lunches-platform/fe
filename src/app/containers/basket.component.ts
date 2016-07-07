@@ -43,6 +43,7 @@ export class BasketController {
         this.showToast('Order has been placed!');
       })
       .catch(err => {
+        console.error(err);
         this.showToast('Error! Unable to place order');
       })
       .finally(() => {
