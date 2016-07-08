@@ -6,16 +6,6 @@ export interface ISize {
   title: string;
 }
 
-export const SizeSelectorComponent = {
-  template: require('./size-selector.html'),
-  controller: SizeSelectorController,
-  controllerAs: 'vm',
-  bindings: {
-    inputSize: '<selectedSize',
-    triggerSizeEvent: '&onSizeSelected'
-  }
-};
-
 export class SizeSelectorController {
   // input bindings
   inputSize: ISize;
@@ -57,4 +47,14 @@ export class SizeSelectorController {
 interface ITriggerSizeSelectEvent {
   (arg: { size: ISize }): void;
 }
+
+export const SizeSelectorComponent = {
+  template: require('./size-selector.html'),
+  controller: SizeSelectorController,
+  controllerAs: 'vm',
+  bindings: {
+    inputSize: '<selectedSize',
+    triggerSizeSelectEvent: '&onSizeSelected'
+  }
+};
 
