@@ -3,7 +3,7 @@
     <md-checkbox ng-model="vm.checked" aria-label="{{ vm.lineItem.product.name }}">
       {{ vm.lineItem.product.name }}
     </md-checkbox>
-    <div flex class="md-caption">{{ vm.calcWeight() }}гр</span> <span class="md-caption">{{ vm.lineItem.product.ingredients.join(', ') }}</div>
+    <div ng-if="vm.checked" flex class="md-caption">{{ vm.calcWeight() }}гр {{ vm.lineItem.product.ingredients.join(', ') }}</div>
   </div>
   <div flex></div>
   <div flex="30" layout="row">
