@@ -1,17 +1,6 @@
 import {cloneDeep} from 'lodash';
 import {IScope} from 'angular';
 
-export const SelectorComponent = {
-  template: require('./selector.html'),
-  controller: SelectorController,
-  controllerAs: 'vm',
-  bindings: {
-    selected: '<',
-    items: '<',
-    triggerSelectEvent: '&onSelected'
-  }
-};
-
 export class SelectorController {
   // input bindings
   selected: ISelectorItem;
@@ -49,4 +38,15 @@ export interface ISelectorItem {
 interface ITriggerSelectEvent {
   (arg: { item: ISelectorItem }): void;
 }
+
+export const SelectorComponent = {
+  template: require('./selector.html'),
+  controller: SelectorController,
+  controllerAs: 'vm',
+  bindings: {
+    selected: '<',
+    items: '<',
+    triggerSelectEvent: '&onSelected'
+  }
+};
 
