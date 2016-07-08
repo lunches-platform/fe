@@ -16,6 +16,6 @@
       <md-list-item>Transfer to card: 1234-5678-8765-4321 (Ivanov Ivan Ivanovich)</md-list-item>
     </md-list>
   </div>
-  <md-button class="md-raised md-primary" ng-click="vm.makeOrder()">Place order</md-button>
+  <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.totalToPay()">Place order</md-button>
 </div>
 

@@ -24,10 +24,6 @@ export class BasketController {
   ) {
     'ngInject';
 
-    if (!this.isStateValid()) {
-      this.$state.go('week-menu');
-    }
-
     this.initOrder();
     this.initCustomer();
     this.initAddress();
@@ -69,7 +65,11 @@ export class BasketController {
   }
 
   private initOrder(): void {
-    this.order = cloneDeep(this.$state.params.order);
+    if (this.isOrderExist()) {
+      this.order = cloneDeep(this.$state.params.order);
+    } else {
+      this.order = new Order();
+    }
   }
 
   private initCustomer() {
@@ -80,7 +80,7 @@ export class BasketController {
     this.$scope.$watch(() => this.address, this.onAddressChanged.bind(this));
   }
 
-  private isStateValid() {
+  private isOrderExist() {
     return this.$state.params.order;
   }
 }
