@@ -1,11 +1,20 @@
-<div layout="column" class="l-menu">
-  <h2 flex class="md-headline title">{{ vm.menu.date | lDate }}</h2>
-  <div flex class="products">
-    <l-line-item ng-repeat="item in vm.orderForm.items" line-item="item" on-changed="vm.onItemChanged(item)" />
+<div layout="column" class="l-menu" >
+
+  <div ng-if="!vm.isLineItemsAddedToBasket()">
+    <h2 flex class="md-headline title">{{ vm.menu.date | lDate }}</h2>
+    <div flex class="products">
+      <l-line-item ng-repeat="item in vm.orderForm.items" line-item="item" on-changed="vm.onItemChanged(item)" />
+    </div>
+    <div flex layout="row">
+      <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()">Добавить в корзину</md-button>
+      <span class="md-headline price-label">{{ vm.calcPrice() }} грн</span>
+    </div>
   </div>
-  <div flex layout="row">
-    <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()">Добавить в корзину</md-button>
-    <span class="md-headline price-label">{{ vm.calcPrice() }} грн</span>
+
+  <div ng-if="vm.isLineItemsAddedToBasket()" layout="row" layout-align="center center">
+    <div class="md-body1">Line items were added to basket. Want more? <md-button class="md-raised" ng-click="vm.orderAgain()">Order again</md-button></div>
   </div>
+
   <md-divider />
 </div>
+

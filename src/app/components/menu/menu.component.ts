@@ -19,6 +19,8 @@ export class MenuController {
   // internal bindings
   orderForm: OrderForm;
 
+  private lineItemsAddedToBasket = false;
+
   constructor(
     private lOrderService: OrderService,
     private lOrderFormService: OrderFormService,
@@ -46,10 +48,18 @@ export class MenuController {
       this.order
     );
 
-    // reset form
-    this.initOrderForm();
+    this.lineItemsAddedToBasket = true;
 
     this.triggerOrderChange({order: this.order});
+  }
+
+  isLineItemsAddedToBasket(): boolean {
+    return this.lineItemsAddedToBasket;
+  }
+
+  orderAgain() {
+    this.initOrderForm();
+    this.lineItemsAddedToBasket = false;
   }
 
   private initOrder() {
