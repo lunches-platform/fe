@@ -6,6 +6,7 @@ import {BasketComponent} from './app/containers/basket.component';
 
 import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
 import {MenuComponent} from './app/components/menu/menu.component';
+import {ViewMenuComponent} from './app/components/view-menu/view-menu.component';
 import {LineItemComponent} from './app/components/line-item/line-item.component';
 import {SelectorComponent} from './app/components/selector/selector.component';
 import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
@@ -33,6 +34,7 @@ angular
 
   .component('lWeekMenu', WeekMenuComponent)
   .component('lMenu', MenuComponent)
+  .component('lViewMenu', ViewMenuComponent)
   .component('lLineItem', LineItemComponent)
   .component('lSelector', SelectorComponent)
   .component('lSizeSelector', SizeSelectorComponent)

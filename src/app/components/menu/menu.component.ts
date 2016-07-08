@@ -88,7 +88,7 @@ export class MenuController {
 }
 
 export const MenuComponent = {
-  templateUrl: 'app/components/menu/menu.html',
+  template: require('./menu.html'),
   controller: MenuController,
   controllerAs: 'vm',
   bindings: {
