@@ -32,9 +32,6 @@ export class SizeSelectorController {
 
   private initSizes(): void {
     this.sizes = [{
-      id: 'small',
-      title: 'Small'
-    }, {
       id: 'medium',
       title: 'Middle'
     }, {
