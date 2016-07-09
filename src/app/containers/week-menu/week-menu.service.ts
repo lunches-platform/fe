@@ -15,14 +15,29 @@ export class WeekMenuService {
     'ngInject';
   }
 
-  fetchAll(): IPromise<Menu[]> {
+  fetchPastDaysMenuForCurrentWeek(): IPromise<Menu[]> {
     // todo: do not hardcode BE URL: DEZ-774
     const url = 'http://api.lunches.com.ua/menus/week/current';
     return this.$http.get(url)
       .then((res: IRes<Menu>) => {
-        return res.data.map(menu => {
-          return new Menu(menu.id, moment.utc(menu.date), this.createProductsListFrom(menu.products));
-        });
+        return res.data
+          .filter(menu => moment.utc(menu.date).isBefore(moment()))
+          .map(menu => {
+            return new Menu(menu.id, moment.utc(menu.date), this.createProductsListFrom(menu.products));
+          });
+      });
+  }
+
+  fetchActualMenuForCurrentWeek(): IPromise<Menu[]> {
+    // todo: do not hardcode BE URL: DEZ-774
+    const url = 'http://api.lunches.com.ua/menus/week/current';
+    return this.$http.get(url)
+      .then((res: IRes<Menu>) => {
+        return res.data
+          .filter(menu => moment.utc(menu.date).isAfter(moment()))
+          .map(menu => {
+            return new Menu(menu.id, moment.utc(menu.date), this.createProductsListFrom(menu.products));
+          });
       });
   }
 

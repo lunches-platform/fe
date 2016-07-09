@@ -42,7 +42,7 @@ export class QuantitySelectorController {
 }
 
 export const QuantitySelectorComponent = {
-  templateUrl: 'app/components/quantity-selector/quantity-selector.html',
+  template: require('./quantity-selector.html'),
   controller: QuantitySelectorController,
   controllerAs: 'vm',
   bindings: {

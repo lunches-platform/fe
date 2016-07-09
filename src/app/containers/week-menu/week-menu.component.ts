@@ -16,7 +16,10 @@ export class WeekMenuController {
   triggerOrderChange: ITriggerOrderChangeEvent;
 
   // internal bindings
-  menus: Menu[];
+  actualMenu: Menu[] = [];
+  pastDaysMenu: Menu[] = [];
+
+  private pastDaysMenuHidden = true;
 
   constructor(private $state: IWeekMenuState, private lWeekMenuService: WeekMenuService) {
     'ngInject';
@@ -33,12 +36,42 @@ export class WeekMenuController {
     this.$state.go('basket', {order: this.order});
   }
 
+  isPastDaysMenuHidden(): boolean {
+    return this.pastDaysMenuHidden;
+  }
+
+  isPastDaysMenuShown(): boolean {
+    return !this.pastDaysMenuHidden;
+  }
+
+  showPastDaysMenu(): void {
+    this.pastDaysMenuHidden = true;
+  }
+
+  hidePastDaysMenu(): void {
+    this.pastDaysMenuHidden = false;
+  }
+
+  hasPastDaysMenu(): boolean {
+    return Boolean(this.pastDaysMenu.length);
+  }
+
+  togglePastDaysMenu(): void {
+    this.pastDaysMenuHidden = !this.pastDaysMenuHidden;
+  }
+
   private fetchData() {
-    this.lWeekMenuService.fetchAll()
+    this.lWeekMenuService.fetchPastDaysMenuForCurrentWeek()
       .then((menus: Menu[]) => {
-        this.menus = menus;
-      })
-    ;
+        this.pastDaysMenu = menus;
+        console.log('pastDaysMenu', this.pastDaysMenu);
+      });
+
+    this.lWeekMenuService.fetchActualMenuForCurrentWeek()
+      .then((menus: Menu[]) => {
+        this.actualMenu = menus;
+        console.log('actualMenu', this.actualMenu);
+      });
   }
 
   private initOrder() {
@@ -47,7 +80,7 @@ export class WeekMenuController {
 }
 
 export const WeekMenuComponent = {
-  templateUrl: 'app/containers/week-menu/week-menu.html',
+  template: require('./week-menu.html'),
   controller: WeekMenuController,
   controllerAs: 'vm'
 };

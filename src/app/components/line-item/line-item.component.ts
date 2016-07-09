@@ -1,5 +1,4 @@
-import {LineItem} from './line-item.service';
-import {LineItemService} from './line-item.service';
+import {LineItem, LineItemService} from './line-item.service';
 import {ISize} from '../size-selector/size-selector.component';
 import {IScope} from 'angular';
 import {cloneDeep} from 'lodash';
@@ -69,7 +68,7 @@ export class LineItemController {
 }
 
 export const LineItemComponent = {
-  templateUrl: 'app/components/line-item/line-item.html',
+  template: require('./line-item.html'),
   controller: LineItemController,
   controllerAs: 'vm',
   bindings: {
