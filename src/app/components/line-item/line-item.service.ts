@@ -15,7 +15,6 @@ export class Product {
 }
 
 export interface ISizeToWeight {
-  small: number;
   medium: number;
   big: number;
 }

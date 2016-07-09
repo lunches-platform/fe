@@ -54,8 +54,8 @@ export class LineItemController {
 
   private initSelectedSize(): void {
     this.defaultSize = {
-      id: 'small',
-      title: 'Small'
+      id: 'medium',
+      title: 'Medium'
     };
 
     this.lineItem.size = this.lineItem.size || cloneDeep(this.defaultSize);
