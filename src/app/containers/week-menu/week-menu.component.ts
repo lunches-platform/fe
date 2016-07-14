@@ -64,13 +64,11 @@ export class WeekMenuController {
     this.lWeekMenuService.fetchPastDaysMenuForCurrentWeek()
       .then((menus: Menu[]) => {
         this.pastDaysMenu = menus;
-        console.log('pastDaysMenu', this.pastDaysMenu);
       });
 
     this.lWeekMenuService.fetchActualMenuForCurrentWeek()
       .then((menus: Menu[]) => {
         this.actualMenu = menus;
-        console.log('actualMenu', this.actualMenu);
       });
   }
 

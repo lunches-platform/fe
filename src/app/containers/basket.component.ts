@@ -12,6 +12,8 @@ export class BasketController {
   // internal bindings
   customer: string;
   address: string;
+  cardNumber: string;
+  cardHolder: string;
 
   private toastPosition = 'top right';
   private toastHideDelay = 5000;
@@ -27,6 +29,7 @@ export class BasketController {
     this.initOrder();
     this.initCustomer();
     this.initAddress();
+    this.initCardInfo();
   }
 
   totalToPay(): number {
@@ -45,6 +48,14 @@ export class BasketController {
       .finally(() => {
         this.$state.go('week-menu');
       });
+  }
+
+  isOrderValid(): boolean {
+    return this.lOrderService.isValid(this.order);
+  }
+
+  goToWeekMenu() {
+    this.$state.go('week-menu');
   }
 
   private showToast(msg: string): void {
@@ -72,16 +83,21 @@ export class BasketController {
     }
   }
 
-  private initCustomer() {
+  private initCustomer(): void {
     this.$scope.$watch(() => this.customer, this.onCustomerChanged.bind(this));
   }
 
-  private initAddress() {
+  private initAddress(): void {
     this.$scope.$watch(() => this.address, this.onAddressChanged.bind(this));
   }
 
-  private isOrderExist() {
-    return this.$state.params.order;
+  private isOrderExist(): boolean {
+    return Boolean(this.$state.params.order);
+  }
+
+  private initCardInfo(): void {
+    this.cardHolder = 'Иванов Иван Иванович';
+    this.cardNumber = '1234-5678-8765-4321';
   }
 }
 

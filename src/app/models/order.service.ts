@@ -68,10 +68,19 @@ export class OrderService {
     return this.updateLineItemProperty(order, product, 'quantity', quantity);
   }
 
+  // todo: add return type
   makeOrder(order: Order) {
     const url = 'http://api.cogniance.lunches.com.ua/orders';
     const body = this.prepareOrderForApi(order);
     return this.$http.post(url, body);
+  }
+
+  isValid(order: Order): boolean {
+    return Boolean(
+      this.calcPriceForOrder(order) &&
+      order.address &&
+      order.customer
+    );
   }
 
   private prepareOrderForApi(order: Order) {

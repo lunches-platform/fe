@@ -1,21 +1,22 @@
 <div layout="column" layout-padding>
+  <md-button class="md-raised" ng-click="vm.goToWeekMenu()">Назад в меню</md-button>
   <md-input-container flex class="md-icon-float md-block">
-    <label>Full Name</label>
+    <label>Имя</label>
     <input ng-model="vm.customer" type="text">
   </md-input-container>
 
   <md-input-container flex class="md-icon-float md-block">
-    <label>Address</label>
+    <label>Этаж</label>
     <input ng-model="vm.address" type="text">
   </md-input-container>
-  <div flex class="md-title">Total to pay: {{ vm.totalToPay() }} грн</div>
+  <div flex class="md-title">Всего к оплате: {{ vm.totalToPay() }} грн</div>
   <div flex>
-    <h3 class="md-title">Payment</h3>
+    <h3 class="md-title">Оплата</h3>
     <md-list>
-      <md-list-item>Leave the money on the reception OR</md-list-item>
-      <md-list-item>Transfer to card: 1234-5678-8765-4321 (Ivanov Ivan Ivanovich)</md-list-item>
+      <md-list-item>Занести деньги на ресепшн ИЛИ</md-list-item>
+      <md-list-item>Переведите на карту: {{ vm.cardNumber }} ({{ vm.cardHolder }})</md-list-item>
     </md-list>
   </div>
-  <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.totalToPay()">Place order</md-button>
+  <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrderValid()">Place order</md-button>
 </div>
 
