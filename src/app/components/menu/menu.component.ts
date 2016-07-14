@@ -4,6 +4,7 @@ import {OrderForm, OrderFormService} from './order.form';
 import {LineItem, LineItemService} from '../line-item/line-item.service';
 import {cloneDeep, filter} from 'lodash';
 import {IScope} from 'angular';
+import {IWeekMenuState} from '../../../routes';
 
 interface ITriggerOrderChangeEvent {
   (arg: { order: Order }): void;
@@ -25,6 +26,7 @@ export class MenuController {
 
   constructor(
     private $scope: IScope,
+    private $state: IWeekMenuState,
     private lOrderService: OrderService,
     private lOrderFormService: OrderFormService,
     private lLineItemService: LineItemService
@@ -64,6 +66,10 @@ export class MenuController {
   orderAgain() {
     this.initOrderForm();
     this.lineItemsAddedToBasket = false;
+  }
+
+  goToBasket() {
+    this.$state.go('basket', {order: this.order});
   }
 
   private initOrder() {

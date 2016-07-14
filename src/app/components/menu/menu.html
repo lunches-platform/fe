@@ -11,7 +11,10 @@
   </div>
 
   <div ng-if="vm.isLineItemsAddedToBasket()" layout="row" layout-align="center center">
-    <div class="md-body1">Line items were added to basket. Want more? <md-button class="md-raised" ng-click="vm.orderAgain()">Order again</md-button></div>
+    <div class="md-body1">Обед добавлен в корзину.
+      <md-button class="md-raised" ng-click="vm.orderAgain()">Заказать еще</md-button>
+      <md-button class="md-raised md-primary" ng-click="vm.goToBasket()">В корзину</md-button>
+    </div>
   </div>
 
   <md-divider />
