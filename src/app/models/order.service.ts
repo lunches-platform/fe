@@ -69,7 +69,7 @@ export class OrderService {
   }
 
   makeOrder(order: Order) {
-    const url = 'http://api.lunches.com.ua/orders';
+    const url = 'http://api.cogniance.lunches.com.ua/orders';
     const body = this.prepareOrderForApi(order);
     return this.$http.post(url, body);
   }

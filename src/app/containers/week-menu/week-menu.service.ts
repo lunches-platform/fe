@@ -17,7 +17,7 @@ export class WeekMenuService {
 
   fetchPastDaysMenuForCurrentWeek(): IPromise<Menu[]> {
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.lunches.com.ua/menus/week/current';
+    const url = 'http://api.cogniance.lunches.com.ua/menus/week/current';
     return this.$http.get(url)
       .then((res: IRes<Menu>) => {
         return res.data
@@ -30,7 +30,7 @@ export class WeekMenuService {
 
   fetchActualMenuForCurrentWeek(): IPromise<Menu[]> {
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.lunches.com.ua/menus/week/current';
+    const url = 'http://api.cogniance.lunches.com.ua/menus/week/current';
     return this.$http.get(url)
       .then((res: IRes<Menu>) => {
         return res.data
