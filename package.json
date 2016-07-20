@@ -3,6 +3,7 @@
     "angular": "^1.5.0",
     "angular-animate": "^1.5.7",
     "angular-aria": "^1.5.7",
+    "angular-local-storage": "^0.2.7",
     "angular-material": "^1.1.0-rc.5",
     "angular-ui-router": "^0.3.1",
     "lodash": "^4.13.1",

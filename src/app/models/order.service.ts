@@ -2,20 +2,27 @@
 import {Product, LineItem, LineItemService} from '../components/line-item/line-item.service';
 import {ISize} from '../components/size-selector/size-selector.component';
 
-import {cloneDeep, find} from 'lodash';
-import {IHttpService} from 'angular';
+import {cloneDeep, find, reduce, every, map} from 'lodash';
+import {IHttpService, IQService} from 'angular';
 import {Moment} from 'moment';
+import * as moment from 'moment';
 
 export class Order {
   items: LineItem[] = [];
   customer: string;
   address: string;
+
+  constructor(public shipmentDate: Moment) {}
 }
 
 // todo: add types: https://github.com/lunches-platform/fe/issues/17
 export class OrderService {
 
-  constructor(private $http: IHttpService, private lLineItemService: LineItemService) {
+  constructor(
+    private $http: IHttpService,
+    private $q: IQService,
+    private lLineItemService: LineItemService
+  ) {
     'ngInject';
   }
 
@@ -41,22 +48,7 @@ export class OrderService {
     return order;
   }
 
-  findLineItemFor(product: Product, order: Order, date: Moment): LineItem {
-    let items = this.findLineItemsFor(date, order);
-
-    return find(items, item => {
-      return item.product.id === product.id;
-    });
-
-  }
-
-  findLineItemsFor(date: Moment, order: Order): LineItem[] {
-    return order.items.filter(item => {
-      return item.date.isSame(date, 'day');
-    });
-  }
-
-  calcPriceForOrder(order: Order): number {
+  calcPriceFor(order: Order): number {
     return this.lLineItemService.calcPriceForAll(order.items);
   }
 
@@ -68,25 +60,65 @@ export class OrderService {
     return this.updateLineItemProperty(order, product, 'quantity', quantity);
   }
 
-  makeOrder(order: Order) {
+  // todo: add return type
+  placeOrders(orders: Order[]) {
     const url = 'http://api.cogniance.lunches.com.ua/orders';
-    const body = this.prepareOrderForApi(order);
-    return this.$http.post(url, body);
+    const allOrdersPlacedPromise = map(orders, order => {
+      return this.$http.post(url, this.prepareOrderForApi(order));
+    });
+
+    return this.$q.all(allOrdersPlacedPromise);
+  }
+
+  isValid(order: Order): boolean {
+    return Boolean(
+      this.calcPriceFor(order) &&
+      order.address &&
+      order.customer &&
+      order.shipmentDate &&
+      order.customer
+    );
+  }
+
+  isValidAll(orders: Order[]) {
+    return every(orders, order => this.isValid(order));
+  }
+
+  calcPriceForAll(orders: Order[]): number {
+    return reduce(orders, (sum, order) => {
+      return sum + this.calcPriceFor(order);
+    }, 0);
+  }
+
+  setCustomerForAll(orders: Order[], customer: string) {
+    return map(orders, order => this.setCustomer(customer, order));
+  }
+
+  setAddressForAll(orders: Order[], address: string) {
+    return map(orders, order => this.setAddress(address, order));
+  }
+
+  createOrderFrom(orderJson) {
+    const order = new Order(moment.utc(orderJson.shipmentDate));
+    order.customer = orderJson.customer;
+    order.address = orderJson.address;
+    order.items = map(orderJson.items, item => this.lLineItemService.createItemFrom(item));
+    return order;
   }
 
   private prepareOrderForApi(order: Order) {
     let items = order.items.map(item => {
       return {
-        product_id: item.product.id,
+        productId: item.product.id,
         size: item.size.id,
-        quantity: item.quantity,
-        date: item.date.format()
+        quantity: item.quantity
       };
     });
 
     return {
       customer: order.customer,
       address: order.address,
+      shipmentDate: order.shipmentDate.format(),
       items: items
     };
   }

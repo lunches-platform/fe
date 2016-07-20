@@ -16,7 +16,7 @@ export interface IBasketStateParams extends IStateParamsService {
   order: Order;
 }
 
-function routesConfig(
+export function routesConfig(
   $stateProvider: IStateProvider,
   $urlRouterProvider: IUrlRouterProvider,
   $locationProvider: ILocationProvider
@@ -33,9 +33,6 @@ function routesConfig(
     })
     .state('basket', {
       url: '/basket',
-      template: '<l-basket/>',
-      params: {
-        order: null
-      }
+      template: '<l-basket/>'
     });
 }
