@@ -1,6 +1,5 @@
 import {ISize} from '../size-selector/size-selector.component';
-import {Moment} from 'moment';
-import {uniqueId, clone} from 'lodash';
+import {uniqueId, cloneDeep} from 'lodash';
 
 export class Product {
   constructor(
@@ -20,16 +19,14 @@ export interface ISizeToWeight {
 }
 
 export class LineItem {
-  id: string;
-
   constructor(
     public product: Product,
-    public date: Moment,
     public size: ISize = {id: 'medium', title: 'Medium'},
     public quantity: number = 1,
-    public checked: boolean = true
+    public checked: boolean = true,
+    public id: string = null
   ) {
-    this.id = uniqueId();
+    this.id = this.id || uniqueId();
   }
 }
 
@@ -49,9 +46,31 @@ export class LineItemService {
   }
 
   setChecked(_item: LineItem, checked: boolean) {
-    let item = clone(_item);
+    let item = cloneDeep(_item);
     item.checked = checked;
     return item;
+  }
+
+  // todo: remove when we migrate to simple js objects
+  createItemFrom(itemJson) {
+    return new LineItem(
+      this.createProductFrom(itemJson.product),
+      itemJson.size,
+      itemJson.quantity,
+      itemJson.checked,
+      itemJson.id
+    );
+  }
+
+  // todo: remove when we migrate to simple js objects
+  createProductFrom(productJson) {
+    return new Product(
+      productJson.id,
+      productJson.name,
+      productJson.price,
+      productJson.ingredients,
+      productJson.sizeToWeight
+    );
   }
 }
 

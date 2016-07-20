@@ -1,15 +1,14 @@
-import {Order, OrderService} from '../models/order.service';
-import {cloneDeep} from 'lodash';
-import {IBasketState} from '../../routes';
-import {IScope} from 'angular';
+import {OrderService} from '../../models/order.service';
+import {Basket, BasketService} from './basket.service';
+import {IBasketState} from '../../../routes';
+import {IScope, ILogService} from 'angular';
+import * as angular from 'angular';
 
 type IToastService = angular.material.IToastService;
 
 export class BasketController {
-  // input bindings
-  order: Order;
-
   // internal bindings
+  basket: Basket;
   customer: string;
   address: string;
   cardNumber: string;
@@ -21,41 +20,67 @@ export class BasketController {
   constructor(
     private $state: IBasketState,
     private $scope: IScope,
+    private $log: ILogService,
     private $mdToast: IToastService,
+    private lBasketService: BasketService,
     private lOrderService: OrderService
   ) {
     'ngInject';
 
-    this.initOrder();
+    this.initBasket();
     this.initCustomer();
     this.initAddress();
     this.initCardInfo();
   }
 
   totalToPay(): number {
-    return this.lOrderService.calcPriceForOrder(this.order);
+    return this.lOrderService.calcPriceForAll(this.basket.orders);
   }
 
   makeOrder(): void {
-    this.lOrderService.makeOrder(this.order)
+    this.lOrderService.placeOrders(this.basket.orders)
       .then(res => {
-        this.showToast('Order has been placed!');
+        this.showToast('Orders have been placed!');
+        this.clearBasket();
       })
       .catch(err => {
         console.error(err);
-        this.showToast('Error! Unable to place order');
+        this.showToast('Error! Unable to place orders');
       })
       .finally(() => {
         this.$state.go('week-menu');
       });
   }
 
-  isOrderValid(): boolean {
-    return this.lOrderService.isValid(this.order);
+  isOrdersValid(): boolean {
+    return this.lOrderService.isValidAll(this.basket.orders);
   }
 
   goToWeekMenu() {
     this.$state.go('week-menu');
+  }
+
+  hasData(): boolean {
+    return Boolean(this.basket.orders.length);
+  }
+
+  isEmpty(): boolean {
+    return !this.hasData();
+  }
+
+  private clearBasket() {
+    this.basket = this.lBasketService.clearBasket(this.basket);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
+
+  private initBasket() {
+    this.lBasketService.fetchBasket()
+      .then(basket => this.basket = basket)
+      .catch(err => {
+        this.$log.info('BasketController: Unable to fetch basket. Create new empty one');
+
+        this.basket = new Basket();
+      });
   }
 
   private showToast(msg: string): void {
@@ -68,19 +93,11 @@ export class BasketController {
   }
 
   private onCustomerChanged(customer: string) {
-    this.order = this.lOrderService.setCustomer(customer, this.order);
+    this.basket = this.lBasketService.setCustomerForAllOrdersIn(this.basket, customer);
   }
 
   private onAddressChanged(address: string) {
-    this.order = this.lOrderService.setAddress(address, this.order);
-  }
-
-  private initOrder(): void {
-    if (this.isOrderExist()) {
-      this.order = cloneDeep(this.$state.params.order);
-    } else {
-      this.order = new Order();
-    }
+    this.basket = this.lBasketService.setAddressForAllOrdersIn(this.basket, address);
   }
 
   private initCustomer(): void {
@@ -89,10 +106,6 @@ export class BasketController {
 
   private initAddress(): void {
     this.$scope.$watch(() => this.address, this.onAddressChanged.bind(this));
-  }
-
-  private isOrderExist(): boolean {
-    return Boolean(this.$state.params.order);
   }
 
   private initCardInfo(): void {

@@ -2,11 +2,11 @@ import {Menu} from './menu.service';
 import {Order, OrderService} from '../../models/order.service';
 import {OrderForm, OrderFormService} from './order.form';
 import {LineItem, LineItemService} from '../line-item/line-item.service';
-import {cloneDeep, filter} from 'lodash';
+import {filter} from 'lodash';
 import {IScope} from 'angular';
 import {IWeekMenuState} from '../../../routes';
 
-interface ITriggerOrderChangeEvent {
+interface ITriggerOrderPlaceEvent {
   (arg: { order: Order }): void;
 }
 
@@ -16,13 +16,13 @@ export class MenuController {
   order: Order;
 
   // output bindings
-  triggerOrderChange: ITriggerOrderChangeEvent;
+  triggerOrderPlaceEvent: ITriggerOrderPlaceEvent;
 
   // internal bindings
   orderForm: OrderForm;
   price: number;
 
-  private lineItemsAddedToBasket = false;
+  private lineItemsAddedToOrder = false;
 
   constructor(
     private $scope: IScope,
@@ -54,33 +54,33 @@ export class MenuController {
       this.order
     );
 
-    this.lineItemsAddedToBasket = true;
+    this.lineItemsAddedToOrder = true;
 
-    this.triggerOrderChange({order: this.order});
+    this.triggerOrderPlaceEvent({order: this.order});
   }
 
-  isLineItemsAddedToBasket(): boolean {
-    return this.lineItemsAddedToBasket;
+  isLineItemsAddedToOrder(): boolean {
+    return this.lineItemsAddedToOrder;
   }
 
   orderAgain() {
     this.initOrderForm();
-    this.lineItemsAddedToBasket = false;
+    this.lineItemsAddedToOrder = false;
   }
 
   goToBasket() {
-    this.$state.go('basket', {order: this.order});
+    this.$state.go('basket');
   }
 
   private initOrder() {
-    this.order = cloneDeep(this.order);
+    this.order = new Order(this.menu.date);
   }
 
   private initOrderForm() {
     this.orderForm = new OrderForm();
 
     this.orderForm = this.lOrderFormService.addItems(this.menu.products.map(product => {
-      return new LineItem(product, this.menu.date);
+      return new LineItem(product);
     }), this.orderForm);
   }
 
@@ -99,7 +99,6 @@ export const MenuComponent = {
   controllerAs: 'vm',
   bindings: {
     menu: '<',
-    order: '<',
-    triggerOrderChange: '&onOrderChanged'
+    triggerOrderPlaceEvent: '&onOrderPlaced'
   }
 };

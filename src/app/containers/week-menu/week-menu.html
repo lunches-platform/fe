@@ -1,8 +1,7 @@
 <div class="l-week-menu" layout="column" layout-padding>
   <md-button ng-if="vm.hasPastDaysMenu()" class="md-raise" ng-click="vm.togglePastDaysMenu()">
-    {{ vm.isPastDaysMenuHidden() ? 'Show past days menu' : 'Hide past days menu' }}
+    {{ vm.isPastDaysMenuHidden() ? 'Показать меню на прошедшие дни' : 'Спрятать меню на прошедшие дни' }}
   </md-button>
   <l-view-menu ng-if="vm.isPastDaysMenuShown()" flex ng-repeat="menu in vm.pastDaysMenu" menu="menu"></l-view-menu>
-  <l-menu flex ng-repeat="menu in vm.actualMenu" menu="menu" order="vm.order" on-order-changed="vm.onOrderChanged(order)"></l-menu>
-  <md-button class="md-raised md-warn" ng-click="vm.goToBasket()">В корзину</md-button>
+  <l-menu flex ng-repeat="menu in vm.actualMenu" menu="menu" on-order-placed="vm.onOrderPlaced(order)"></l-menu>
 </div>

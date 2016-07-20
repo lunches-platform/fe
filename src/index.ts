@@ -2,8 +2,7 @@
 
 import * as angular from 'angular';
 
-import {BasketComponent} from './app/containers/basket.component';
-
+import {BasketComponent} from './app/containers/basket/basket.component';
 import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
 import {MenuComponent} from './app/components/menu/menu.component';
 import {ViewMenuComponent} from './app/components/view-menu/view-menu.component';
@@ -16,21 +15,24 @@ import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
 import {OrderService} from './app/models/order.service';
 import {OrderFormService} from './app/components/menu/order.form';
+import {BasketService} from './app/containers/basket/basket.service';
 
 import {DateFilter} from './app/filters/date.filter';
 
 import 'angular-ui-router';
 import 'angular-material';
+import 'angular-local-storage';
 import 'angular-material/angular-material.css';
-import routesConfig from './routes';
-import localeConfig from './config';
+import {routesConfig} from './routes';
+import {localeConfig, localStorageConfig} from './config';
 
 import './index.scss';
 
 angular
-  .module('app', ['ui.router', 'ngMaterial'])
+  .module('app', ['ui.router', 'ngMaterial', 'LocalStorageModule'])
   .config(routesConfig)
   .config(localeConfig)
+  .config(localStorageConfig)
 
   .component('lWeekMenu', WeekMenuComponent)
   .component('lMenu', MenuComponent)
@@ -45,6 +47,7 @@ angular
   .service('lLineItemService', LineItemService)
   .service('lOrderService', OrderService)
   .service('lOrderFormService', OrderFormService)
+  .service('lBasketService', BasketService)
 
   .filter('lDate', DateFilter)
   ;

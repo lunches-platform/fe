@@ -1,19 +1,13 @@
 import {WeekMenuService} from './week-menu.service';
 import {Menu} from '../../components/menu/menu.service';
 import {Order} from '../../models/order.service';
-import {cloneDeep} from 'lodash';
 import {IWeekMenuState} from '../../../routes';
-
-interface ITriggerOrderChangeEvent {
-  (arg: { order: Order }): void;
-}
+import {Basket, BasketService} from '../../containers/basket/basket.service';
+import {ILogService} from 'angular';
 
 export class WeekMenuController {
   // input bindings
-  order: Order;
-
-  // output bindings
-  triggerOrderChange: ITriggerOrderChangeEvent;
+  basket: Basket;
 
   // internal bindings
   actualMenu: Menu[] = [];
@@ -21,19 +15,29 @@ export class WeekMenuController {
 
   private pastDaysMenuHidden = true;
 
-  constructor(private $state: IWeekMenuState, private lWeekMenuService: WeekMenuService) {
+  constructor(
+    private $state: IWeekMenuState,
+    private $log: ILogService,
+    private lWeekMenuService: WeekMenuService,
+    private lBasketService: BasketService
+  ) {
     'ngInject';
 
-    this.initOrder();
+    this.initBasket();
     this.fetchData();
   }
 
-  onOrderChanged(order: Order) {
-    this.order = cloneDeep(order);
+  onOrderPlaced(order: Order) {
+    this.basket = this.lBasketService.addOrderTo(this.basket, order);
+    const stored = this.lBasketService.storeBasketInStorage(this.basket);
+
+    if (!stored) {
+      this.$log.error('WeekMenuController: Unable to store basket in storage');
+    }
   }
 
   goToBasket() {
-    this.$state.go('basket', {order: this.order});
+    this.$state.go('basket');
   }
 
   isPastDaysMenuHidden(): boolean {
@@ -72,8 +76,14 @@ export class WeekMenuController {
       });
   }
 
-  private initOrder() {
-    this.order = new Order();
+  private initBasket() {
+    this.lBasketService.fetchBasket()
+      .then(basket => this.basket = basket)
+      .catch(err => {
+        this.$log.info('WeekMenuController: Unable to fetch basket. Create new empty one');
+
+        this.basket = new Basket();
+      });
   }
 }
 
