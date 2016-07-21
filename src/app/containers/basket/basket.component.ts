@@ -1,18 +1,22 @@
-import {OrderService} from '../../models/order.service';
+import * as angular from 'angular';
+import {cloneDeep} from 'lodash';
+
+import {OrderService, Order} from '../../models/order.service';
 import {Basket, BasketService} from './basket.service';
 import {IBasketState} from '../../../routes';
 import {IScope, ILogService} from 'angular';
-import * as angular from 'angular';
 
 type IToastService = angular.material.IToastService;
 
 export class BasketController {
-  // internal bindings
+  // bindings ------------------------------------------------------------------
+  // internal
   basket: Basket;
   customer: string;
   address: string;
   cardNumber: string;
   cardHolder: string;
+  ordersForReview: Order[];
 
   private toastPosition = 'top right';
   private toastHideDelay = 5000;
@@ -33,10 +37,7 @@ export class BasketController {
     this.initCardInfo();
   }
 
-  totalToPay(): number {
-    return this.lOrderService.calcPriceForAll(this.basket.orders);
-  }
-
+  // dom event handlers --------------------------------------------------------
   makeOrder(): void {
     this.lOrderService.placeOrders(this.basket.orders)
       .then(res => {
@@ -44,7 +45,6 @@ export class BasketController {
         this.clearBasket();
       })
       .catch(err => {
-        console.error(err);
         this.showToast('Error! Unable to place orders');
       })
       .finally(() => {
@@ -52,12 +52,23 @@ export class BasketController {
       });
   }
 
-  isOrdersValid(): boolean {
-    return this.lOrderService.isValidAll(this.basket.orders);
+  goToWeekMenu(): void {
+    this.$state.go('week-menu');
   }
 
-  goToWeekMenu() {
-    this.$state.go('week-menu');
+  removeFromBasket(order: Order) {
+    this.basket = this.lBasketService.removeOrderFrom(this.basket, order);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
+
+  restoreToBasket(order: Order) {
+    this.basket = this.lBasketService.addOrderTo(this.basket, order);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
+
+  // view helpers --------------------------------------------------------------
+  totalToPay(): number {
+    return this.lOrderService.calcPriceForAll(this.basket.orders);
   }
 
   hasData(): boolean {
@@ -68,36 +79,27 @@ export class BasketController {
     return !this.hasData();
   }
 
-  private clearBasket() {
-    this.basket = this.lBasketService.clearBasket(this.basket);
-    this.lBasketService.storeBasketInStorage(this.basket);
+  isOrdersValid(): boolean {
+    return this.lOrderService.isValidAll(this.basket.orders);
   }
 
-  private initBasket() {
+  // private init --------------------------------------------------------------
+  private initBasket(): void {
     this.lBasketService.fetchBasket()
       .then(basket => this.basket = basket)
       .catch(err => {
         this.$log.info('BasketController: Unable to fetch basket. Create new empty one');
 
         this.basket = new Basket();
+        this.lBasketService.storeBasketInStorage(this.basket);
+      })
+      .finally(() => {
+        this.initOrdersForReview();
       });
   }
 
-  private showToast(msg: string): void {
-    this.$mdToast.show(
-      this.$mdToast.simple()
-        .textContent(msg)
-        .position(this.toastPosition)
-        .hideDelay(this.toastHideDelay)
-    );
-  }
-
-  private onCustomerChanged(customer: string) {
-    this.basket = this.lBasketService.setCustomerForAllOrdersIn(this.basket, customer);
-  }
-
-  private onAddressChanged(address: string) {
-    this.basket = this.lBasketService.setAddressForAllOrdersIn(this.basket, address);
+  private initOrdersForReview(): void {
+    this.ordersForReview = cloneDeep(this.basket.orders);
   }
 
   private initCustomer(): void {
@@ -112,8 +114,35 @@ export class BasketController {
     this.cardHolder = 'Иванов Иван Иванович';
     this.cardNumber = '1234-5678-8765-4321';
   }
+
+  // private helpers -----------------------------------------------------------
+  private clearBasket(): void {
+    this.basket = this.lBasketService.clearBasket(this.basket);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
+
+  private showToast(msg: string): void {
+    this.$mdToast.show(
+      this.$mdToast.simple()
+        .textContent(msg)
+        .position(this.toastPosition)
+        .hideDelay(this.toastHideDelay)
+    );
+  }
+
+  // private event handlers ----------------------------------------------------
+  private onCustomerChanged(customer: string): void {
+    this.basket = this.lBasketService.setCustomerForAllOrdersIn(this.basket, customer);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
+
+  private onAddressChanged(address: string): void {
+    this.basket = this.lBasketService.setAddressForAllOrdersIn(this.basket, address);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
 }
 
+// component definition --------------------------------------------------------
 export const BasketComponent = {
   template: require('./basket.html'),
   controller: BasketController,

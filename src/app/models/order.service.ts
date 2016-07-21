@@ -1,18 +1,20 @@
+import {cloneDeep, find, reduce, every, map, uniqueId} from 'lodash';
+import * as moment from 'moment';
+import {Moment} from 'moment';
+import {IHttpService, IQService} from 'angular';
+
 // todo: move Product out from line-item service
 import {Product, LineItem, LineItemService} from '../components/line-item/line-item.service';
 import {ISize} from '../components/size-selector/size-selector.component';
-
-import {cloneDeep, find, reduce, every, map} from 'lodash';
-import {IHttpService, IQService} from 'angular';
-import {Moment} from 'moment';
-import * as moment from 'moment';
 
 export class Order {
   items: LineItem[] = [];
   customer: string;
   address: string;
 
-  constructor(public shipmentDate: Moment) {}
+  constructor(public shipmentDate: Moment, public id: string = null) {
+    this.id = id || uniqueId();
+  }
 }
 
 // todo: add types: https://github.com/lunches-platform/fe/issues/17
@@ -99,7 +101,7 @@ export class OrderService {
   }
 
   createOrderFrom(orderJson) {
-    const order = new Order(moment.utc(orderJson.shipmentDate));
+    const order = new Order(moment.utc(orderJson.shipmentDate), orderJson.id);
     order.customer = orderJson.customer;
     order.address = orderJson.address;
     order.items = map(orderJson.items, item => this.lLineItemService.createItemFrom(item));

@@ -1,7 +1,8 @@
+import {cloneDeep, map, filter} from 'lodash';
 import * as angular from 'angular';
-import {Order, OrderService} from '../../models/order.service';
-import {cloneDeep, map} from 'lodash';
 import {IQService, IPromise} from 'angular';
+
+import {Order, OrderService} from '../../models/order.service';
 
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
@@ -42,19 +43,19 @@ export class BasketService {
     }
   }
 
-  createBasketFrom(basketJson) {
+  createBasketFrom(basketJson): Basket {
     let basket = new Basket();
     basket.orders = map(basketJson.orders, order => this.lOrderService.createOrderFrom(order));
     return basket;
   }
 
-  setCustomerForAllOrdersIn(_basket: Basket, customer: string) {
+  setCustomerForAllOrdersIn(_basket: Basket, customer: string): Basket {
     let basket = cloneDeep(_basket);
     basket.orders = this.lOrderService.setCustomerForAll(basket.orders, customer);
     return basket;
   }
 
-  setAddressForAllOrdersIn(_basket: Basket, address: string) {
+  setAddressForAllOrdersIn(_basket: Basket, address: string): Basket {
     let basket = cloneDeep(_basket);
     basket.orders = this.lOrderService.setAddressForAll(basket.orders, address);
     return basket;
@@ -64,8 +65,14 @@ export class BasketService {
     return this.storeBasketInLocalStorage(basket);
   }
 
-  clearBasket(basket: Basket) {
+  clearBasket(basket: Basket): Basket {
     return new Basket();
+  }
+
+  removeOrderFrom(_basket: Basket, order: Order): Basket {
+    let basket = cloneDeep(_basket);
+    basket.orders = filter<Order>(basket.orders, o => o.id !== order.id);
+    return basket;
   }
 
   private storeBasketInLocalStorage(basket: Basket): boolean {
