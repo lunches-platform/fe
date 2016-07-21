@@ -1,0 +1,24 @@
+<div layout="column" class="l-basket-order" >
+  <h2 flex class="md-headline title">{{ vm.order.shipmentDate | lDate }}</h2>
+
+  <div ng-if="vm.isExist()">
+    <div class="line-items" flex>
+      <div ng-repeat="item in vm.order.items" flex="100">
+        <div class="md-subhead">{{ item.product.name }}</div>
+        <div flex class="md-caption">{{ item.product.ingredients.join(', ') }}</div>
+      </div>
+    </div>
+    <md-button class="md-raised" ng-click="vm.remove()">Удалить из корзины</md-button>
+    <span class="md-headline price-label">{{ vm.calcPrice() }} грн</span>
+  </div>
+
+  <div ng-if="vm.isRemoved()" layout="row" layout-align="center center">
+    <div class="md-body1">Обед удален из корзины.
+      <md-button class="md-raised" ng-click="vm.addAnother()">Сделать другой заказ</md-button>
+      <md-button class="md-raised md-primary" ng-click="vm.restore()">Вернуть обратно</md-button>
+    </div>
+  </div>
+
+  <md-divider />
+</div>
+

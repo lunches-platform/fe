@@ -77,6 +77,8 @@ export class MenuController {
   }
 
   private initOrderForm() {
+    this.initOrder();
+
     this.orderForm = new OrderForm();
 
     this.orderForm = this.lOrderFormService.addItems(this.menu.products.map(product => {
