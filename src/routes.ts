@@ -29,10 +29,16 @@ export function routesConfig(
   $stateProvider
     .state('week-menu', {
       url: '/',
-      template: '<l-week-menu/>'
+      template: '<l-week-menu/>',
+      data: {
+        title: 'Меню на текущую неделю'
+      }
     })
     .state('basket', {
       url: '/basket',
-      template: '<l-basket/>'
+      template: '<l-basket/>',
+      data: {
+        title: 'Корзина'
+      }
     });
 }

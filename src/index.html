@@ -1,9 +1,9 @@
 <!doctype html>
-<html>
+<html ng-app="app">
   <head>
     <base href="/">
     <meta charset="utf-8">
-    <title>FountainJS</title>
+    <title ng-bind="$state.current.data.title || 'App'"></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- todo: remove it and self host the icon font (DEZ-763) -->
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   </head>
 
-  <body ng-app="app">
+  <body>
     <ui-view></ui-view>
   </body>
 </html>

@@ -25,7 +25,7 @@ import 'angular-material';
 import 'angular-local-storage';
 import 'angular-material/angular-material.css';
 import {routesConfig} from './routes';
-import {localeConfig, localStorageConfig} from './config';
+import {localeConfig, localStorageConfig, currentStateConfig} from './config';
 
 import './index.scss';
 
@@ -34,6 +34,7 @@ angular
   .config(routesConfig)
   .config(localeConfig)
   .config(localStorageConfig)
+  .run(currentStateConfig)
 
   .component('lWeekMenu', WeekMenuComponent)
   .component('lMenu', MenuComponent)

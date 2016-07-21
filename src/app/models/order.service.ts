@@ -38,13 +38,13 @@ export class OrderService {
     return order;
   }
 
-  setCustomer(customer: string, _order: Order) {
+  setCustomer(customer: string, _order: Order): Order {
     let order = cloneDeep(_order);
     order.customer = customer;
     return order;
   }
 
-  setAddress(address: string, _order: Order) {
+  setAddress(address: string, _order: Order): Order {
     let order = cloneDeep(_order);
     order.address = address;
     return order;
