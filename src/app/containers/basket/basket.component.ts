@@ -1,8 +1,8 @@
 import * as angular from 'angular';
 import {cloneDeep} from 'lodash';
 
-import {OrderService, Order} from '../../models/order.service';
-import {Basket, BasketService} from './basket.service';
+import {IOrder, OrderService} from '../../models/order';
+import {IBasket, BasketService} from './basket.service';
 import {IBasketState} from '../../../routes';
 import {IScope, ILogService} from 'angular';
 
@@ -11,12 +11,12 @@ type IToastService = angular.material.IToastService;
 export class BasketController {
   // bindings ------------------------------------------------------------------
   // internal
-  basket: Basket;
+  basket: IBasket;
   customer: string;
   address: string;
   cardNumber: string;
   cardHolder: string;
-  ordersForReview: Order[];
+  ordersForReview: IOrder[];
 
   private toastPosition = 'top right';
   private toastHideDelay = 5000;
@@ -56,12 +56,12 @@ export class BasketController {
     this.$state.go('week-menu');
   }
 
-  removeFromBasket(order: Order) {
+  removeFromBasket(order: IOrder) {
     this.basket = this.lBasketService.removeOrderFrom(this.basket, order);
     this.lBasketService.storeBasketInStorage(this.basket);
   }
 
-  restoreToBasket(order: Order) {
+  restoreToBasket(order: IOrder) {
     this.basket = this.lBasketService.addOrderTo(this.basket, order);
     this.lBasketService.storeBasketInStorage(this.basket);
   }
@@ -90,7 +90,7 @@ export class BasketController {
       .catch(err => {
         this.$log.info('BasketController: Unable to fetch basket. Create new empty one');
 
-        this.basket = new Basket();
+        this.basket = this.lBasketService.createEmptyBasket();
         this.lBasketService.storeBasketInStorage(this.basket);
       })
       .finally(() => {

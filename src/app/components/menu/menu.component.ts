@@ -1,25 +1,29 @@
-import {Menu} from './menu.service';
-import {Order, OrderService} from '../../models/order.service';
-import {OrderForm, OrderFormService} from './order.form';
-import {LineItem, LineItemService} from '../line-item/line-item.service';
-import {filter} from 'lodash';
+import {cloneDeep} from 'lodash';
 import {IScope} from 'angular';
+
+import {IMenu} from './menu.service';
+import {IProduct} from '../../models/product';
+import {IOrder, OrderService} from '../../models/order';
+import {IOrderForm, OrderFormService} from './order.form';
+import {ILineItem, LineItemService} from '../line-item/line-item.service';
 import {IWeekMenuState} from '../../../routes';
 
 interface ITriggerOrderPlaceEvent {
-  (arg: { order: Order }): void;
+  (arg: { order: IOrder }): void;
 }
 
 export class MenuController {
-  // input bindings
-  menu: Menu;
-  order: Order;
+  // bindings ------------------------------------------------------------------
+  // input
+  menu: IMenu;
 
-  // output bindings
+  // output
   triggerOrderPlaceEvent: ITriggerOrderPlaceEvent;
 
-  // internal bindings
-  orderForm: OrderForm;
+  // internal
+  order: IOrder;
+  orderForm: IOrderForm;
+  lineItemsForReview: ILineItem[];
   price: number;
 
   private lineItemsAddedToOrder = false;
@@ -33,68 +37,100 @@ export class MenuController {
   ) {
     'ngInject';
 
-    this.initOrder();
-    this.initOrderForm();
     this.initPrice();
   }
 
-  calcPrice() {
-    return this.lLineItemService.calcPriceForAll(
-      filter(this.orderForm.items, ['checked', true])
-    );
-  }
-
-  onItemChanged(item: LineItem) {
+  // dom event handlers --------------------------------------------------------
+  onItemChanged(item: ILineItem): void {
     this.orderForm = this.lOrderFormService.updateItem(item, this.orderForm);
   }
 
-  addToOrder() {
-    this.order = this.lOrderService.addLineItems(
-      filter(this.orderForm.items, ['checked', true]),
-      this.order
-    );
+  onItemToggled(item: ILineItem, checked: boolean): void {
+    if (checked) {
+      this.orderForm = this.lOrderFormService.addItemTo(this.orderForm, item);
+    } else {
+      this.orderForm = this.lOrderFormService.removeItemFrom(this.orderForm, item);
+    }
+  }
+
+  addToOrder(): void {
+    this.order = this.lOrderService.addLineItems(this.orderForm.items, this.order);
 
     this.lineItemsAddedToOrder = true;
 
     this.triggerOrderPlaceEvent({order: this.order});
   }
 
-  isLineItemsAddedToOrder(): boolean {
-    return this.lineItemsAddedToOrder;
-  }
-
-  orderAgain() {
+  orderAgain(): void {
     this.initOrderForm();
     this.lineItemsAddedToOrder = false;
   }
 
-  goToBasket() {
+  goToBasket(): void {
     this.$state.go('basket');
   }
 
+  // view helpers --------------------------------------------------------------
+  calcPrice(): number {
+    return this.lLineItemService.calcPriceForAll(this.orderForm.items);
+  }
+
+  isLineItemsAddedToOrder(): boolean {
+    return this.lineItemsAddedToOrder;
+  }
+
+  // private init --------------------------------------------------------------
+  // todo: add typings
+  $onChanges(changes) {
+    if (changes.menu) {
+      this.onInputMenuChanged(this.menu);
+
+      this.init();
+    }
+  }
+
+  private init() {
+    this.initLineItemsForReview();
+    this.initOrderForm();
+  }
+
   private initOrder() {
-    this.order = new Order(this.menu.date);
+    this.order = this.lOrderService.createOrderByDate(this.menu.date);
   }
 
   private initOrderForm() {
+    // reset order
     this.initOrder();
 
-    this.orderForm = new OrderForm();
+    this.orderForm = this.lOrderFormService.createOrderFormWith(this.lineItemsForReview);
+  }
 
-    this.orderForm = this.lOrderFormService.addItems(this.menu.products.map(product => {
-      return new LineItem(product);
-    }), this.orderForm);
+  private initLineItemsForReview() {
+     this.lineItemsForReview = this.createLineItemsBy(this.menu.products);
   }
 
   private initPrice() {
     this.$scope.$watch(() => this.orderForm, this.updatePrice.bind(this));
   }
 
+  // private helpers -----------------------------------------------------------
+  private createLineItemsBy(products: IProduct[]): ILineItem[] {
+    return products.map(product => {
+      return this.lLineItemService.createLineItem(product);
+    });
+  }
+
   private updatePrice() {
     this.price = this.calcPrice();
   }
+
+  // private event handlers ----------------------------------------------------
+  private onInputMenuChanged(menu: IMenu) {
+    this.menu = cloneDeep(menu);
+  }
 }
 
+// component definition --------------------------------------------------------
 export const MenuComponent = {
   template: require('./menu.html'),
   controller: MenuController,

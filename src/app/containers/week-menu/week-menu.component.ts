@@ -1,17 +1,17 @@
 import {ILogService, IQService} from 'angular';
 
 import {WeekMenuService} from './week-menu.service';
-import {Menu} from '../../components/menu/menu.service';
-import {Order} from '../../models/order.service';
+import {IMenu} from '../../components/menu/menu.service';
+import {IOrder} from '../../models/order';
 import {IWeekMenuState} from '../../../routes';
-import {Basket, BasketService} from '../../containers/basket/basket.service';
+import {IBasket, BasketService} from '../../containers/basket/basket.service';
 
 export class WeekMenuController {
   // bindings ------------------------------------------------------------------
   // internal
-  basket: Basket;
-  actualMenu: Menu[];
-  pastDaysMenu: Menu[];
+  basket: IBasket;
+  actualMenu: IMenu[];
+  pastDaysMenu: IMenu[];
 
   private pastDaysMenuHidden: boolean;
   private loading: boolean;
@@ -33,7 +33,7 @@ export class WeekMenuController {
   }
 
   // dom event handlers --------------------------------------------------------
-  onOrderPlaced(order: Order): void {
+  onOrderPlaced(order: IOrder): void {
     this.basket = this.lBasketService.addOrderTo(this.basket, order);
     const stored = this.lBasketService.storeBasketInStorage(this.basket);
 
@@ -82,7 +82,7 @@ export class WeekMenuController {
       .catch(err => {
         this.$log.info('WeekMenuController: Unable to fetch basket. Create new empty one');
 
-        this.basket = new Basket();
+        this.basket = this.lBasketService.createEmptyBasket();
       });
   }
 
@@ -104,7 +104,7 @@ export class WeekMenuController {
     this.loading = true;
 
     // todo: make only one request
-    this.$q.all<Menu[]>([
+    this.$q.all<IMenu[]>([
       this.lWeekMenuService.fetchPastDaysMenuForCurrentWeek(),
       this.lWeekMenuService.fetchActualMenuForCurrentWeek()
     ])

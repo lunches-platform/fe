@@ -1,18 +1,23 @@
-import {LineItem, LineItemService} from './line-item.service';
+import {ILineItem, LineItemService} from './line-item.service';
 import {ISize} from '../size-selector/size-selector.component';
 import {IScope} from 'angular';
 import {cloneDeep} from 'lodash';
 
 interface ITriggerChangeEvent {
-  (arg: { item: LineItem }): void;
+  (arg: { item: ILineItem }): void;
+}
+
+interface ITriggerToggleEvent {
+  (arg: { item: ILineItem, checked: boolean }): void;
 }
 
 export class LineItemController {
   // input bindings
-  lineItem: LineItem;
+  lineItem: ILineItem;
 
   // output bindings
   triggerChangeEvent: ITriggerChangeEvent;
+  triggerToggleEvent: ITriggerToggleEvent;
 
   // internal bindings
   checked: boolean;
@@ -32,8 +37,7 @@ export class LineItemController {
   }
 
   onToggled(checked: boolean): void {
-    this.lineItem = this.lLineItemService.setChecked(this.lineItem, checked);
-    this.triggerChangeEvent({item: this.lineItem});
+    this.triggerToggleEvent({item: this.lineItem, checked: checked});
   }
 
   onSizeSelected(size: ISize): void {
@@ -62,7 +66,7 @@ export class LineItemController {
   }
 
   private initCheckedState() {
-    this.checked = this.lineItem.checked;
+    this.checked = true;
     this.$scope.$watch(() => this.checked, this.onToggled.bind(this));
   }
 }
@@ -74,5 +78,6 @@ export const LineItemComponent = {
   bindings: {
     lineItem: '<',
     triggerChangeEvent: '&onChanged',
+    triggerToggleEvent: '&onToggled',
   }
 };
