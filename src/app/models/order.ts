@@ -1,20 +1,23 @@
 import {cloneDeep, find, reduce, every, map, uniqueId} from 'lodash';
-import * as moment from 'moment';
-import {Moment} from 'moment';
 import {IHttpService, IQService} from 'angular';
 
-// todo: move Product out from line-item service
-import {Product, LineItem, LineItemService} from '../components/line-item/line-item.service';
+import {ILineItemRequestBody, ILineItem, LineItemService} from '../components/line-item/line-item.service';
 import {ISize} from '../components/size-selector/size-selector.component';
+import {IProduct} from './product';
 
-export class Order {
-  items: LineItem[] = [];
+export interface IOrder {
+  id: string;
+  items: ILineItem[];
   customer: string;
   address: string;
+  shipmentDate: string;
+}
 
-  constructor(public shipmentDate: Moment, public id: string = null) {
-    this.id = id || uniqueId();
-  }
+export interface IOrderRequestBody {
+  items: ILineItemRequestBody[];
+  customer: string;
+  address: string;
+  shipmentDate: string;
 }
 
 // todo: add types: https://github.com/lunches-platform/fe/issues/17
@@ -28,7 +31,27 @@ export class OrderService {
     'ngInject';
   }
 
-  addLineItems(items: LineItem[], _order: Order): Order {
+  createOrderByDate(date: string): IOrder {
+    return {
+      id: uniqueId(),
+      items: [],
+      customer: null,
+      address: null,
+      shipmentDate: date
+    };
+  }
+
+  createOrderByDateAndId(date: string, id: string): IOrder {
+    return {
+      id: id,
+      items: [],
+      customer: null,
+      address: null,
+      shipmentDate: date
+    };
+  }
+
+  addLineItems(items: ILineItem[], _order: IOrder): IOrder {
     let order = cloneDeep(_order);
 
     items.forEach(item => {
@@ -38,32 +61,32 @@ export class OrderService {
     return order;
   }
 
-  setCustomer(customer: string, _order: Order): Order {
+  setCustomer(customer: string, _order: IOrder): IOrder {
     let order = cloneDeep(_order);
     order.customer = customer;
     return order;
   }
 
-  setAddress(address: string, _order: Order): Order {
+  setAddress(address: string, _order: IOrder): IOrder {
     let order = cloneDeep(_order);
     order.address = address;
     return order;
   }
 
-  calcPriceFor(order: Order): number {
+  calcPriceFor(order: IOrder): number {
     return this.lLineItemService.calcPriceForAll(order.items);
   }
 
-  updateSizeForProductIn(order: Order, product: Product, size: ISize): Order {
+  updateSizeForProductIn(order: IOrder, product: IProduct, size: ISize): IOrder {
     return this.updateLineItemProperty(order, product, 'size', size);
   }
 
-  updateQuantityForProductIn(order: Order, product: Product, quantity: number): Order {
+  updateQuantityForProductIn(order: IOrder, product: IProduct, quantity: number): IOrder {
     return this.updateLineItemProperty(order, product, 'quantity', quantity);
   }
 
   // todo: add return type
-  placeOrders(orders: Order[]) {
+  placeOrders(orders: IOrder[]) {
     const url = 'http://api.cogniance.lunches.com.ua/orders';
     const allOrdersPlacedPromise = map(orders, order => {
       return this.$http.post(url, this.prepareOrderForApi(order));
@@ -72,7 +95,7 @@ export class OrderService {
     return this.$q.all(allOrdersPlacedPromise);
   }
 
-  isValid(order: Order): boolean {
+  isValid(order: IOrder): boolean {
     return Boolean(
       this.calcPriceFor(order) &&
       order.address &&
@@ -82,50 +105,44 @@ export class OrderService {
     );
   }
 
-  isValidAll(orders: Order[]) {
+  isValidAll(orders: IOrder[]): boolean {
     return every(orders, order => this.isValid(order));
   }
 
-  calcPriceForAll(orders: Order[]): number {
+  calcPriceForAll(orders: IOrder[]): number {
     return reduce(orders, (sum, order) => {
       return sum + this.calcPriceFor(order);
     }, 0);
   }
 
-  setCustomerForAll(orders: Order[], customer: string) {
+  setCustomerForAll(orders: IOrder[], customer: string): IOrder[] {
     return map(orders, order => this.setCustomer(customer, order));
   }
 
-  setAddressForAll(orders: Order[], address: string) {
+  setAddressForAll(orders: IOrder[], address: string): IOrder[] {
     return map(orders, order => this.setAddress(address, order));
   }
 
-  createOrderFrom(orderJson) {
-    const order = new Order(moment.utc(orderJson.shipmentDate), orderJson.id);
-    order.customer = orderJson.customer;
-    order.address = orderJson.address;
-    order.items = map(orderJson.items, item => this.lLineItemService.createItemFrom(item));
-    return order;
+  private prepareOrderForApi(order: IOrder): IOrderRequestBody {
+    return {
+      items: this.prepareLineItemsForApi(order.items),
+      customer: order.customer,
+      address: order.address,
+      shipmentDate: order.shipmentDate,
+    };
   }
 
-  private prepareOrderForApi(order: Order) {
-    let items = order.items.map(item => {
+  private prepareLineItemsForApi(items: ILineItem[]): ILineItemRequestBody[] {
+    return items.map(item => {
       return {
         productId: item.product.id,
         size: item.size.id,
         quantity: item.quantity
       };
     });
-
-    return {
-      customer: order.customer,
-      address: order.address,
-      shipmentDate: order.shipmentDate.format(),
-      items: items
-    };
   }
 
-  private updateLineItemProperty(_order: Order, product: Product, key: string, value: ISize | number) {
+  private updateLineItemProperty(_order: IOrder, product: IProduct, key: string, value: ISize | number) {
     let order = cloneDeep(_order);
 
     let lineItem = find(order.items, ['product.id', product.id]);

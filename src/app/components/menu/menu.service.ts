@@ -1,12 +1,7 @@
-import {Product} from '../line-item/line-item.service';
-import {Moment} from 'moment';
+import {IProduct} from '../../models/product';
 
-export class Menu {
-  constructor(
-    public id: number,
-    public date: Moment,
-    public products: Product[]
-  ) {
-
-  }
+export interface IMenu {
+  id: number;
+  date: string;
+  products: IProduct[];
 }

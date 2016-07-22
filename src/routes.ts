@@ -1,5 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
-import {Order} from './app/models/order.service';
+import {IOrder} from './app/models/order';
 import {IStateProvider, IUrlRouterProvider, IStateService, IStateParamsService} from 'angular-ui-router';
 import {ILocationProvider} from 'angular';
 
@@ -13,7 +13,7 @@ export interface IBasketState extends IStateService {
 }
 
 export interface IBasketStateParams extends IStateParamsService {
-  order: Order;
+  order: IOrder;
 }
 
 export function routesConfig(

@@ -2,7 +2,12 @@
   <h2 flex class="md-headline title">{{ vm.menu.date | lDate }}</h2>
 
   <div class="products" ng-if="!vm.isLineItemsAddedToOrder()" flex>
-    <l-line-item ng-repeat="item in vm.orderForm.items" line-item="item" on-changed="vm.onItemChanged(item)" />
+    <l-line-item
+      ng-repeat="item in vm.lineItemsForReview track by item.id"
+      line-item="item"
+      on-changed="vm.onItemChanged(item)"
+      on-toggled="vm.onItemToggled(item, checked)">
+    </l-line-item>
   </div>
 
   <div class="order-button" ng-if="!vm.isLineItemsAddedToOrder()" flex layout="row">

@@ -14,7 +14,7 @@ import {BasketOrderComponent} from './app/components/basket-order/basket-order.c
 
 import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
-import {OrderService} from './app/models/order.service';
+import {OrderService} from './app/models/order';
 import {OrderFormService} from './app/components/menu/order.form';
 import {BasketService} from './app/containers/basket/basket.service';
 

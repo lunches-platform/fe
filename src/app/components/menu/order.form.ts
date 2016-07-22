@@ -1,23 +1,35 @@
-import {LineItem} from '../line-item/line-item.service';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, filter, find} from 'lodash';
 
-export class OrderForm {
-  items: LineItem[] = [];
+import {ILineItem} from '../line-item/line-item.service';
+
+export interface IOrderForm {
+  items: ILineItem[];
 }
 
 export class OrderFormService {
 
-  addItems(items: LineItem[], _form: OrderForm): OrderForm {
-    let form = cloneDeep(_form);
+  createOrderFormWith(items: ILineItem[]): IOrderForm {
+    return {items: cloneDeep(items)};
+  }
 
-    items.forEach(item => {
-      form.items.push(item);
-    });
+  addItemTo(_form: IOrderForm, item: ILineItem): IOrderForm {
+    if (find(_form.items, ['id', item.id])) {
+      return _form;
+    }
+
+    const form = cloneDeep(_form);
+    form.items.push(item);
 
     return form;
   }
 
-  updateItem(lineItem: LineItem, _form: OrderForm): OrderForm {
+  removeItemFrom(_form: IOrderForm, item: ILineItem): IOrderForm {
+    let form = cloneDeep(_form);
+    form.items = filter<ILineItem>(form.items, i => i.id !== item.id);
+    return form;
+  }
+
+  updateItem(lineItem: ILineItem, _form: IOrderForm): IOrderForm {
     let form = cloneDeep(_form);
 
     form.items = form.items.map(item => {

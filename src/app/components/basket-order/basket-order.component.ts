@@ -1,23 +1,23 @@
-import {cloneDeep, filter} from 'lodash';
+import {cloneDeep} from 'lodash';
 
-import {Order} from '../../models/order.service';
+import {IOrder} from '../../models/order';
 import {LineItemService} from '../line-item/line-item.service';
 import {IBasketState} from '../../../routes';
 
 // output bindings interfaces --------------------------------------------------
 interface ITriggerRemoveEvent {
-  (arg: { order: Order }): void;
+  (arg: { order: IOrder }): void;
 }
 
 interface ITriggerRestoreEvent {
-  (arg: { order: Order }): void;
+  (arg: { order: IOrder }): void;
 }
 
 export class BasketOrderController {
   // bindings ------------------------------------------------------------------
 
   // input
-  order: Order;
+  order: IOrder;
 
   // output
   triggerRemoveEvent: ITriggerRemoveEvent;
@@ -58,9 +58,7 @@ export class BasketOrderController {
   }
 
   calcPrice(): number {
-    return this.lLineItemService.calcPriceForAll(
-      filter(this.order.items, ['checked', true])
-    );
+    return this.lLineItemService.calcPriceForAll(this.order.items);
   }
 
   // private init --------------------------------------------------------------
@@ -72,7 +70,7 @@ export class BasketOrderController {
   }
 
   // private event handlers ----------------------------------------------------
-  private onInputOrderChanged(order: Order) {
+  private onInputOrderChanged(order: IOrder) {
     this.order = cloneDeep(order);
   }
 }
