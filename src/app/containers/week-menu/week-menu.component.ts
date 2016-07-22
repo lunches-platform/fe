@@ -1,4 +1,4 @@
-import {ILogService, IQService} from 'angular';
+import {ILogService} from 'angular';
 
 import {WeekMenuService} from './week-menu.service';
 import {IMenu} from '../../components/menu/menu.service';
@@ -11,9 +11,13 @@ export class WeekMenuController {
   // bindings ------------------------------------------------------------------
   // internal
   basket: IBasket;
+  selectedWeek: Week;
+  nextWeekMenu: IMenu[];
+  currentWeekMenu: IMenu[];
+
+  // these two are just shortcut for currentWeekMenu
   actualMenu: IMenu[];
   pastDaysMenu: IMenu[];
-  selectedWeek: Week;
 
   private pastDaysMenuHidden: boolean;
   private loading: boolean;
@@ -21,7 +25,6 @@ export class WeekMenuController {
   constructor(
     private $state: IWeekMenuState,
     private $log: ILogService,
-    private $q: IQService,
     private lWeekMenuService: WeekMenuService,
     private lBasketService: BasketService
   ) {
@@ -49,6 +52,10 @@ export class WeekMenuController {
     this.selectedWeek = week;
   }
 
+  selectNextWeek(): void {
+    this.selectedWeek = Week.Next;
+  }
+
   togglePastDaysMenu(): void {
     this.pastDaysMenuHidden = !this.pastDaysMenuHidden;
   }
@@ -74,12 +81,24 @@ export class WeekMenuController {
     return this.pastDaysMenuHidden;
   }
 
-  isPastDaysMenuShown(): boolean {
-    return !this.pastDaysMenuHidden;
+  needToShowCurrentWeekViewMenu(): boolean {
+    return this.selectedWeek === Week.Current && !this.pastDaysMenuHidden;
   }
 
-  hasPastDaysMenu(): boolean {
-    return Boolean(this.pastDaysMenu.length);
+  needToShowCurrentWeekOrderMenu(): boolean {
+    return this.selectedWeek === Week.Current && Boolean(this.actualMenu.length);
+  }
+
+  needToShowNextWeek(): boolean {
+    return this.selectedWeek === Week.Next;
+  }
+
+  needToShowPastDaysSwitcher(): boolean {
+    return Boolean(this.pastDaysMenu.length) && Boolean(this.actualMenu.length);
+  }
+
+  needToShowCurrentWeekOrderImpossible(): boolean {
+    return this.selectedWeek === Week.Current && this.actualMenu.length === 0;
   }
 
   // private init --------------------------------------------------------------
@@ -114,14 +133,15 @@ export class WeekMenuController {
   private fetchData(): void {
     this.loading = true;
 
-    // todo: make only one request
-    this.$q.all<IMenu[]>([
-      this.lWeekMenuService.fetchPastDaysMenuForCurrentWeek(),
-      this.lWeekMenuService.fetchActualMenuForCurrentWeek()
-    ])
-      .then(menus => {
-        this.pastDaysMenu = menus[0];
-        this.actualMenu = menus[1];
+    this.lWeekMenuService.fetchTwoWeekMenu()
+      .then(twoWeeks => {
+        [this.currentWeekMenu, this.nextWeekMenu] = twoWeeks;
+        [this.pastDaysMenu, this.actualMenu] = this.lWeekMenuService.splitToPastAndActualDaysMenu(this.currentWeekMenu);
+
+        // todo: move to separate method?
+        if (this.actualMenu.length === 0) {
+          this.pastDaysMenuHidden = false;
+        }
       })
       .catch(err => this.$log.error(err))
       .finally(() => this.loading = false);

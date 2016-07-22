@@ -27,6 +27,12 @@ export class WeekSwitcherController {
   }
 
   // private init --------------------------------------------------------------
+  $onChanges(changes) {
+    if (changes.inputSelected) {
+      this.selected = this.inputSelected;
+    }
+  }
+
   private initSelectedWeek(): void {
     this.selected = this.inputSelected || Week.Current;
 
@@ -34,7 +40,9 @@ export class WeekSwitcherController {
   }
 
   // private event handlers ----------------------------------------------------
-  private onWeekChanged(): void {
+  private onWeekChanged(newWeek: string): void {
+    this.selected = parseInt(newWeek);
+
     if (this.inputSelected === this.selected) {
       return;
     }
