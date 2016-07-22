@@ -5,6 +5,7 @@ import {IMenu} from '../../components/menu/menu.service';
 import {IOrder} from '../../models/order';
 import {IWeekMenuState} from '../../../routes';
 import {IBasket, BasketService} from '../../containers/basket/basket.service';
+import {Week} from '../../components/week-switcher/week-switcher.component';
 
 export class WeekMenuController {
   // bindings ------------------------------------------------------------------
@@ -12,6 +13,7 @@ export class WeekMenuController {
   basket: IBasket;
   actualMenu: IMenu[];
   pastDaysMenu: IMenu[];
+  selectedWeek: Week;
 
   private pastDaysMenuHidden: boolean;
   private loading: boolean;
@@ -27,6 +29,7 @@ export class WeekMenuController {
 
     this.initMenu();
     this.initPastDaysSwitcher();
+    this.initWeekSwitcher();
     this.initLoading();
     this.initBasket();
     this.fetchData();
@@ -40,6 +43,10 @@ export class WeekMenuController {
     if (!stored) {
       this.$log.error('WeekMenuController: Unable to store basket in storage');
     }
+  }
+
+  onWeekChanged(week: Week): void {
+    this.selectedWeek = week;
   }
 
   togglePastDaysMenu(): void {
@@ -97,6 +104,10 @@ export class WeekMenuController {
   private initMenu(): void {
     this.pastDaysMenu = [];
     this.actualMenu = [];
+  }
+
+  private initWeekSwitcher(): void {
+    this.selectedWeek = Week.Current;
   }
 
   // private helpers -----------------------------------------------------------

@@ -11,6 +11,7 @@ import {SelectorComponent} from './app/components/selector/selector.component';
 import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
 import {QuantitySelectorComponent} from './app/components/quantity-selector/quantity-selector.component';
 import {BasketOrderComponent} from './app/components/basket-order/basket-order.component';
+import {WeekSwitcherComponent} from './app/components/week-switcher/week-switcher.component';
 
 import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
@@ -60,6 +61,7 @@ angular
   .component('lQuantitySelector', QuantitySelectorComponent)
   .component('lBasket', BasketComponent)
   .component('lBasketOrder', BasketOrderComponent)
+  .component('lWeekSwitcher', WeekSwitcherComponent)
 
   .service('lWeekMenuService', WeekMenuService)
   .service('lLineItemService', LineItemService)

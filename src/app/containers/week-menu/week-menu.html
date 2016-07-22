@@ -1,6 +1,12 @@
 <div class="l-week-menu" layout="column" layout-padding>
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
   <div ng-if="!vm.isLoading()">
+
+    <l-week-switcher
+      selected="vm.selectedWeek"
+      on-changed="vm.onWeekChanged(week)">
+    </l-week-switcher>
+
     <md-button ng-if="vm.hasPastDaysMenu()" class="md-raise" ng-click="vm.togglePastDaysMenu()">
       {{ vm.isPastDaysMenuHidden() ? 'Показать меню на прошедшие дни' : 'Спрятать меню на прошедшие дни' }}
     </md-button>
