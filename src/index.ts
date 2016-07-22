@@ -23,18 +23,33 @@ import {DateFilter} from './app/filters/date.filter';
 import 'angular-ui-router';
 import 'angular-material';
 import 'angular-local-storage';
+
 import 'angular-material/angular-material.css';
+
 import {routesConfig} from './routes';
 import {localeConfig, localStorageConfig, currentStateConfig} from './config';
 
 import './index.scss';
 
+// fake-api: comment out when API implemented
+import 'angular-mocks';
+import {fakeApiConfig} from './fake-api/config';
+
 angular
-  .module('app', ['ui.router', 'ngMaterial', 'LocalStorageModule'])
+  .module('app', [
+    'ui.router',
+    'ngMaterial',
+    'LocalStorageModule',
+    // fake-api: comment out when API implemented
+    'ngMockE2E'
+  ])
   .config(routesConfig)
   .config(localeConfig)
   .config(localStorageConfig)
   .run(currentStateConfig)
+
+  // fake-api: comment out when API implemented
+  .run(fakeApiConfig)
 
   .component('lWeekMenu', WeekMenuComponent)
   .component('lMenu', MenuComponent)
