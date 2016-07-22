@@ -1,38 +1,72 @@
+import {each, filter} from 'lodash';
 import * as moment from 'moment';
 import {IHttpService, IPromise} from 'angular';
 
 import {IMenu} from '../../components/menu/menu.service';
-
-export interface IRes<T> {
-  data: T[];
-  status: number;
-  statusText: string;
-  config: any;
-}
 
 export class WeekMenuService {
   constructor(private $http: IHttpService) {
     'ngInject';
   }
 
-  fetchPastDaysMenuForCurrentWeek(): IPromise<IMenu[]> {
+  fetchTwoWeekMenu(): IPromise<IMenu[][]> {
     // todo: do not hardcode BE URL: DEZ-774
     const url = 'http://api.cogniance.lunches.com.ua/menus/week/current';
-    return this.$http.get(url)
-      .then((res: IRes<IMenu>) => {
-        return res.data
-          .filter(menu => moment.utc(menu.date).isBefore(moment()));
-      });
+    return this.$http.get<IMenu[]>(url).then(res => this.splitToCurrentAndNextWeekMenu(res.data));
   }
 
-  fetchActualMenuForCurrentWeek(): IPromise<IMenu[]> {
-    // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/menus/week/current';
-    return this.$http.get(url)
-      .then((res: IRes<IMenu>) => {
-        return res.data
-          .filter(menu => moment.utc(menu.date).isAfter(moment()));
-      });
+  splitToCurrentAndNextWeekMenu(menus: IMenu[]): IMenu[][] {
+    const currentWeekMenu = [];
+    const nextWeekMenu = [];
+
+    each(menus, menu => {
+      if (this.isInsideCurrentWeek(menu.date)) {
+        currentWeekMenu.push(menu);
+      } else if (this.isInsideNextWeek(menu.date)) {
+        nextWeekMenu.push(menu);
+      }
+    });
+
+    return [currentWeekMenu, nextWeekMenu];
+  }
+
+  splitToPastAndActualDaysMenu(menus: IMenu[]): IMenu[][] {
+    const pastDaysMenu = [];
+    const actualDaysMenu = [];
+
+    each(menus, menu => {
+      if (moment.utc(menu.date).isBefore(moment())) {
+        pastDaysMenu.push(menu);
+      } else {
+        actualDaysMenu.push(menu);
+      }
+    });
+
+    return [pastDaysMenu, actualDaysMenu];
+  }
+
+  findPastDaysMenuIn(menus: IMenu[]): IMenu[] {
+    return filter<IMenu>(menus, menu => {
+      return moment.utc(menu.date).isBefore(moment());
+    });
+  }
+
+  private isInsideCurrentWeek(date: string): boolean {
+    return moment.utc(date).isBetween(
+      moment().startOf('week'),
+      moment().endOf('week'),
+      'days',
+      '[]'
+    );
+  }
+
+  private isInsideNextWeek(date: string): boolean {
+    return moment.utc(date).isBetween(
+      moment().add(1, 'weeks').startOf('week'),
+      moment().add(1, 'weeks').endOf('week'),
+      'days',
+      '[]'
+    );
   }
 }
 
