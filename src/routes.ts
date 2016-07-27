@@ -5,10 +5,16 @@ import {ILocationProvider} from 'angular';
 
 export default routesConfig;
 
-export interface IWeekMenuState extends IStateService {
+export interface IBaseState extends IStateService {
+  data: {
+    title: string;
+  };
 }
 
-export interface IBasketState extends IStateService {
+export interface IWeekMenuState extends IBaseState {
+}
+
+export interface IBasketState extends IBaseState {
   params: IBasketStateParams;
 }
 
@@ -31,7 +37,7 @@ export function routesConfig(
       url: '/',
       template: '<l-week-menu/>',
       data: {
-        title: 'Меню на текущую неделю'
+        title: null
       }
     })
     .state('basket', {

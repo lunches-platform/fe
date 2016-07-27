@@ -5,13 +5,18 @@ import {IHttpService, IPromise} from 'angular';
 import {IMenu} from '../../components/menu/menu.service';
 
 export class WeekMenuService {
+  static SHORT_DATE_FORMAT = 'YYYY-MM-DD';
+
   constructor(private $http: IHttpService) {
     'ngInject';
   }
 
   fetchTwoWeekMenu(): IPromise<IMenu[][]> {
+    const startDate = moment().startOf('week').format(WeekMenuService.SHORT_DATE_FORMAT);
+    const endDate = moment().add(1, 'weeks').endOf('week').format(WeekMenuService.SHORT_DATE_FORMAT);
+
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/menus/week/current';
+    const url = 'http://api.cogniance.lunches.com.ua/menus?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IMenu[]>(url).then(res => this.splitToCurrentAndNextWeekMenu(res.data));
   }
 
