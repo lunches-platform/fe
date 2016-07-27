@@ -41,7 +41,7 @@ export class WeekSwitcherController {
 
   // private event handlers ----------------------------------------------------
   private onWeekChanged(newWeek: string): void {
-    this.selected = parseInt(newWeek);
+    this.selected = parseInt(newWeek, 10);
 
     if (this.inputSelected === this.selected) {
       return;

@@ -16,6 +16,10 @@
       <md-button class="md-raised" ng-click="vm.selectNextWeek()">Посмотреть следующую</md-button>
     </span>
 
+    <span class="md-title" ng-show="vm.needToShowNoData()">
+      На выбранную неделю меню еще не сформировано.
+    </span>
+
     <!-- CURRENT WEEK VIEW -->
     <l-view-menu
       ng-show="vm.needToShowCurrentWeekViewMenu()"
