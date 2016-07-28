@@ -4,11 +4,16 @@ import 'moment/locale/ru';
 import * as moment from 'moment';
 type ILocalStorageServiceProvider = angular.local.storage.ILocalStorageServiceProvider;
 import {IStateService} from 'angular-ui-router';
-import {IRootScopeService} from 'angular';
+import {IRootScopeService, IChangesObject} from 'angular';
 
 // todo: is it correct place?
 export interface ILRootScope extends IRootScopeService {
   $state: IStateService;
+}
+
+// todo: is it correct place?
+export interface IChangesList {
+  [property: string]: IChangesObject;
 }
 
 export default localeConfig;

@@ -1,10 +1,11 @@
-import * as angular from 'angular';
 import {cloneDeep} from 'lodash';
+import * as angular from 'angular';
+import {IScope, ILogService} from 'angular';
+
+import {IBasketState} from '../../../routes';
 
 import {IOrder, OrderService} from '../../models/order';
 import {IBasket, BasketService} from './basket.service';
-import {IBasketState} from '../../../routes';
-import {IScope, ILogService} from 'angular';
 
 type IToastService = angular.material.IToastService;
 

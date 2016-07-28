@@ -1,4 +1,6 @@
-import {IScope} from 'angular';
+import {IScope, IComponentOptions} from 'angular';
+
+import {IChangesList} from '../../../config';
 
 interface ITriggerChangeEvent {
   (arg: { week: Week }): void;
@@ -27,8 +29,8 @@ export class WeekSwitcherController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes) {
-    if (changes.inputSelected) {
+  $onChanges(changes: IChangesList) {
+    if (changes['inputSelected']) { // tslint:disable-line:no-string-literal
       this.selected = this.inputSelected;
     }
   }
@@ -52,7 +54,7 @@ export class WeekSwitcherController {
 }
 
 // component definition --------------------------------------------------------
-export const WeekSwitcherComponent = {
+export const WeekSwitcherComponent: IComponentOptions = {
   template: require('./week-switcher.html'),
   controller: WeekSwitcherController,
   controllerAs: 'vm',

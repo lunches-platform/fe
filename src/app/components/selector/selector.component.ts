@@ -1,5 +1,5 @@
 import {cloneDeep} from 'lodash';
-import {IScope} from 'angular';
+import {IScope, IComponentOptions} from 'angular';
 
 export class SelectorController {
   // input bindings
@@ -39,7 +39,7 @@ interface ITriggerSelectEvent {
   (arg: { item: ISelectorItem }): void;
 }
 
-export const SelectorComponent = {
+export const SelectorComponent: IComponentOptions = {
   template: require('./selector.html'),
   controller: SelectorController,
   controllerAs: 'vm',
