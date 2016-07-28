@@ -1,0 +1,23 @@
+<md-toolbar class="md-hue-2 md-whiteframe-4dp">
+  <div class="md-toolbar-tools">
+
+    <md-button class="md-icon-button" ng-if="false">
+      <md-icon aria-label="menu">menu</md-icon>
+    </md-button>
+
+    <div ng-transclude="beforeTitle"></div>
+
+    <div flex hide show-gt-xs ng-click="vm.goToWeekMenu()">Обеды не выходя из офиса</div>
+    <div flex hide-gt-xs ng-click="vm.goToWeekMenu()">Обеды</div>
+
+    <md-button class="md-icon-button" ng-click="vm.goToMyOrders()" ng-if="false">
+      <md-icon aria-label="my orders">receipt</md-icon>
+    </md-button>
+
+    <div ng-transclude="atRight"></div>
+
+    <md-button class="md-icon-button" ng-if="false">
+      <md-icon aria-label="more">more_vert</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
