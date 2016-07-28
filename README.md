@@ -1,7 +1,9 @@
 # Lunches Website Front-End
+[![Code Climate][codeclimate-image]][codeclimate-url] [![Test Coverage][coverage-image]][coverage-url] [![Dependecies][david-dm-image]][david-dm-url]
+
 Website for managing lunches delivery specific activities
 
-## Prerequisites for development  
+## Prerequisites for development
 * Installed [node.js](https://nodejs.org/en/)
 * Installed BE part for this project - [Lunches API](https://github.com/lunches-platform/api)
 
@@ -19,7 +21,7 @@ Website for managing lunches delivery specific activities
 ### NPM dependencies:
 ```
 npm install // (shorthanded to: `npm i`)
-typings install  
+typings install
 ```
 
 ### Available npm tasks
@@ -27,10 +29,10 @@ typings install
 npm install
 
 // build minified production version
-npm run build 
+npm run build
 
 // continuous build and watching for changes, output into ./.tmp folder
-npm run serve 
+npm run serve
 
 // continuous build and watching for changes, output into ./dist folder
 npm run serve:dist
@@ -48,4 +50,11 @@ npm run test:auto
 ### Coverage
 Generated when you run `npm run test` or `npm run test:auto` tasks:
 - html output to `/coverage/`
+
+[codeclimate-image]: https://codeclimate.com/github/lunches-platform/fe/badges/gpa.svg
+[codeclimate-url]: https://codeclimate.com/github/lunches-platform/fe
+[coverage-image]: https://codeclimate.com/github/lunches-platform/fe/badges/coverage.svg
+[coverage-url]: https://codeclimate.com/github/lunches-platform/fe/coverage
+[david-dm-image]: https://david-dm.org/lunches-platform/fe.svg
+[david-dm-url]: https://david-dm.org/lunches-platform/fe
 
