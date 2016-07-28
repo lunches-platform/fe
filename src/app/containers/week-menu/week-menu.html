@@ -1,6 +1,14 @@
-<div class="l-week-menu" layout="column" layout-padding>
+<div class="l-week-menu">
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
-  <div ng-if="!vm.isLoading()">
+  <l-toolbar ng-if="!vm.isLoading()">
+    <l-toolbar-at-right>
+      <md-button class="md-icon-button" ng-click="vm.goToBasket()">
+        <md-icon aria-label="basket">shopping_cart</md-icon>
+      </md-button>
+    </l-toolbar-at-right>
+  </l-toolbar>
+
+  <div ng-if="!vm.isLoading()" layout="column" layout-padding>
 
     <l-week-switcher
       selected="vm.selectedWeek"
