@@ -5,6 +5,12 @@
         <md-icon aria-label="back to week menu">keyboard_arrow_left</md-icon> Меню
       </md-button>
     </l-toolbar-before-title>
+
+    <l-toolbar-at-right>
+      <md-button class="md-icon-button" ng-click="vm.goToMyOrders()">
+        <md-icon aria-label="my orders">receipt</md-icon>
+      </md-button>
+    </l-toolbar-at-right>
   </l-toolbar>
 
   <div ng-if="vm.hasData()" layout="column" layout-padding>

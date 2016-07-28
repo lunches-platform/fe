@@ -4,6 +4,8 @@ import * as angular from 'angular';
 
 import {BasketComponent} from './app/containers/basket/basket.component';
 import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
+import {MyOrdersComponent} from './app/containers/my-orders/my-orders.component';
+
 import {MenuComponent} from './app/components/menu/menu.component';
 import {ViewMenuComponent} from './app/components/view-menu/view-menu.component';
 import {LineItemComponent} from './app/components/line-item/line-item.component';
@@ -13,6 +15,7 @@ import {QuantitySelectorComponent} from './app/components/quantity-selector/quan
 import {BasketOrderComponent} from './app/components/basket-order/basket-order.component';
 import {WeekSwitcherComponent} from './app/components/week-switcher/week-switcher.component';
 import {ToolbarComponent} from './app/components/toolbar/toolbar.component';
+import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
 
 import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
@@ -57,16 +60,19 @@ angular
   // .run(fakeApiConfig)
 
   .component('lWeekMenu', WeekMenuComponent)
+  .component('lBasket', BasketComponent)
+  .component('lMyOrders', MyOrdersComponent)
+
   .component('lMenu', MenuComponent)
   .component('lViewMenu', ViewMenuComponent)
   .component('lLineItem', LineItemComponent)
   .component('lSelector', SelectorComponent)
   .component('lSizeSelector', SizeSelectorComponent)
   .component('lQuantitySelector', QuantitySelectorComponent)
-  .component('lBasket', BasketComponent)
   .component('lBasketOrder', BasketOrderComponent)
   .component('lWeekSwitcher', WeekSwitcherComponent)
   .component('lToolbar', ToolbarComponent)
+  .component('lMyOrdersItem', MyOrdersItemComponent)
 
   .service('lWeekMenuService', WeekMenuService)
   .service('lLineItemService', LineItemService)

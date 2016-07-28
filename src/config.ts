@@ -16,6 +16,13 @@ export interface IChangesList {
   [property: string]: IChangesObject;
 }
 
+function makeCounter() {
+  let i = 0;
+  return () => i++;
+}
+
+export const uniqId = makeCounter();
+
 export default localeConfig;
 
 export function localeConfig() {

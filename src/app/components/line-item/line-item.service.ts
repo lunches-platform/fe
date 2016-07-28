@@ -1,15 +1,24 @@
-import {uniqueId} from 'lodash';
+import {uniqId} from '../../../config';
 
 import {IProduct} from '../../models/product';
 
 export interface ILineItem {
-  id: string;
+  id: number;
   product: IProduct;
   size: string;
   quantity: number;
 }
 
-export class ILineItemRequestBody {
+export interface ILineItemRequestBody {
+  productId: number;
+  size: string;
+  quantity: number;
+}
+
+export interface ILineItemResponseBody {
+  id: number;
+  price: number;
+  // todo: replace with IProduct
   productId: number;
   size: string;
   quantity: number;
@@ -20,10 +29,10 @@ export class LineItemService {
     product: IProduct,
     size: string = 'medium',
     quantity: number = 1,
-    id: string = null
+    id: number = null
   ): ILineItem {
     return {
-      id: id || uniqueId(),
+      id: id || uniqId(),
       product: product,
       size: size,
       quantity: quantity,

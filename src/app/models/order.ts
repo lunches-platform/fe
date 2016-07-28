@@ -1,22 +1,42 @@
 import {cloneDeep, find, reduce, every, map, uniqueId} from 'lodash';
 import {IHttpService, IQService} from 'angular';
 
-import {ILineItemRequestBody, ILineItem, LineItemService} from '../components/line-item/line-item.service';
+import {uniqId} from '../../config';
+
+import {
+  ILineItem,
+  ILineItemRequestBody,
+  ILineItemResponseBody,
+  LineItemService
+} from '../components/line-item/line-item.service';
 import {IProduct} from './product';
 
 export interface IOrder {
-  id: string;
+  id: number;
   items: ILineItem[];
   customer: string;
   address: string;
   shipmentDate: string;
 }
 
-export interface IOrderRequestBody {
+export interface IPlaceOrderRequestBody {
   items: ILineItemRequestBody[];
   customer: string;
   address: string;
   shipmentDate: string;
+}
+
+export interface IOrderResponseBody {
+  id: number;
+  price: number;
+  // todo: rename to `orderNumber`
+  number: number;
+  customer: string;
+  createdAt: string;
+  shipmentDate: string;
+  address: string;
+  // todo: rename to `items`
+  lineItems: ILineItemResponseBody[];
 }
 
 // todo: add types: https://github.com/lunches-platform/fe/issues/17
@@ -32,7 +52,7 @@ export class OrderService {
 
   createOrderByDate(date: string): IOrder {
     return {
-      id: uniqueId(),
+      id: uniqId(),
       items: [],
       customer: null,
       address: null,
@@ -40,7 +60,7 @@ export class OrderService {
     };
   }
 
-  createOrderByDateAndId(date: string, id: string): IOrder {
+  createOrderByDateAndId(date: string, id: number): IOrder {
     return {
       id: id,
       items: [],
@@ -122,7 +142,53 @@ export class OrderService {
     return map(orders, order => this.setAddress(address, order));
   }
 
-  private prepareOrderForApi(order: IOrder): IOrderRequestBody {
+  fetchMyOrders(): IPromise<IOrder[]> {
+    const userName = 'Yuriy';
+    // todo: do not hardcode BE URL: DEZ-774
+    const url = 'http://api.cogniance.lunches.com.ua/customers/' + userName + '/orders';
+    return this.$http.get<IOrderResponseBody[]>(url).then(res => this.transformToOrdersList(res.data));
+  }
+
+  private transformToOrdersList(orders: IOrderResponseBody[]): IOrder[] {
+    return map<IOrderResponseBody, IOrder>(orders, order => {
+
+      const size: ISize = {
+        id: 'medium',
+        title: 'Medium'
+      };
+
+      const items = map<ILineItemResponseBody, ILineItem>(order.lineItems, item => {
+        // todo: replace with real data from API
+        const product: IProduct = {
+          id: item.productId,
+          name: 'Гречка',
+          price: 0,
+          ingredients: [],
+          sizeToWeight: {
+            medium: 100,
+            big: 200
+          }
+        };
+
+        return {
+          id: item.id,
+          product: product,
+          size: size, // todo: replace with real data
+          quantity: item.quantity
+        };
+      });
+
+      return {
+        id: order.id,
+        items: items,
+        customer: order.customer,
+        address: order.address,
+        shipmentDate: 'hello' // todo: replace with real data
+      };
+    });
+  }
+
+  private prepareOrderForApi(order: IOrder): IPlaceOrderRequestBody {
     return {
       items: this.prepareLineItemsForApi(order.items),
       customer: order.customer,

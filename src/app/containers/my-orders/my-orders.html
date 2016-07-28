@@ -1,0 +1,35 @@
+<div class="l-my-orders">
+  <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
+
+  <l-toolbar ng-if="!vm.isLoading()">
+    <l-toolbar-before-title>
+      <md-button ng-click="vm.goToWeekMenu()">
+        <md-icon aria-label="back to week menu">keyboard_arrow_left</md-icon> Меню
+      </md-button>
+    </l-toolbar-before-title>
+
+    <l-toolbar-at-right>
+      <md-button class="md-icon-button" ng-click="vm.goToBasket()">
+        <md-icon aria-label="basket">shopping_cart</md-icon>
+      </md-button>
+    </l-toolbar-at-right>
+  </l-toolbar>
+
+  <div ng-if="!vm.isLoading()" layout="column" layout-padding>
+    <div ng-if="vm.hasData()">
+      <h3 class="md-title">Ваши заказы</h3>
+
+      <l-my-orders-item
+        ng-repeat="order in vm.orders"
+        order="order"
+        on-changed="vm.onChanged(order)"
+        on-cancel="vm.onCanceled(order)"
+        on-restore="vm.onRestored(order)">
+      </l-my-orders-item>
+    </div>
+
+    <div ng-if="vm.isEmpty()">
+      Нет заказов за выбранный период времени
+    <div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 /// <reference path="../typings/index.d.ts" />
-import {IOrder} from './app/models/order';
-import {IStateProvider, IUrlRouterProvider, IStateService, IStateParamsService} from 'angular-ui-router';
+import {IStateProvider, IUrlRouterProvider, IStateService} from 'angular-ui-router';
 import {ILocationProvider} from 'angular';
 
 export default routesConfig;
@@ -11,16 +10,9 @@ export interface IBaseState extends IStateService {
   };
 }
 
-export interface IWeekMenuState extends IBaseState {
-}
-
-export interface IBasketState extends IBaseState {
-  params: IBasketStateParams;
-}
-
-export interface IBasketStateParams extends IStateParamsService {
-  order: IOrder;
-}
+export interface IWeekMenuState extends IBaseState {}
+export interface IBasketState extends IBaseState {}
+export interface IMyOrdersState extends IBaseState {}
 
 export function routesConfig(
   $stateProvider: IStateProvider,
@@ -45,6 +37,13 @@ export function routesConfig(
       template: '<l-basket/>',
       data: {
         title: 'Корзина'
+      }
+    })
+    .state('my-orders', {
+      url: '/my-orders',
+      template: '<l-my-orders/>',
+      data: {
+        title: 'Мои заказы'
       }
     });
 }
