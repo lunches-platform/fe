@@ -1,7 +1,8 @@
+import {cloneDeep} from 'lodash';
+import {IScope, IComponentOptions} from 'angular';
+
 import {ILineItem, LineItemService} from './line-item.service';
 import {ISize} from '../size-selector/size-selector.component';
-import {IScope} from 'angular';
-import {cloneDeep} from 'lodash';
 
 interface ITriggerChangeEvent {
   (arg: { item: ILineItem }): void;
@@ -71,7 +72,7 @@ export class LineItemController {
   }
 }
 
-export const LineItemComponent = {
+export const LineItemComponent: IComponentOptions = {
   template: require('./line-item.html'),
   controller: LineItemController,
   controllerAs: 'vm',

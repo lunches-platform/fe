@@ -1,12 +1,14 @@
 import {cloneDeep} from 'lodash';
-import {IScope} from 'angular';
+import {IScope, IComponentOptions} from 'angular';
+
+import {IChangesList} from '../../../config';
+import {IWeekMenuState} from '../../../routes';
 
 import {IMenu} from './menu.service';
 import {IProduct} from '../../models/product';
 import {IOrder, OrderService} from '../../models/order';
 import {IOrderForm, OrderFormService} from './order.form';
 import {ILineItem, LineItemService} from '../line-item/line-item.service';
-import {IWeekMenuState} from '../../../routes';
 
 interface ITriggerOrderPlaceEvent {
   (arg: { order: IOrder }): void;
@@ -80,9 +82,8 @@ export class MenuController {
   }
 
   // private init --------------------------------------------------------------
-  // todo: add typings
-  $onChanges(changes) {
-    if (changes.menu) {
+  $onChanges(changes: IChangesList) {
+    if (changes['menu']) { // tslint:disable-line:no-string-literal
       this.onInputMenuChanged(this.menu);
 
       this.init();
@@ -131,7 +132,7 @@ export class MenuController {
 }
 
 // component definition --------------------------------------------------------
-export const MenuComponent = {
+export const MenuComponent: IComponentOptions = {
   template: require('./menu.html'),
   controller: MenuController,
   controllerAs: 'vm',

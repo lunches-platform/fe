@@ -1,3 +1,5 @@
+import {IComponentOptions} from 'angular';
+
 interface IOnQuantityChangedEvent {
   (arg: { quantity: number }): void;
 }
@@ -41,7 +43,7 @@ export class QuantitySelectorController {
   }
 }
 
-export const QuantitySelectorComponent = {
+export const QuantitySelectorComponent: IComponentOptions = {
   template: require('./quantity-selector.html'),
   controller: QuantitySelectorController,
   controllerAs: 'vm',

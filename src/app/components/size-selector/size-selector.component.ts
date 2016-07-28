@@ -1,4 +1,5 @@
 import {cloneDeep} from 'lodash';
+import {IComponentOptions} from 'angular';
 
 // todo: replace just with `id: string`. Get the title from translate file: DEZ-773
 export interface ISize {
@@ -45,7 +46,7 @@ interface ITriggerSizeSelectEvent {
   (arg: { size: ISize }): void;
 }
 
-export const SizeSelectorComponent = {
+export const SizeSelectorComponent: IComponentOptions = {
   template: require('./size-selector.html'),
   controller: SizeSelectorController,
   controllerAs: 'vm',

@@ -1,8 +1,11 @@
 import {cloneDeep} from 'lodash';
+import {IComponentOptions} from 'angular';
+
+import {IChangesList} from '../../../config';
+import {IBasketState} from '../../../routes';
 
 import {IOrder} from '../../models/order';
 import {LineItemService} from '../line-item/line-item.service';
-import {IBasketState} from '../../../routes';
 
 // output bindings interfaces --------------------------------------------------
 interface ITriggerRemoveEvent {
@@ -62,9 +65,8 @@ export class BasketOrderController {
   }
 
   // private init --------------------------------------------------------------
-  // todo: add typings
-  $onChanges(changes) {
-    if (changes.order) {
+  $onChanges(changes: IChangesList) {
+    if (changes['order']) { // tslint:disable-line:no-string-literal
       this.onInputOrderChanged(this.order);
     }
   }
@@ -76,7 +78,7 @@ export class BasketOrderController {
 }
 
 // component definition --------------------------------------------------------
-export const BasketOrderComponent = {
+export const BasketOrderComponent: IComponentOptions = {
   template: require('./basket-order.html'),
   controller: BasketOrderController,
   controllerAs: 'vm',
