@@ -1,5 +1,5 @@
-import {cloneDeep, find, reduce, every, map, uniqueId} from 'lodash';
-import {IHttpService, IQService} from 'angular';
+import {cloneDeep, find, reduce, every, map} from 'lodash';
+import {IHttpService, IQService, IPromise} from 'angular';
 
 import {uniqId} from '../../config';
 import {IUser, UserService} from './user';
@@ -152,12 +152,10 @@ export class OrderService {
     return this.updateIn(order, 'canceled', false);
   }
 
-  cancelOrderIn(orders: IOrder[], orderToBeCanceled: IOrder): IOrder[] {
-    return this.updateOrderIn(orders, orderToBeCanceled, 'canceled', true);
-  }
-
-  restoreOrderIn(orders: IOrder[], orderToBeRestored: IOrder): IOrder[] {
-    return this.updateOrderIn(orders, orderToBeRestored, 'canceled', false);
+  updateOrderIn(orders: IOrder[], orderToBeUpdated: IOrder): IOrder[] {
+    return map(orders, order => {
+      return order.id === orderToBeUpdated.id ? orderToBeUpdated : order;
+    });
   }
 
   syncOrderFor(user: IUser, order: IOrder): IPromise<IOrder> {
@@ -174,11 +172,6 @@ export class OrderService {
     return order;
   }
 
-  private updateOrderIn(orders: IOrder[], orderToBeUpdated: IOrder, key: string, value: any): IOrder[] {
-    return map(orders, order => {
-      return order.id === orderToBeUpdated.id ? this.updateIn(order, key, value) : order;
-    });
-  }
 
   private prepareOrderForApi(order: IOrder): IPlaceOrderRequestBody {
     return {

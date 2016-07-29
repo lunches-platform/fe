@@ -29,36 +29,19 @@ export class MyOrdersController {
   }
 
   // dom event handlers --------------------------------------------------------
-  onCancel(order: IOrder): void {
-    this.cancel(order);
+  onChange(order: IOrder, oldOrder: IOrder): void {
+    this.update(order);
 
     this.lOrderService.syncOrderFor(this.user, order)
       .catch(err => {
-        this.lToastService.show('Unable to cancel order');
-        this.restore(order);
+        this.lToastService.show('Unable to update order');
+        this.update(oldOrder);
       });
   }
 
-  onRestore(order: IOrder): void {
-    this.restore(order);
-
-    this.lOrderService.syncOrderFor(this.user, order)
-      .catch(err => {
-        this.lToastService.show('Unable to restore order');
-        this.cancel(order);
-      });
+  onNewOrder(): void {
+    this.goToWeekMenu();
   }
-
-  // todo: implement
-  // onUpdate(order: IOrder): void {
-  //   this.update(order);
-
-  //   this.lOrderService.syncOrderFor(this.user, order)
-  //     .catch(err => {
-  //       this.lToastService.show('Unable to update order');
-  //       this.update(order);
-  //     });
-  // }
 
   goToWeekMenu(): void {
     this.$state.go('week-menu');
@@ -101,13 +84,10 @@ export class MyOrdersController {
   private initUser(): void {
     this.user = this.lUserService.me();
   }
-  // private helpers -----------------------------------------------------------
-  private restore(order: IOrder): void {
-    this.orders = this.lOrderService.restoreOrderIn(this.orders, order);
-  }
 
-  private cancel(order: IOrder): void {
-    this.orders = this.lOrderService.cancelOrderIn(this.orders, order);
+  // private helpers -----------------------------------------------------------
+  private update(order: IOrder): void {
+    this.orders = this.lOrderService.updateOrderIn(this.orders, order);
   }
 
   // private event handlers ----------------------------------------------------

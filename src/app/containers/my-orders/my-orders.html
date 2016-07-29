@@ -22,9 +22,8 @@
       <l-my-orders-item
         ng-repeat="order in vm.orders"
         order="order"
-        on-changed="vm.onUpdate(order)"
-        on-cancel="vm.onCancel(order)"
-        on-restore="vm.onRestore(order)">
+        on-change="vm.onChange(order, oldOrder)"
+        on-new-order="vm.onNewOrder()">
       </l-my-orders-item>
     </div>
 

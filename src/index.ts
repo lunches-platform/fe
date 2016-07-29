@@ -16,11 +16,12 @@ import {BasketOrderComponent} from './app/components/basket-order/basket-order.c
 import {WeekSwitcherComponent} from './app/components/week-switcher/week-switcher.component';
 import {ToolbarComponent} from './app/components/toolbar/toolbar.component';
 import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
+import {ViewOrderComponent} from './app/components/view-order/view-order.component';
 
 import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
+import {BasketService} from './app/containers/basket/basket.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
 import {OrderFormService} from './app/components/menu/order.form';
-import {BasketService} from './app/containers/basket/basket.service';
 
 import {OrderService} from './app/models/order';
 import {UserService} from './app/models/user';
@@ -73,6 +74,7 @@ angular
   .component('lWeekSwitcher', WeekSwitcherComponent)
   .component('lToolbar', ToolbarComponent)
   .component('lMyOrdersItem', MyOrdersItemComponent)
+  .component('lViewOrder', ViewOrderComponent)
 
   .service('lWeekMenuService', WeekMenuService)
   .service('lLineItemService', LineItemService)

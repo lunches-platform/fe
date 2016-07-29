@@ -1,24 +1,10 @@
 <div layout="column" class="l-my-orders-item" >
-  <h2 flex class="md-headline title">{{ vm.order.shipmentDate | lDate }}</h2>
+  <l-view-order
+    ng-if="vm.isViewMode()"
+    order="vm.order"
+    on-change="vm.onChange(order)"
+    on-new-order="vm.onNewOrder()">
+  </l-view-order>
 
-  <div ng-if="vm.isExist()">
-    <div class="line-items" flex>
-      <div ng-repeat="item in vm.order.items" flex="100">
-        <div class="md-subhead">{{ item.product.name }}</div>
-        <div flex class="md-caption">{{ item.product.ingredients.join(', ') }}</div>
-      </div>
-    </div>
-    <md-button class="md-raised" ng-click="vm.cancel()" ng-if="vm.needToShowCancelButton()">Отменить заказ</md-button>
-    <span class="md-headline price-label">{{ vm.order.price }} грн</span>
-  </div>
-
-  <div ng-if="vm.isCanceled()" layout="row" layout-align="center center">
-    <div class="md-body1">Вы отменили этот заказ.
-      <md-button class="md-raised" ng-click="vm.addAnother()">Сделать другой заказ</md-button>
-      <md-button class="md-raised md-primary" ng-click="vm.restore()">Вернуть обратно</md-button>
-    </div>
-  </div>
-
-  <md-divider />
+  <l-edit-order ng-if="vm.isEditMode()" on-change="vm.onChange()"></l-edit-order>
 </div>
-
