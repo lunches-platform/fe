@@ -20,6 +20,7 @@ import {OrderService} from './app/models/order';
 import {OrderFormService} from './app/components/menu/order.form';
 import {BasketService} from './app/containers/basket/basket.service';
 
+import {UserService} from './app/models/user';
 import {DateFilter} from './app/filters/date.filter';
 
 import 'angular-ui-router';
@@ -70,6 +71,7 @@ angular
   .service('lOrderService', OrderService)
   .service('lOrderFormService', OrderFormService)
   .service('lBasketService', BasketService)
+  .service('lUserService', UserService)
 
   .filter('lDate', DateFilter)
   ;

@@ -1,4 +1,4 @@
-<div class="basket-container">
+<div class="l-basket">
   <l-toolbar ng-if="!vm.isLoading()">
     <l-toolbar-before-title>
       <md-button ng-click="vm.goToWeekMenu()">
@@ -44,7 +44,7 @@
     <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrdersValid()">Заказать</md-button>
   </div>
 
-  <div ng-if="vm.isEmpty()">
+  <div ng-if="vm.isEmpty()" layout="column" layout-padding>
     В корзине пусто
   <div>
 </div>
