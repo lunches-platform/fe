@@ -7,7 +7,7 @@
     </l-toolbar-before-title>
 
     <l-toolbar-at-right>
-      <md-button class="md-icon-button" ng-click="vm.goToMyOrders()">
+      <md-button class="md-icon-button" ng-click="vm.goToMyOrders()" ng-if="vm.user">
         <md-icon aria-label="my orders">receipt</md-icon>
       </md-button>
     </l-toolbar-at-right>

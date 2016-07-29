@@ -40,7 +40,7 @@ export class WeekMenuService {
     const actualDaysMenu = [];
 
     each(menus, menu => {
-      if (moment.utc(menu.date).isBefore(moment())) {
+      if (moment(menu.date).isBefore(moment())) {
         pastDaysMenu.push(menu);
       } else {
         actualDaysMenu.push(menu);
@@ -52,12 +52,12 @@ export class WeekMenuService {
 
   findPastDaysMenuIn(menus: IMenu[]): IMenu[] {
     return filter<IMenu>(menus, menu => {
-      return moment.utc(menu.date).isBefore(moment());
+      return moment(menu.date).isBefore(moment());
     });
   }
 
   private isInsideCurrentWeek(date: string): boolean {
-    return moment.utc(date).isBetween(
+    return moment(date).isBetween(
       moment().startOf('week'),
       moment().endOf('week'),
       'days',
@@ -66,7 +66,7 @@ export class WeekMenuService {
   }
 
   private isInsideNextWeek(date: string): boolean {
-    return moment.utc(date).isBetween(
+    return moment(date).isBetween(
       moment().add(1, 'weeks').startOf('week'),
       moment().add(1, 'weeks').endOf('week'),
       'days',

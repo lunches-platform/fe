@@ -2,7 +2,7 @@
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
   <l-toolbar ng-if="!vm.isLoading()">
     <l-toolbar-at-right>
-      <md-button class="md-icon-button" ng-click="vm.goToMyOrders()">
+      <md-button class="md-icon-button" ng-click="vm.goToMyOrders()" ng-if="vm.user">
         <md-icon aria-label="my orders">receipt</md-icon>
       </md-button>
 

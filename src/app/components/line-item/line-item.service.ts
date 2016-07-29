@@ -15,15 +15,6 @@ export interface ILineItemRequestBody {
   quantity: number;
 }
 
-export interface ILineItemResponseBody {
-  id: number;
-  price: number;
-  // todo: replace with IProduct
-  productId: number;
-  size: string;
-  quantity: number;
-}
-
 export class LineItemService {
   createLineItem(
     product: IProduct,

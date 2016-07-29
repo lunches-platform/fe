@@ -2,21 +2,21 @@ import {cloneDeep, find, reduce, every, map, uniqueId} from 'lodash';
 import {IHttpService, IQService} from 'angular';
 
 import {uniqId} from '../../config';
+import {IUser, UserService} from './user';
 
-import {
-  ILineItem,
-  ILineItemRequestBody,
-  ILineItemResponseBody,
-  LineItemService
-} from '../components/line-item/line-item.service';
+import {ILineItem, ILineItemRequestBody, LineItemService} from '../components/line-item/line-item.service';
 import {IProduct} from './product';
 
 export interface IOrder {
   id: number;
   items: ILineItem[];
-  customer: string;
-  address: string;
   shipmentDate: string;
+  address: string;
+  customer: string;
+  canceled: boolean;
+  createdAt?: string;
+  orderNumber?: string;
+  price?: number;
 }
 
 export interface IPlaceOrderRequestBody {
@@ -26,26 +26,14 @@ export interface IPlaceOrderRequestBody {
   shipmentDate: string;
 }
 
-export interface IOrderResponseBody {
-  id: number;
-  price: number;
-  // todo: rename to `orderNumber`
-  number: number;
-  customer: string;
-  createdAt: string;
-  shipmentDate: string;
-  address: string;
-  // todo: rename to `items`
-  lineItems: ILineItemResponseBody[];
-}
-
 // todo: add types: https://github.com/lunches-platform/fe/issues/17
 export class OrderService {
 
   constructor(
     private $http: IHttpService,
     private $q: IQService,
-    private lLineItemService: LineItemService
+    private lLineItemService: LineItemService,
+    private lUserService: UserService
   ) {
     'ngInject';
   }
@@ -56,7 +44,9 @@ export class OrderService {
       items: [],
       customer: null,
       address: null,
-      shipmentDate: date
+      shipmentDate: date,
+      price: 0,
+      canceled: false
     };
   }
 
@@ -66,7 +56,9 @@ export class OrderService {
       items: [],
       customer: null,
       address: null,
-      shipmentDate: date
+      shipmentDate: date,
+      price: 0,
+      canceled: false
     };
   }
 
@@ -76,6 +68,8 @@ export class OrderService {
     items.forEach(item => {
       order.items.push(item);
     });
+
+    order.price = this.calcPriceFor(order);
 
     return order;
   }
