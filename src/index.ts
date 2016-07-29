@@ -16,11 +16,13 @@ import {ToolbarComponent} from './app/components/toolbar/toolbar.component';
 
 import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
-import {OrderService} from './app/models/order';
 import {OrderFormService} from './app/components/menu/order.form';
 import {BasketService} from './app/containers/basket/basket.service';
 
+import {OrderService} from './app/models/order';
 import {UserService} from './app/models/user';
+import {ToastService} from './app/models/toast';
+
 import {DateFilter} from './app/filters/date.filter';
 
 import 'angular-ui-router';
@@ -72,6 +74,7 @@ angular
   .service('lOrderFormService', OrderFormService)
   .service('lBasketService', BasketService)
   .service('lUserService', UserService)
+  .service('lToastService', ToastService)
 
   .filter('lDate', DateFilter)
   ;
