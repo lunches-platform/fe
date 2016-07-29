@@ -3,6 +3,7 @@ import {ILogService, IScope} from 'angular';
 import {WeekMenuService} from './week-menu.service';
 import {IMenu} from '../../components/menu/menu.service';
 import {IOrder} from '../../models/order';
+import {IUser, UserService} from '../../models/user';
 import {IWeekMenuState} from '../../../routes';
 import {IBasket, BasketService} from '../../containers/basket/basket.service';
 import {Week} from '../../components/week-switcher/week-switcher.component';
@@ -14,6 +15,7 @@ export class WeekMenuController {
   selectedWeek: Week;
   nextWeekMenu: IMenu[];
   currentWeekMenu: IMenu[];
+  user: IUser;
 
   // these two are just shortcut for currentWeekMenu
   actualMenu: IMenu[];
@@ -27,10 +29,12 @@ export class WeekMenuController {
     private $scope: IScope,
     private $log: ILogService,
     private lWeekMenuService: WeekMenuService,
-    private lBasketService: BasketService
+    private lBasketService: BasketService,
+    private lUserService: UserService
   ) {
     'ngInject';
 
+    this.initUser();
     this.initMenu();
     this.initPastDaysSwitcher();
     this.initWeekSwitcher();
@@ -139,6 +143,10 @@ export class WeekMenuController {
     this.$scope.$watch(() => this.selectedWeek, () => {
       this.$state.current.data.title = this.isCurrentWeek() ? 'Меню на текущую неделю' : 'Меню на следующую неделю';
     });
+  }
+
+  private initUser(): void {
+    this.user = this.lUserService.me();
   }
 
   // private helpers -----------------------------------------------------------

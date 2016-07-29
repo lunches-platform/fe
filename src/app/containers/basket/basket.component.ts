@@ -5,6 +5,7 @@ import {IScope, ILogService} from 'angular';
 import {IBasketState} from '../../../routes';
 
 import {IOrder, OrderService} from '../../models/order';
+import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from './basket.service';
 
 type IToastService = angular.material.IToastService;
@@ -18,6 +19,7 @@ export class BasketController {
   cardNumber: string;
   cardHolder: string;
   ordersForReview: IOrder[];
+  user: IUser;
 
   private toastPosition = 'top right';
   private toastHideDelay = 5000;
@@ -28,10 +30,12 @@ export class BasketController {
     private $log: ILogService,
     private $mdToast: IToastService,
     private lBasketService: BasketService,
-    private lOrderService: OrderService
+    private lOrderService: OrderService,
+    private lUserService: UserService
   ) {
     'ngInject';
 
+    this.initUser();
     this.initBasket();
     this.initCustomer();
     this.initAddress();
@@ -116,6 +120,10 @@ export class BasketController {
     this.cardNumber = '1234-5678-8765-4321';
   }
 
+  private initUser(): void {
+    this.user = this.lUserService.me();
+  }
+
   // private helpers -----------------------------------------------------------
   private clearBasket(): void {
     this.basket = this.lBasketService.clearBasket(this.basket);
@@ -133,14 +141,23 @@ export class BasketController {
 
   // private event handlers ----------------------------------------------------
   private onCustomerChanged(customer: string): void {
+    if (!customer) {
+      return;
+    }
+
+    this.user = this.lUserService.updateFullNameFor(this.user, customer);
+    this.lUserService.sync(this.user);
     this.basket = this.lBasketService.setCustomerForAllOrdersIn(this.basket, customer);
     this.lBasketService.storeBasketInStorage(this.basket);
   }
 
   private onAddressChanged(address: string): void {
+    this.user = this.lUserService.updateAddressFor(this.user, address);
+    this.lUserService.sync(this.user);
     this.basket = this.lBasketService.setAddressForAllOrdersIn(this.basket, address);
     this.lBasketService.storeBasketInStorage(this.basket);
   }
+
 }
 
 // component definition --------------------------------------------------------
