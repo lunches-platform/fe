@@ -137,48 +137,46 @@ export class OrderService {
   }
 
   fetchMyOrders(): IPromise<IOrder[]> {
-    const userName = 'Yuriy';
+    const me = this.lUserService.me();
+
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/customers/' + userName + '/orders';
-    return this.$http.get<IOrderResponseBody[]>(url).then(res => this.transformToOrdersList(res.data));
+    const url = 'http://api.cogniance.lunches.com.ua/customers/' + me.fullName + '/orders';
+    return this.$http.get<IOrder[]>(url).then(res => res.data);
   }
 
-  private transformToOrdersList(orders: IOrderResponseBody[]): IOrder[] {
-    return map<IOrderResponseBody, IOrder>(orders, order => {
+  cancel(order: IOrder): IOrder {
+    return this.updateIn(order, 'canceled', true);
+  }
 
-      const size: ISize = {
-        id: 'medium',
-        title: 'Medium'
-      };
+  restore(order: IOrder): IOrder {
+    return this.updateIn(order, 'canceled', false);
+  }
 
-      const items = map<ILineItemResponseBody, ILineItem>(order.lineItems, item => {
-        // todo: replace with real data from API
-        const product: IProduct = {
-          id: item.productId,
-          name: 'Гречка',
-          price: 0,
-          ingredients: [],
-          sizeToWeight: {
-            medium: 100,
-            big: 200
-          }
-        };
+  cancelOrderIn(orders: IOrder[], orderToBeCanceled: IOrder): IOrder[] {
+    return this.updateOrderIn(orders, orderToBeCanceled, 'canceled', true);
+  }
 
-        return {
-          id: item.id,
-          product: product,
-          size: size, // todo: replace with real data
-          quantity: item.quantity
-        };
-      });
+  restoreOrderIn(orders: IOrder[], orderToBeRestored: IOrder): IOrder[] {
+    return this.updateOrderIn(orders, orderToBeRestored, 'canceled', false);
+  }
 
-      return {
-        id: order.id,
-        items: items,
-        customer: order.customer,
-        address: order.address,
-        shipmentDate: 'hello' // todo: replace with real data
-      };
+  syncOrderFor(user: IUser, order: IOrder): IPromise<IOrder> {
+    // todo: do not hardcode BE URL: DEZ-774
+    const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullName + '/orders/' + order.id;
+    return this.$http
+      .put<IOrder>(url, order)
+      .then(res => res.data);
+  }
+
+  private updateIn(inputOrder: IOrder, key: string, value: any): IOrder {
+    const order = cloneDeep(inputOrder);
+    order[key] = value;
+    return order;
+  }
+
+  private updateOrderIn(orders: IOrder[], orderToBeUpdated: IOrder, key: string, value: any): IOrder[] {
+    return map(orders, order => {
+      return order.id === orderToBeUpdated.id ? this.updateIn(order, key, value) : order;
     });
   }
 

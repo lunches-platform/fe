@@ -1,5 +1,6 @@
 import {cloneDeep} from 'lodash';
 import {IComponentOptions} from 'angular';
+import * as moment from 'moment';
 
 import {IChangesList} from '../../../config';
 import {IBasketState} from '../../../routes';
@@ -40,6 +41,8 @@ export class MyOrdersItemController {
     private lLineItemService: LineItemService
   ) {
     'ngInject';
+
+    this.initCanceledState();
   }
 
   // dom event handlers --------------------------------------------------------
@@ -67,8 +70,8 @@ export class MyOrdersItemController {
     return !this.canceled;
   }
 
-  calcPrice(): number {
-    return this.lLineItemService.calcPriceForAll(this.order.items);
+  needToShowCancelButton(): boolean {
+    return this.isCurrentDateBeforeShipmentDate();
   }
 
   // private init --------------------------------------------------------------
@@ -78,9 +81,19 @@ export class MyOrdersItemController {
     }
   }
 
+  private initCanceledState(): void {
+    this.canceled = this.order.canceled;
+  }
+
   // private event handlers ----------------------------------------------------
   private onInputOrderChanged(order: IOrder) {
     this.order = cloneDeep(order);
+
+    this.initCanceledState();
+  }
+
+  private isCurrentDateBeforeShipmentDate(): boolean {
+    return moment().isBefore(moment(this.order.shipmentDate));
   }
 }
 
@@ -91,8 +104,8 @@ export const MyOrdersItemComponent: IComponentOptions = {
   controllerAs: 'vm',
   bindings: {
     order: '<',
-    triggerCancelEvent: '&onCanceled',
-    triggerRestoreEvent: '&onRestored',
+    triggerCancelEvent: '&onCancel',
+    triggerRestoreEvent: '&onRestore',
     triggerChangeEvent: '&onChanged'
   }
 };
