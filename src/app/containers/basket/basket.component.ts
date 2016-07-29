@@ -1,14 +1,12 @@
 import {cloneDeep} from 'lodash';
-import * as angular from 'angular';
 import {IScope, ILogService} from 'angular';
 
 import {IBasketState} from '../../../routes';
 
 import {IOrder, OrderService} from '../../models/order';
 import {IUser, UserService} from '../../models/user';
+import {ToastService} from '../../models/toast';
 import {IBasket, BasketService} from './basket.service';
-
-type IToastService = angular.material.IToastService;
 
 export class BasketController {
   // bindings ------------------------------------------------------------------
@@ -21,16 +19,13 @@ export class BasketController {
   ordersForReview: IOrder[];
   user: IUser;
 
-  private toastPosition = 'top right';
-  private toastHideDelay = 5000;
-
   constructor(
     private $state: IBasketState,
     private $scope: IScope,
     private $log: ILogService,
-    private $mdToast: IToastService,
     private lBasketService: BasketService,
     private lOrderService: OrderService,
+    private lToastService: ToastService,
     private lUserService: UserService
   ) {
     'ngInject';
@@ -46,11 +41,11 @@ export class BasketController {
   makeOrder(): void {
     this.lOrderService.placeOrders(this.basket.orders)
       .then(res => {
-        this.showToast('Orders have been placed!');
+        this.lToastService.show('Orders have been placed!');
         this.clearBasket();
       })
       .catch(err => {
-        this.showToast('Error! Unable to place orders');
+        this.lToastService.show('Error! Unable to place orders');
       })
       .finally(() => {
         this.$state.go('week-menu');
@@ -128,15 +123,6 @@ export class BasketController {
   private clearBasket(): void {
     this.basket = this.lBasketService.clearBasket(this.basket);
     this.lBasketService.storeBasketInStorage(this.basket);
-  }
-
-  private showToast(msg: string): void {
-    this.$mdToast.show(
-      this.$mdToast.simple()
-        .textContent(msg)
-        .position(this.toastPosition)
-        .hideDelay(this.toastHideDelay)
-    );
   }
 
   // private event handlers ----------------------------------------------------
