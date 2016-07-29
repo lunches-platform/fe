@@ -2,7 +2,6 @@ import {cloneDeep, find, reduce, every, map, uniqueId} from 'lodash';
 import {IHttpService, IQService} from 'angular';
 
 import {ILineItemRequestBody, ILineItem, LineItemService} from '../components/line-item/line-item.service';
-import {ISize} from '../components/size-selector/size-selector.component';
 import {IProduct} from './product';
 
 export interface IOrder {
@@ -77,7 +76,7 @@ export class OrderService {
     return this.lLineItemService.calcPriceForAll(order.items);
   }
 
-  updateSizeForProductIn(order: IOrder, product: IProduct, size: ISize): IOrder {
+  updateSizeForProductIn(order: IOrder, product: IProduct, size: string): IOrder {
     return this.updateLineItemProperty(order, product, 'size', size);
   }
 
@@ -136,13 +135,13 @@ export class OrderService {
     return items.map(item => {
       return {
         productId: item.product.id,
-        size: item.size.id,
+        size: item.size,
         quantity: item.quantity
       };
     });
   }
 
-  private updateLineItemProperty(_order: IOrder, product: IProduct, key: string, value: ISize | number) {
+  private updateLineItemProperty(_order: IOrder, product: IProduct, key: string, value: string | number) {
     let order = cloneDeep(_order);
 
     let lineItem = find(order.items, ['product.id', product.id]);

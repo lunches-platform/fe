@@ -1,51 +1,76 @@
-import {cloneDeep} from 'lodash';
 import {IComponentOptions} from 'angular';
 
-// todo: replace just with `id: string`. Get the title from translate file: DEZ-773
-export interface ISize {
-  id: string;
-  title: string;
+import {IChangesList} from '../../../config';
+
+import {ISelectorItem} from '../selector/selector.component';
+
+// internal types --------------------------------------------------------------
+interface ITriggerSizeSelectEvent {
+  (arg: { size: string }): void;
 }
 
 export class SizeSelectorController {
-  // input bindings
-  inputSize: ISize;
+  // bindings ------------------------------------------------------------------
+  // input
+  inputSize: string;
 
-  // output bindings
+  // output
   triggerSizeSelectEvent: ITriggerSizeSelectEvent;
 
-  // internal bindings
-  selectedSize: ISize;
-  sizes: ISize[];
+  // internal
+  selectedSize: ISelectorItem;
+  sizes: ISelectorItem[];
+
+  private sizeToTitleMap;
 
   constructor() {
-    this.initSelectedSize();
+    this.initSizeToTitleMap();
     this.initSizes();
   }
 
-  onSelected(size: ISize): void {
-    this.triggerSizeSelectEvent({size});
+  // dom event handlers --------------------------------------------------------
+  onSelected(size: ISelectorItem): void {
+    this.triggerSizeSelectEvent({size: size.id});
   }
 
-  private initSelectedSize(): void {
-    this.selectedSize = cloneDeep(this.inputSize);
+  // private init --------------------------------------------------------------
+  $onChanges(changes: IChangesList) {
+    /* tslint:disable:no-string-literal */
+    if (changes['inputSize']) {
+      this.onInputSizeChanged(changes['inputSize'].currentValue);
+    }
+    /* tslint:enable:no-string-literal */
   }
 
   private initSizes(): void {
-    this.sizes = [{
-      id: 'medium',
-      title: 'Middle'
-    }, {
-      id: 'big',
-      title: 'Big'
-    }];
+    this.sizes = [
+      this.createSelectorItemFor('medium'),
+      this.createSelectorItemFor('big')
+    ];
+  }
+
+  private initSizeToTitleMap(): void {
+    this.sizeToTitleMap = {
+      medium: 'Средняя',
+      big: 'Большая'
+    };
+  }
+
+  // private helpers -----------------------------------------------------------
+  private createSelectorItemFor(size: string): ISelectorItem {
+    return {
+      id: size,
+      title: this.sizeToTitleMap[size]
+    };
+  }
+
+  // private event handlers ----------------------------------------------------
+  private onInputSizeChanged(inputSize: string): void {
+    this.selectedSize = this.createSelectorItemFor(inputSize);
   }
 }
 
-interface ITriggerSizeSelectEvent {
-  (arg: { size: ISize }): void;
-}
-
+// component definition --------------------------------------------------------
 export const SizeSelectorComponent: IComponentOptions = {
   template: require('./size-selector.html'),
   controller: SizeSelectorController,

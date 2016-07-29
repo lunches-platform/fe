@@ -1,4 +1,4 @@
-<md-select class="l-selector" ng-model="vm.selected" ng-model-options="{trackBy: '$value.id'}" placeholder="Select a size">
-  <md-option ng-repeat="item in vm.items" ng-value="item">{{ item.title }}</md-option>
+<md-select class="l-selector" ng-model="vm.selectedItem" ng-model-options="{trackBy: '$value.id'}" placeholder="Выберите размер">
+  <md-option ng-repeat="item in vm.inputItems" ng-value="item">{{ item.title }}</md-option>
 </md-select>
 
