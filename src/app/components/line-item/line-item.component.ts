@@ -2,7 +2,6 @@ import {cloneDeep} from 'lodash';
 import {IScope, IComponentOptions} from 'angular';
 
 import {ILineItem, LineItemService} from './line-item.service';
-import {ISize} from '../size-selector/size-selector.component';
 
 interface ITriggerChangeEvent {
   (arg: { item: ILineItem }): void;
@@ -23,7 +22,7 @@ export class LineItemController {
   // internal bindings
   checked: boolean;
 
-  private defaultSize: ISize;
+  private defaultSize: string;
 
   constructor(private $scope: IScope, private lLineItemService: LineItemService) {
     'ngInject';
@@ -41,7 +40,7 @@ export class LineItemController {
     this.triggerToggleEvent({item: this.lineItem, checked: checked});
   }
 
-  onSizeSelected(size: ISize): void {
+  onSizeSelected(size: string): void {
     this.lineItem.size = size;
 
     this.triggerChangeEvent({item: this.lineItem});
@@ -58,10 +57,7 @@ export class LineItemController {
   }
 
   private initSelectedSize(): void {
-    this.defaultSize = {
-      id: 'medium',
-      title: 'Medium'
-    };
+    this.defaultSize = 'medium';
 
     this.lineItem.size = this.lineItem.size || cloneDeep(this.defaultSize);
   }

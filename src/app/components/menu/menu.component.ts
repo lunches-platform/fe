@@ -10,6 +10,7 @@ import {IOrder, OrderService} from '../../models/order';
 import {IOrderForm, OrderFormService} from './order.form';
 import {ILineItem, LineItemService} from '../line-item/line-item.service';
 
+// internal types --------------------------------------------------------------
 interface ITriggerOrderPlaceEvent {
   (arg: { order: IOrder }): void;
 }

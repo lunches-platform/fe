@@ -1,50 +1,80 @@
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEqual} from 'lodash';
 import {IScope, IComponentOptions} from 'angular';
 
-export class SelectorController {
-  // input bindings
-  selected: ISelectorItem;
-  items: ISelectorItem[];
+import {IChangesList} from '../../../config';
 
-  // output bindings
-  triggerSelectEvent: ITriggerSelectEvent;
-
-  constructor(private $scope: IScope) {
-    'ngInject';
-
-    this.initSelected();
-    this.initItems();
-  }
-
-  onItemSelected(item: ISelectorItem): void {
-    this.triggerSelectEvent({item});
-  }
-
-  private initSelected(): void {
-    this.selected = cloneDeep(this.selected);
-    this.$scope.$watch('vm.selected', this.onItemSelected.bind(this));
-  }
-
-  private initItems(): void {
-    this.items = cloneDeep(this.items);
-  }
-}
-
+// exported types --------------------------------------------------------------
 export interface ISelectorItem {
   id: string;
   title: string;
 }
 
+// internal types --------------------------------------------------------------
 interface ITriggerSelectEvent {
   (arg: { item: ISelectorItem }): void;
 }
 
+export class SelectorController {
+  // bindings ------------------------------------------------------------------
+  // input
+  inputSelectedItem: ISelectorItem;
+  inputItems: ISelectorItem[];
+
+  // output
+  triggerSelectEvent: ITriggerSelectEvent;
+
+  // internal
+  selectedItem: ISelectorItem;
+
+  constructor(private $scope: IScope) {
+    'ngInject';
+
+    this.initSelectedItem();
+  }
+
+  // private init --------------------------------------------------------------
+  $onChanges(changes: IChangesList) {
+    /* tslint:disable:no-string-literal */
+    if (changes['inputSelectedItem']) {
+      this.onInputSelectedItemChanged(changes['inputSelectedItem'].currentValue);
+    }
+
+    if (changes['items']) {
+      this.onInputItemsChanged(changes['items'].currentValue);
+    }
+    /* tslint:enable:no-string-literal */
+  }
+
+  private initSelectedItem(): void {
+    this.$scope.$watch('vm.selectedItem', this.onItemSelected.bind(this));
+  }
+
+  // private event handlers ----------------------------------------------------
+  private onInputSelectedItemChanged(inputSelectedItem: ISelectorItem) {
+    this.inputSelectedItem = cloneDeep(inputSelectedItem);
+    this.selectedItem = cloneDeep(inputSelectedItem);
+  }
+
+  private onInputItemsChanged(items: ISelectorItem[]) {
+    this.inputItems = cloneDeep(items);
+  }
+
+  private onItemSelected(selectedItem: ISelectorItem): void {
+    if (isEqual(this.inputSelectedItem, selectedItem)) {
+      return;
+    }
+
+    this.triggerSelectEvent({item: selectedItem});
+  }
+}
+
+// component definition --------------------------------------------------------
 export const SelectorComponent: IComponentOptions = {
   template: require('./selector.html'),
   controller: SelectorController,
   controllerAs: 'vm',
   bindings: {
-    selected: '<',
+    inputSelectedItem: '<selected',
     items: '<',
     triggerSelectEvent: '&onSelected'
   }

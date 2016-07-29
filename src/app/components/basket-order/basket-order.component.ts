@@ -7,7 +7,7 @@ import {IBasketState} from '../../../routes';
 import {IOrder} from '../../models/order';
 import {LineItemService} from '../line-item/line-item.service';
 
-// output bindings interfaces --------------------------------------------------
+// internal types --------------------------------------------------------------
 interface ITriggerRemoveEvent {
   (arg: { order: IOrder }): void;
 }

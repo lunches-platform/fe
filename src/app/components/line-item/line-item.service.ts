@@ -1,12 +1,11 @@
 import {uniqueId} from 'lodash';
 
-import {ISize} from '../size-selector/size-selector.component';
 import {IProduct} from '../../models/product';
 
 export interface ILineItem {
   id: string;
   product: IProduct;
-  size: ISize;
+  size: string;
   quantity: number;
 }
 
@@ -19,7 +18,7 @@ export class ILineItemRequestBody {
 export class LineItemService {
   createLineItem(
     product: IProduct,
-    size: ISize = {id: 'medium', title: 'Medium'},
+    size: string = 'medium',
     quantity: number = 1,
     id: string = null
   ): ILineItem {
@@ -32,7 +31,7 @@ export class LineItemService {
   }
 
   calcWeightFor(item: ILineItem): number {
-    return item.product.sizeToWeight[item.size.id] * item.quantity;
+    return item.product.sizeToWeight[item.size] * item.quantity;
   }
 
   calcPriceFor(item: ILineItem): number {
