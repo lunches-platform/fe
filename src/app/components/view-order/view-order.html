@@ -9,7 +9,8 @@
         <div flex class="md-caption">{{ item.product.ingredients.join(', ') }}</div>
       </div>
     </div>
-    <md-button class="md-raised" ng-click="vm.onCancel()" ng-if="vm.needToShowCancelButton()">Отменить заказ</md-button>
+    <md-button class="md-raised" ng-click="vm.onCancel()" ng-if="vm.needToShowCancelButton()">Отменить</md-button>
+    <md-button class="md-raised" ng-click="vm.onEditOrder()" ng-if="vm.needToShowEditButton()">Редактировать</md-button>
     <span class="md-headline price-label">{{ vm.order.price }} грн</span>
   </div>
 

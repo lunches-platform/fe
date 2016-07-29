@@ -39,10 +39,15 @@ export class MyOrdersItemController {
   // dom event handlers --------------------------------------------------------
   onChange(order: IOrder): void {
     this.triggerChangeEvent({order: order, oldOrder: this.order});
+    this.mode = Mode.View;
   }
 
   onNewOrder(): void {
     this.triggerNewOrderEvent();
+  }
+
+  onEditOrder(): void {
+    this.mode = Mode.Edit;
   }
 
   // view helpers --------------------------------------------------------------

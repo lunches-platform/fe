@@ -15,6 +15,10 @@ interface ITriggerNewOrderEvent {
   (): void;
 }
 
+interface ITriggerEditOrderEvent {
+  (): void;
+}
+
 export class ViewOrderController {
   // bindings ------------------------------------------------------------------
 
@@ -24,6 +28,7 @@ export class ViewOrderController {
   // output
   triggerChangeEvent: ITriggerChangeEvent;
   triggerNewOrderEvent: ITriggerNewOrderEvent;
+  triggerEditOrderEvent: ITriggerEditOrderEvent;
 
   constructor(private lOrderService: OrderService) {
     'ngInject';
@@ -42,6 +47,10 @@ export class ViewOrderController {
     this.triggerNewOrderEvent();
   }
 
+  onEditOrder(): void {
+    this.triggerEditOrderEvent();
+  }
+
   // view helpers --------------------------------------------------------------
   isCanceled(): boolean {
     return this.order.canceled;
@@ -52,6 +61,10 @@ export class ViewOrderController {
   }
 
   needToShowCancelButton(): boolean {
+    return this.isCurrentDateBeforeShipmentDate();
+  }
+
+  needToShowEditButton(): boolean {
     return this.isCurrentDateBeforeShipmentDate();
   }
 
@@ -80,6 +93,7 @@ export const ViewOrderComponent: IComponentOptions = {
   bindings: {
     order: '<',
     triggerChangeEvent: '&onChange',
-    triggerNewOrderEvent: '&onNewOrder'
+    triggerNewOrderEvent: '&onNewOrder',
+    triggerEditOrderEvent: '&onEditOrder'
   }
 };

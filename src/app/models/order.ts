@@ -1,4 +1,4 @@
-import {cloneDeep, find, reduce, every, map} from 'lodash';
+import {cloneDeep, find, reduce, every, map, filter} from 'lodash';
 import {IHttpService, IQService, IPromise} from 'angular';
 
 import {uniqId} from '../../config';
@@ -164,6 +164,39 @@ export class OrderService {
     return this.$http
       .put<IOrder>(url, order)
       .then(res => res.data);
+  }
+
+  updateItemIn(inputOrder: IOrder, item: ILineItem): IOrder {
+    let order = cloneDeep(inputOrder);
+
+    order.items = order.items.map(it => {
+      return it.id === item.id ? item : it;
+    });
+
+    order.price = this.calcPriceFor(order);
+
+    return order;
+  }
+
+  removeItemFrom(inputOrder: IOrder, item: ILineItem): IOrder {
+    let order = cloneDeep(inputOrder);
+
+    order.items = filter(order.items, it => it.id !== item.id);
+    order.price = this.calcPriceFor(order);
+
+    return order;
+  }
+
+  addItemTo(inputOrder: IOrder, item: ILineItem): IOrder {
+    if (find(inputOrder.items, ['id', item.id])) {
+      return inputOrder;
+    }
+
+    const order = cloneDeep(inputOrder);
+    order.items.push(item);
+    order.price = this.calcPriceFor(order);
+
+    return order;
   }
 
   private updateIn(inputOrder: IOrder, key: string, value: any): IOrder {
