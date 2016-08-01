@@ -1,11 +1,12 @@
 import {ILogService, IScope} from 'angular';
 
-import {WeekMenuService} from './week-menu.service';
-import {IMenu} from '../../components/menu/menu.service';
-import {IOrder} from '../../models/order';
-import {IUser, UserService} from '../../models/user';
 import {IWeekMenuState} from '../../../routes';
+
+import {IOrder} from '../../models/order';
+import {IMenu, MenuService} from '../../models/menu';
+import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from '../../containers/basket/basket.service';
+
 import {Week} from '../../components/week-switcher/week-switcher.component';
 
 export class WeekMenuController {
@@ -28,7 +29,7 @@ export class WeekMenuController {
     private $state: IWeekMenuState,
     private $scope: IScope,
     private $log: ILogService,
-    private lWeekMenuService: WeekMenuService,
+    private lMenuService: MenuService,
     private lBasketService: BasketService,
     private lUserService: UserService
   ) {
@@ -157,10 +158,10 @@ export class WeekMenuController {
   private fetchData(): void {
     this.loading = true;
 
-    this.lWeekMenuService.fetchTwoWeekMenu()
+    this.lMenuService.fetchTwoWeekMenu()
       .then(twoWeeks => {
         [this.currentWeekMenu, this.nextWeekMenu] = twoWeeks;
-        [this.pastDaysMenu, this.actualMenu] = this.lWeekMenuService.splitToPastAndActualDaysMenu(this.currentWeekMenu);
+        [this.pastDaysMenu, this.actualMenu] = this.lMenuService.splitToPastAndActualDaysMenu(this.currentWeekMenu);
 
         // todo: move to separate method?
         if (this.actualMenu.length === 0) {

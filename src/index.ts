@@ -19,11 +19,11 @@ import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-i
 import {ViewOrderComponent} from './app/components/view-order/view-order.component';
 import {EditOrderComponent} from './app/components/edit-order/edit-order.component';
 
-import {WeekMenuService} from './app/containers/week-menu/week-menu.service';
 import {BasketService} from './app/containers/basket/basket.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
 import {OrderFormService} from './app/components/menu/order.form';
 
+import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
 import {UserService} from './app/models/user';
 import {ToastService} from './app/models/toast';
@@ -78,7 +78,7 @@ angular
   .component('lViewOrder', ViewOrderComponent)
   .component('lEditOrder', EditOrderComponent)
 
-  .service('lWeekMenuService', WeekMenuService)
+  .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
   .service('lOrderService', OrderService)
   .service('lOrderFormService', OrderFormService)
