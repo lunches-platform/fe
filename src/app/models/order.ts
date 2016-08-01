@@ -1,18 +1,25 @@
-import {cloneDeep, find, reduce, every, map, uniqueId} from 'lodash';
-import {IHttpService, IQService} from 'angular';
+import {cloneDeep, find, reduce, every, map, filter} from 'lodash';
+import {IHttpService, IQService, IPromise} from 'angular';
 
-import {ILineItemRequestBody, ILineItem, LineItemService} from '../components/line-item/line-item.service';
+import {uniqId} from '../../config';
+import {IUser, UserService} from './user';
+
+import {ILineItem, ILineItemRequestBody, LineItemService} from '../components/line-item/line-item.service';
 import {IProduct} from './product';
 
 export interface IOrder {
-  id: string;
+  id: number;
   items: ILineItem[];
-  customer: string;
-  address: string;
   shipmentDate: string;
+  address: string;
+  customer: string;
+  canceled: boolean;
+  createdAt?: string;
+  orderNumber?: string;
+  price?: number;
 }
 
-export interface IOrderRequestBody {
+export interface IPlaceOrderRequestBody {
   items: ILineItemRequestBody[];
   customer: string;
   address: string;
@@ -25,28 +32,33 @@ export class OrderService {
   constructor(
     private $http: IHttpService,
     private $q: IQService,
-    private lLineItemService: LineItemService
+    private lLineItemService: LineItemService,
+    private lUserService: UserService
   ) {
     'ngInject';
   }
 
   createOrderByDate(date: string): IOrder {
     return {
-      id: uniqueId(),
+      id: uniqId(),
       items: [],
       customer: null,
       address: null,
-      shipmentDate: date
+      shipmentDate: date,
+      price: 0,
+      canceled: false
     };
   }
 
-  createOrderByDateAndId(date: string, id: string): IOrder {
+  createOrderByDateAndId(date: string, id: number): IOrder {
     return {
       id: id,
       items: [],
       customer: null,
       address: null,
-      shipmentDate: date
+      shipmentDate: date,
+      price: 0,
+      canceled: false
     };
   }
 
@@ -56,6 +68,8 @@ export class OrderService {
     items.forEach(item => {
       order.items.push(item);
     });
+
+    order.price = this.calcPriceFor(order);
 
     return order;
   }
@@ -122,7 +136,77 @@ export class OrderService {
     return map(orders, order => this.setAddress(address, order));
   }
 
-  private prepareOrderForApi(order: IOrder): IOrderRequestBody {
+  fetchMyOrders(): IPromise<IOrder[]> {
+    const me = this.lUserService.me();
+
+    // todo: do not hardcode BE URL: DEZ-774
+    const url = 'http://api.cogniance.lunches.com.ua/customers/' + me.fullName + '/orders';
+    return this.$http.get<IOrder[]>(url).then(res => res.data);
+  }
+
+  cancel(order: IOrder): IOrder {
+    return this.updateIn(order, 'canceled', true);
+  }
+
+  restore(order: IOrder): IOrder {
+    return this.updateIn(order, 'canceled', false);
+  }
+
+  updateOrderIn(orders: IOrder[], orderToBeUpdated: IOrder): IOrder[] {
+    return map(orders, order => {
+      return order.id === orderToBeUpdated.id ? orderToBeUpdated : order;
+    });
+  }
+
+  syncOrderFor(user: IUser, order: IOrder): IPromise<IOrder> {
+    // todo: do not hardcode BE URL: DEZ-774
+    const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullName + '/orders/' + order.id;
+    return this.$http
+      .put<IOrder>(url, order)
+      .then(res => res.data);
+  }
+
+  updateItemIn(inputOrder: IOrder, item: ILineItem): IOrder {
+    let order = cloneDeep(inputOrder);
+
+    order.items = order.items.map(it => {
+      return it.id === item.id ? item : it;
+    });
+
+    order.price = this.calcPriceFor(order);
+
+    return order;
+  }
+
+  removeItemFrom(inputOrder: IOrder, item: ILineItem): IOrder {
+    let order = cloneDeep(inputOrder);
+
+    order.items = filter(order.items, it => it.id !== item.id);
+    order.price = this.calcPriceFor(order);
+
+    return order;
+  }
+
+  addItemTo(inputOrder: IOrder, item: ILineItem): IOrder {
+    if (find(inputOrder.items, ['id', item.id])) {
+      return inputOrder;
+    }
+
+    const order = cloneDeep(inputOrder);
+    order.items.push(item);
+    order.price = this.calcPriceFor(order);
+
+    return order;
+  }
+
+  private updateIn(inputOrder: IOrder, key: string, value: any): IOrder {
+    const order = cloneDeep(inputOrder);
+    order[key] = value;
+    return order;
+  }
+
+
+  private prepareOrderForApi(order: IOrder): IPlaceOrderRequestBody {
     return {
       items: this.prepareLineItemsForApi(order.items),
       customer: order.customer,

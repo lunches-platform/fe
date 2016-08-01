@@ -2,62 +2,61 @@ import {cloneDeep} from 'lodash';
 import {IComponentOptions} from 'angular';
 
 import {IChangesList} from '../../../config';
-import {IBasketState} from '../../../routes';
 
 import {IOrder} from '../../models/order';
-import {LineItemService} from '../line-item/line-item.service';
+
+enum Mode {
+  View,
+  Edit
+}
 
 // internal types --------------------------------------------------------------
-interface ITriggerRemoveEvent {
-  (arg: { order: IOrder }): void;
+interface ITriggerChangeEvent {
+  (arg: { order: IOrder, oldOrder: IOrder }): void;
 }
 
-interface ITriggerRestoreEvent {
-  (arg: { order: IOrder }): void;
+interface ITriggerNewOrderEvent {
+  (): void;
 }
 
-export class BasketOrderController {
+export class MyOrdersItemController {
   // bindings ------------------------------------------------------------------
 
   // input
   order: IOrder;
 
   // output
-  triggerRemoveEvent: ITriggerRemoveEvent;
-  triggerRestoreEvent: ITriggerRestoreEvent;
+  triggerChangeEvent: ITriggerChangeEvent;
+  triggerNewOrderEvent: ITriggerNewOrderEvent;
 
   // internal
-  removed: boolean;
+  mode: Mode;
 
-  constructor(
-    private $state: IBasketState,
-    private lLineItemService: LineItemService
-  ) {
-    'ngInject';
+  constructor() {
+    this.initMode();
   }
 
   // dom event handlers --------------------------------------------------------
-  remove(): void {
-    this.removed = true;
-    this.triggerRemoveEvent({order: this.order});
+  onChange(order: IOrder): void {
+    this.triggerChangeEvent({order: order, oldOrder: this.order});
+    this.mode = Mode.View;
   }
 
-  restore(): void {
-    this.removed = false;
-    this.triggerRestoreEvent({order: this.order});
+  onNewOrder(): void {
+    this.triggerNewOrderEvent();
   }
 
-  addAnother(): void {
-    this.$state.go('week-menu');
+  onEditOrder(): void {
+    this.mode = Mode.Edit;
   }
 
   // view helpers --------------------------------------------------------------
-  isRemoved(): boolean {
-    return this.removed;
+  isViewMode(): boolean {
+    return this.mode === Mode.View;
   }
 
-  isExist(): boolean {
-    return !this.removed;
+  isEditMode(): boolean {
+    return this.mode === Mode.Edit;
   }
 
   // private init --------------------------------------------------------------
@@ -67,6 +66,10 @@ export class BasketOrderController {
     }
   }
 
+  private initMode(): void {
+    this.mode = Mode.View;
+  }
+
   // private event handlers ----------------------------------------------------
   private onInputOrderChanged(order: IOrder) {
     this.order = cloneDeep(order);
@@ -74,13 +77,13 @@ export class BasketOrderController {
 }
 
 // component definition --------------------------------------------------------
-export const BasketOrderComponent: IComponentOptions = {
-  template: require('./basket-order.html'),
-  controller: BasketOrderController,
+export const MyOrdersItemComponent: IComponentOptions = {
+  template: require('./my-orders-item.html'),
+  controller: MyOrdersItemController,
   controllerAs: 'vm',
   bindings: {
     order: '<',
-    triggerRemoveEvent: '&onRemove',
-    triggerRestoreEvent: '&onRestore'
+    triggerChangeEvent: '&onChange',
+    triggerNewOrderEvent: '&onNewOrder'
   }
 };

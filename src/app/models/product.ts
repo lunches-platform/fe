@@ -9,5 +9,5 @@ export interface IProduct {
   price: number;
   ingredients: string[];
   sizeToWeight: ISizeToWeight;
+  images: string[];
 }
-

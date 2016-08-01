@@ -70,6 +70,10 @@ export class WeekMenuController {
     this.$state.go('basket');
   }
 
+  goToMyOrders(): void {
+    this.$state.go('my-orders');
+  }
+
   showPastDaysMenu(): void {
     this.pastDaysMenuHidden = true;
   }

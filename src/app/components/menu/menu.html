@@ -13,7 +13,7 @@
   <div class="order-button" ng-if="!vm.isLineItemsAddedToOrder()" flex layout="row">
     <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()" ng-disabled="!vm.price">Добавить в корзину</md-button>
     <span ng-if="vm.price" class="md-headline price-label">{{ vm.price }} грн</span>
-    <span ng-if="!vm.price" class="md-headline price-label">Please choose any dishes in the list above</span>
+    <span ng-if="!vm.price" class="md-headline price-label">Выберите пожалуйста блюда из меню выше</span>
   </div>
 
   <div ng-if="vm.isLineItemsAddedToOrder()" layout="row" layout-align="center center">

@@ -1,0 +1,15 @@
+<div layout="column" class="l-my-orders-item" >
+  <l-view-order
+    ng-if="vm.isViewMode()"
+    order="vm.order"
+    on-change="vm.onChange(order)"
+    on-new-order="vm.onNewOrder()"
+    on-edit-order="vm.onEditOrder()">
+  </l-view-order>
+
+  <l-edit-order
+    ng-if="vm.isEditMode()"
+    order="vm.order"
+    on-change="vm.onChange(order)">
+  </l-edit-order>
+</div>

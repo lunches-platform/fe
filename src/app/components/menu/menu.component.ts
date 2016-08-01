@@ -74,10 +74,6 @@ export class MenuController {
   }
 
   // view helpers --------------------------------------------------------------
-  calcPrice(): number {
-    return this.lLineItemService.calcPriceForAll(this.orderForm.items);
-  }
-
   isLineItemsAddedToOrder(): boolean {
     return this.lineItemsAddedToOrder;
   }
@@ -123,7 +119,7 @@ export class MenuController {
   }
 
   private updatePrice() {
-    this.price = this.calcPrice();
+    this.price = this.lLineItemService.calcPriceForAll(this.orderForm.items);
   }
 
   // private event handlers ----------------------------------------------------

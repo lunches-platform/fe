@@ -1,0 +1,21 @@
+<div layout="column" class="l-edit-order" >
+  <h2 flex class="md-headline title">{{ vm.order.shipmentDate | lDate }}</h2>
+
+  <div class="line-items" flex>
+    <l-line-item
+      ng-repeat="item in vm.draftOrderItems track by item.id"
+      line-item="item"
+      on-changed="vm.onItemChanged(item)"
+      on-toggled="vm.onItemToggled(item, checked)">
+    </l-line-item>
+  </div>
+
+  <div class="save-button" flex layout="row">
+    <md-button class="md-raised md-primary order-button" ng-click="vm.onSave()" ng-disabled="!vm.draftOrder.price">Сохранить</md-button>
+    <span ng-if="vm.draftOrder.price" class="md-headline price-label">{{ vm.draftOrder.price }} грн</span>
+    <span ng-if="!vm.draftOrder.price" class="md-headline price-label">Выберите пожалуйста блюда из меню выше</span>
+  </div>
+
+  <md-divider />
+</div>
+

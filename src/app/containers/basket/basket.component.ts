@@ -56,6 +56,10 @@ export class BasketController {
     this.$state.go('week-menu');
   }
 
+  goToMyOrders(): void {
+    this.$state.go('my-orders');
+  }
+
   removeFromBasket(order: IOrder) {
     this.basket = this.lBasketService.removeOrderFrom(this.basket, order);
     this.lBasketService.storeBasketInStorage(this.basket);
