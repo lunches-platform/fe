@@ -1,0 +1,8 @@
+<div class="l-payment-status md-subhead" ng-class="{paid: vm.paid, 'not-paid': !vm.paid}">
+  <md-icon
+    aria-label="payment status"
+    ng-class="{paid: vm.paid, 'not-paid': !vm.paid}">
+    payment
+  </md-icon>
+  {{ vm.paid ? 'Оплачен' : 'Не оплачен' }}
+</div>
