@@ -19,10 +19,15 @@
     <div ng-if="vm.hasData()">
       <h3 class="md-title">Ваши заказы</h3>
 
+      <l-date-range-selector
+        range="vm.selectedDateRange"
+        on-changed="vm.onDateRangeChanged(dateRange)">
+      </l-date-range-selector>
+
       <l-my-orders-item
         ng-repeat="order in vm.orders"
         order="order"
-        on-change="vm.onChange(order, oldOrder)"
+        on-change="vm.onItemChange(order, oldOrder)"
         on-new-order="vm.onNewOrder()">
       </l-my-orders-item>
     </div>

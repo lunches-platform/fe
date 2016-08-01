@@ -19,6 +19,7 @@ import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-i
 import {ViewOrderComponent} from './app/components/view-order/view-order.component';
 import {EditOrderComponent} from './app/components/edit-order/edit-order.component';
 import {PaymentStatusComponent} from './app/components/payment-status/payment-status.component';
+import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
 
 import {BasketService} from './app/containers/basket/basket.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
@@ -38,7 +39,7 @@ import 'angular-local-storage';
 import 'angular-material/angular-material.css';
 
 import {routesConfig} from './routes';
-import {localeConfig, localStorageConfig, currentStateConfig} from './config';
+import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorConfig} from './config';
 
 import './index.scss';
 
@@ -57,6 +58,7 @@ angular
   .config(routesConfig)
   .config(localeConfig)
   .config(localStorageConfig)
+  .config(dateRangeSelectorConfig)
   .run(currentStateConfig)
 
   // fake-api: comment out when API implemented
@@ -79,6 +81,7 @@ angular
   .component('lViewOrder', ViewOrderComponent)
   .component('lEditOrder', EditOrderComponent)
   .component('lPaymentStatus', PaymentStatusComponent)
+  .component('lDateRangeSelector', DateRangeSelectorComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
