@@ -1,7 +1,8 @@
 import {cloneDeep, find, reduce, every, map, filter} from 'lodash';
 import {IHttpService, IQService, IPromise} from 'angular';
+import * as moment from 'moment';
 
-import {uniqId} from '../../config';
+import {uniqId, SHORT_DATE_FORMAT} from '../../config';
 import {IUser, UserService} from './user';
 
 import {ILineItem, ILineItemRequestBody, LineItemService} from '../components/line-item/line-item.service';
@@ -139,8 +140,12 @@ export class OrderService {
   fetchMyOrders(): IPromise<IOrder[]> {
     const me = this.lUserService.me();
 
+    const startDate = moment().subtract(1, 'weeks').startOf('week').format(SHORT_DATE_FORMAT);
+    const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
+
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/customers/' + me.fullName + '/orders';
+    const basePath = 'http://api.cogniance.lunches.com.ua';
+    const url = basePath + '/customers/' + me.fullName + '/orders?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IOrder[]>(url).then(res => res.data);
   }
 

@@ -11,6 +11,8 @@ export interface ILRootScope extends IRootScopeService {
   $state: IStateService;
 }
 
+export const SHORT_DATE_FORMAT = 'YYYY-MM-DD';
+
 // todo: is it correct place?
 export interface IChangesList {
   [property: string]: IChangesObject;
