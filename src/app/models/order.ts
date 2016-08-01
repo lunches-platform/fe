@@ -15,6 +15,7 @@ export interface IOrder {
   address: string;
   customer: string;
   canceled: boolean;
+  paid: boolean;
   createdAt?: string;
   orderNumber?: string;
   price?: number;
@@ -47,7 +48,8 @@ export class OrderService {
       address: null,
       shipmentDate: date,
       price: 0,
-      canceled: false
+      canceled: false,
+      paid: false
     };
   }
 
@@ -59,7 +61,8 @@ export class OrderService {
       address: null,
       shipmentDate: date,
       price: 0,
-      canceled: false
+      canceled: false,
+      paid: false
     };
   }
 

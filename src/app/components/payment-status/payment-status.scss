@@ -1,0 +1,9 @@
+.l-payment-status {
+  &.paid, .paid {
+    color: green;
+  }
+
+  &.not-paid, .not-paid {
+    color: red;
+  }
+}

@@ -18,6 +18,7 @@ import {ToolbarComponent} from './app/components/toolbar/toolbar.component';
 import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
 import {ViewOrderComponent} from './app/components/view-order/view-order.component';
 import {EditOrderComponent} from './app/components/edit-order/edit-order.component';
+import {PaymentStatusComponent} from './app/components/payment-status/payment-status.component';
 
 import {BasketService} from './app/containers/basket/basket.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
@@ -77,6 +78,7 @@ angular
   .component('lMyOrdersItem', MyOrdersItemComponent)
   .component('lViewOrder', ViewOrderComponent)
   .component('lEditOrder', EditOrderComponent)
+  .component('lPaymentStatus', PaymentStatusComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
