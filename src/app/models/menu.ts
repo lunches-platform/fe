@@ -2,11 +2,17 @@ import {each, filter} from 'lodash';
 import * as moment from 'moment';
 import {IHttpService, IPromise} from 'angular';
 
-import {SHORT_DATE_FORMAT} from '../../../config';
+import {SHORT_DATE_FORMAT} from '../../config';
 
-import {IMenu} from '../../components/menu/menu.service';
+import {IProduct} from './product';
 
-export class WeekMenuService {
+export interface IMenu {
+  id: number;
+  date: string;
+  products: IProduct[];
+}
+
+export class MenuService {
 
   constructor(private $http: IHttpService) {
     'ngInject';

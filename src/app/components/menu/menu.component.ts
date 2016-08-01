@@ -4,9 +4,10 @@ import {IScope, IComponentOptions} from 'angular';
 import {IChangesList} from '../../../config';
 import {IWeekMenuState} from '../../../routes';
 
-import {IMenu} from './menu.service';
+import {IMenu} from '../../models/menu';
 import {IProduct} from '../../models/product';
 import {IOrder, OrderService} from '../../models/order';
+
 import {IOrderForm, OrderFormService} from './order.form';
 import {ILineItem, LineItemService} from '../line-item/line-item.service';
 
