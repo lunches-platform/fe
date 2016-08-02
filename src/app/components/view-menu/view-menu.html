@@ -1,16 +1,24 @@
 <div layout="column" class="l-view-menu" >
-  <h2 flex class="md-headline title">{{ vm.menu.date | lDate }}</h2>
+  <md-card>
+    <l-menu-cover menu="vm.menu"></l-menu-cover>
 
-  <div class="products" flex>
-    <div layout="row" ng-repeat="product in vm.menu.products">
-      <div flex="40" layout="column">
-        <div class="md-subhead">{{ product.name }}</md-title>
-        <div flex class="md-caption">{{ product.ingredients.join(', ') }}</div>
-      </div>
-      <div flex></div>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">{{ vm.menu.date | lDate }}</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <span ng-repeat="product in vm.menu.products track by product.id">
+        {{ product.name }}.
+      </span>
+    </md-card-content>
+
+    <md-divider />
+
+    <div layout="row" layout-align="center center" layout-padding>
+      <div class="md-body1">Обед заказать уже нельзя.</div>
     </div>
-  </div>
 
-  <md-divider />
+  </md-card>
 </div>
 

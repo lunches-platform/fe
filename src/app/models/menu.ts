@@ -63,6 +63,11 @@ export class MenuService {
     });
   }
 
+  // todo: get correct cover
+  getCoverOf(menu: IMenu, productIndex: number): string {
+    return menu.products[productIndex].images[0].url;
+  }
+
   private isInsideCurrentWeek(date: string): boolean {
     return moment(date).isBetween(
       moment().startOf('week'),
