@@ -19,6 +19,7 @@ import {ViewOrderComponent} from './app/components/view-order/view-order.compone
 import {EditOrderComponent} from './app/components/edit-order/edit-order.component';
 import {PaymentStatusComponent} from './app/components/payment-status/payment-status.component';
 import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
+import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
 
 import {BasketService} from './app/containers/basket/basket.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
@@ -79,6 +80,7 @@ angular
   .component('lEditOrder', EditOrderComponent)
   .component('lPaymentStatus', PaymentStatusComponent)
   .component('lDateRangeSelector', DateRangeSelectorComponent)
+  .component('lMenuCover', MenuCoverComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)

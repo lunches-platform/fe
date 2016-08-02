@@ -1,6 +1,7 @@
 <div layout="column" class="l-menu" >
   <md-card>
-    <img ng-src="{{ vm.coverUrl() }}" class="md-card-image" alt="..." ng-click="vm.nextCover()">
+    <l-menu-cover menu="vm.menu"></l-menu-cover>
+
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">{{ vm.menu.date | lDate }}</span>

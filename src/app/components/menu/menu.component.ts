@@ -29,7 +29,6 @@ export class MenuController {
   size: string;
 
   private lineItemsAddedToOrder = false;
-  private coverIndex: number;
 
   constructor(
     private $scope: IScope,
@@ -67,19 +66,6 @@ export class MenuController {
     return this.lineItemsAddedToOrder;
   }
 
-  coverUrl(): string {
-    return this.lMenuService.getCoverOf(this.menu, this.coverIndex);
-  }
-
-  nextCover(): void {
-    const newCoverIndex = this.coverIndex + 1;
-    if (newCoverIndex < this.menu.products.length) {
-      this.coverIndex = this.coverIndex + 1;
-    } else {
-      this.coverIndex = 0;
-    }
-  }
-
   // private init --------------------------------------------------------------
   $onChanges(changes: IChangesList) {
     if (changes['menu']) { // tslint:disable-line:no-string-literal
@@ -91,7 +77,6 @@ export class MenuController {
     this.initOrder();
     this.initPrice();
     this.initSize();
-    this.initCover();
   }
 
   private initOrder() {
@@ -107,10 +92,6 @@ export class MenuController {
     this.size = 'medium';
 
     this.$scope.$watch(() => this.size, this.onSizeChanged.bind(this));
-  }
-
-  private initCover(): void {
-    this.coverIndex = 0;
   }
 
   // private helpers -----------------------------------------------------------
