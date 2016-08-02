@@ -13,7 +13,6 @@ import {SelectorComponent} from './app/components/selector/selector.component';
 import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
 import {QuantitySelectorComponent} from './app/components/quantity-selector/quantity-selector.component';
 import {BasketOrderComponent} from './app/components/basket-order/basket-order.component';
-import {WeekSwitcherComponent} from './app/components/week-switcher/week-switcher.component';
 import {ToolbarComponent} from './app/components/toolbar/toolbar.component';
 import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
 import {ViewOrderComponent} from './app/components/view-order/view-order.component';
@@ -75,7 +74,6 @@ angular
   .component('lSizeSelector', SizeSelectorComponent)
   .component('lQuantitySelector', QuantitySelectorComponent)
   .component('lBasketOrder', BasketOrderComponent)
-  .component('lWeekSwitcher', WeekSwitcherComponent)
   .component('lToolbar', ToolbarComponent)
   .component('lMyOrdersItem', MyOrdersItemComponent)
   .component('lViewOrder', ViewOrderComponent)
