@@ -7,13 +7,16 @@ import {IMenu, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from '../../containers/basket/basket.service';
 
-import {Week} from '../../components/week-switcher/week-switcher.component';
+export enum Week {
+  Current,
+  Next
+}
 
 export class WeekMenuController {
   // bindings ------------------------------------------------------------------
   // internal
   basket: IBasket;
-  selectedWeek: Week;
+  selectedWeek: number;
   nextWeekMenu: IMenu[];
   currentWeekMenu: IMenu[];
   user: IUser;
@@ -38,7 +41,7 @@ export class WeekMenuController {
     this.initUser();
     this.initMenu();
     this.initPastDaysSwitcher();
-    this.initWeekSwitcher();
+    this.initSelectedWeek();
     this.initLoading();
     this.initBasket();
     this.initPageTitle();
@@ -93,23 +96,15 @@ export class WeekMenuController {
   }
 
   needToShowCurrentWeekViewMenu(): boolean {
-    return this.isCurrentWeek() && !this.pastDaysMenuHidden;
-  }
-
-  needToShowCurrentWeekOrderMenu(): boolean {
-    return this.isCurrentWeek() && this.hasActualMenu();
-  }
-
-  needToShowNextWeek(): boolean {
-    return this.isNextWeek();
+    return !this.pastDaysMenuHidden;
   }
 
   needToShowPastDaysSwitcher(): boolean {
-    return this.isCurrentWeek() && this.hasPastDaysMenu() && this.hasActualMenu();
+    return this.hasPastDaysMenu() && this.hasActualMenu();
   }
 
   needToShowCurrentWeekOrderImpossible(): boolean {
-    return this.isCurrentWeek() && !this.hasActualMenu();
+    return !this.hasActualMenu();
   }
 
   needToShowNoData(): boolean {
@@ -140,13 +135,13 @@ export class WeekMenuController {
     this.actualMenu = [];
   }
 
-  private initWeekSwitcher(): void {
+  private initSelectedWeek(): void {
     this.selectedWeek = Week.Current;
   }
 
   private initPageTitle(): void {
     this.$scope.$watch(() => this.selectedWeek, () => {
-      this.$state.current.data.title = this.isCurrentWeek() ? 'Меню на текущую неделю' : 'Меню на следующую неделю';
+      this.$state.current.data.title = this.selectedWeek === Week.Current ? 'Меню на текущую неделю' : 'Меню на следующую неделю';
     });
   }
 
@@ -177,15 +172,7 @@ export class WeekMenuController {
   }
 
   private isNextMenuEmpty(): boolean {
-     return this.isNextWeek() && !Boolean(this.nextWeekMenu.length);
-  }
-
-  private isCurrentWeek(): boolean {
-    return this.selectedWeek === Week.Current;
-  }
-
-  private isNextWeek(): boolean {
-    return this.selectedWeek === Week.Next;
+     return this.selectedWeek === Week.Next && !Boolean(this.nextWeekMenu.length);
   }
 
   private hasActualMenu(): boolean {
