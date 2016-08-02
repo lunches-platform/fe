@@ -4,11 +4,9 @@ import {IScope, IComponentOptions} from 'angular';
 import {IChangesList} from '../../../config';
 import {IWeekMenuState} from '../../../routes';
 
-import {IMenu} from '../../models/menu';
-import {IProduct} from '../../models/product';
+import {IMenu, MenuService} from '../../models/menu';
 import {IOrder, OrderService} from '../../models/order';
 
-import {IOrderForm, OrderFormService} from './order.form';
 import {ILineItem, LineItemService} from '../line-item/line-item.service';
 
 // internal types --------------------------------------------------------------
@@ -26,39 +24,28 @@ export class MenuController {
 
   // internal
   order: IOrder;
-  orderForm: IOrderForm;
-  lineItemsForReview: ILineItem[];
+  lineItems: ILineItem[];
   price: number;
+  size: string;
 
   private lineItemsAddedToOrder = false;
+  private coverIndex: number;
 
   constructor(
     private $scope: IScope,
     private $state: IWeekMenuState,
     private lOrderService: OrderService,
-    private lOrderFormService: OrderFormService,
-    private lLineItemService: LineItemService
+    private lLineItemService: LineItemService,
+    private lMenuService: MenuService
   ) {
     'ngInject';
 
-    this.initPrice();
+    this.init();
   }
 
   // dom event handlers --------------------------------------------------------
-  onItemChanged(item: ILineItem): void {
-    this.orderForm = this.lOrderFormService.updateItem(item, this.orderForm);
-  }
-
-  onItemToggled(item: ILineItem, checked: boolean): void {
-    if (checked) {
-      this.orderForm = this.lOrderFormService.addItemTo(this.orderForm, item);
-    } else {
-      this.orderForm = this.lOrderFormService.removeItemFrom(this.orderForm, item);
-    }
-  }
-
   addToOrder(): void {
-    this.order = this.lOrderService.addLineItems(this.orderForm.items, this.order);
+    this.order = this.lOrderService.addLineItems(this.lineItems, this.order);
 
     this.lineItemsAddedToOrder = true;
 
@@ -66,7 +53,8 @@ export class MenuController {
   }
 
   orderAgain(): void {
-    this.initOrderForm();
+    this.init();
+
     this.lineItemsAddedToOrder = false;
   }
 
@@ -79,53 +67,67 @@ export class MenuController {
     return this.lineItemsAddedToOrder;
   }
 
+  coverUrl(): string {
+    return this.lMenuService.getCoverOf(this.menu, this.coverIndex);
+  }
+
+  nextCover(): void {
+    const newCoverIndex = this.coverIndex + 1;
+    if (newCoverIndex < this.menu.products.length) {
+      this.coverIndex = this.coverIndex + 1;
+    } else {
+      this.coverIndex = 0;
+    }
+  }
+
   // private init --------------------------------------------------------------
   $onChanges(changes: IChangesList) {
     if (changes['menu']) { // tslint:disable-line:no-string-literal
       this.onInputMenuChanged(this.menu);
-
-      this.init();
     }
   }
 
-  private init() {
-    this.initLineItemsForReview();
-    this.initOrderForm();
+  private init(): void {
+    this.initOrder();
+    this.initPrice();
+    this.initSize();
+    this.initCover();
   }
 
   private initOrder() {
     this.order = this.lOrderService.createOrderByDate(this.menu.date);
-  }
-
-  private initOrderForm() {
-    // reset order
-    this.initOrder();
-
-    this.orderForm = this.lOrderFormService.createOrderFormWith(this.lineItemsForReview);
-  }
-
-  private initLineItemsForReview() {
-     this.lineItemsForReview = this.createLineItemsBy(this.menu.products);
+    this.lineItems = this.lLineItemService.createLineItemsBy(this.menu.products);
   }
 
   private initPrice() {
-    this.$scope.$watch(() => this.orderForm, this.updatePrice.bind(this));
+    this.price = 0;
+  }
+
+  private initSize(): void {
+    this.size = 'medium';
+
+    this.$scope.$watch(() => this.size, this.onSizeChanged.bind(this));
+  }
+
+  private initCover(): void {
+    this.coverIndex = 0;
   }
 
   // private helpers -----------------------------------------------------------
-  private createLineItemsBy(products: IProduct[]): ILineItem[] {
-    return products.map(product => {
-      return this.lLineItemService.createLineItem(product);
-    });
-  }
-
-  private updatePrice() {
-    this.price = this.lLineItemService.calcPriceForAll(this.orderForm.items);
+  private updatePrice(): void {
+    this.price = this.lLineItemService.calcPriceForAll(this.lineItems);
   }
 
   // private event handlers ----------------------------------------------------
   private onInputMenuChanged(menu: IMenu) {
     this.menu = cloneDeep(menu);
+
+    this.init();
+  }
+
+  private onSizeChanged(size: string): void {
+    this.lineItems = this.lLineItemService.setSizeForAll(this.lineItems, size);
+    this.updatePrice();
   }
 }
 

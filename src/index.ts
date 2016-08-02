@@ -22,7 +22,6 @@ import {DateRangeSelectorComponent} from './app/components/date-range-selector/d
 
 import {BasketService} from './app/containers/basket/basket.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
-import {OrderFormService} from './app/components/menu/order.form';
 
 import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
@@ -84,7 +83,6 @@ angular
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
   .service('lOrderService', OrderService)
-  .service('lOrderFormService', OrderFormService)
   .service('lBasketService', BasketService)
   .service('lUserService', UserService)
   .service('lToastService', ToastService)

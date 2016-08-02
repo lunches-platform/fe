@@ -1,3 +1,5 @@
+import {map, cloneDeep} from 'lodash';
+
 import {uniqId} from '../../../config';
 
 import {IProduct} from '../../models/product';
@@ -42,6 +44,24 @@ export class LineItemService {
     return items.reduce((sum, item) => {
       return sum + this.calcPriceFor(item);
     }, 0);
+  }
+
+  createLineItemsBy(products: IProduct[]): ILineItem[] {
+    return products.map(product => {
+      return this.createLineItem(product);
+    });
+  }
+
+  setSizeForAll(items: ILineItem[], size: string): ILineItem[] {
+    return map(items, item => {
+      return this.setSizeFor(item, size);
+    });
+  }
+
+  setSizeFor(inputItem: ILineItem, size: string): ILineItem {
+    const item = cloneDeep(inputItem);
+    item.size = size;
+    return item;
   }
 }
 

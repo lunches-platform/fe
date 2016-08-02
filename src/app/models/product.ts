@@ -3,11 +3,16 @@ export interface ISizeToWeight {
   big: number;
 }
 
+export interface IImage {
+  url: string;
+  isCover: boolean;
+}
+
 export interface IProduct {
   id: number;
   name: string;
   price: number;
   ingredients: string[];
   sizeToWeight: ISizeToWeight;
-  images: string[];
+  images: IImage[];
 }
