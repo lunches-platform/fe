@@ -229,7 +229,7 @@ export class OrderService {
     });
   }
 
-  private updateLineItemProperty(_order: IOrder, product: IProduct, key: string, value: string | number) {
+  private updateLineItemProperty(_order: IOrder, product: IProduct, key: string, value: string | number): IOrder {
     let order = cloneDeep(_order);
 
     let lineItem = find(order.items, ['product.id', product.id]);
