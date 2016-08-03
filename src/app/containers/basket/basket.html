@@ -14,15 +14,7 @@
   </l-toolbar>
 
   <div ng-if="vm.hasData()" layout="column" layout-padding>
-    <md-input-container flex class="md-icon-float md-block">
-      <label>Имя</label>
-      <input ng-model="vm.customer" type="text">
-    </md-input-container>
-
-    <md-input-container flex class="md-icon-float md-block">
-      <label>Этаж</label>
-      <input ng-model="vm.address" type="text">
-    </md-input-container>
+    <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>
 
     <div flex class="md-title">Всего к оплате: {{ vm.totalToPay() }} грн</div>
 

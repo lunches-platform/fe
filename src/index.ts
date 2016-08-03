@@ -20,6 +20,7 @@ import {EditOrderComponent} from './app/components/edit-order/edit-order.compone
 import {PaymentStatusComponent} from './app/components/payment-status/payment-status.component';
 import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
 import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
+import {UserCardComponent} from './app/components/user-card/user-card.component';
 
 import {BasketService} from './app/containers/basket/basket.service';
 import {LineItemService} from './app/components/line-item/line-item.service';
@@ -81,6 +82,7 @@ angular
   .component('lPaymentStatus', PaymentStatusComponent)
   .component('lDateRangeSelector', DateRangeSelectorComponent)
   .component('lMenuCover', MenuCoverComponent)
+  .component('lUserCard', UserCardComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)

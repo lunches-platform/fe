@@ -1,0 +1,18 @@
+<md-card class="l-user-card">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Информация о клиенте</span>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <md-input-container flex class="md-icon-float md-block">
+      <label>Имя</label>
+      <input ng-model="vm.fullName" type="text" ng-blur="vm.onFullNameChange(vm.fullName)" />
+    </md-input-container>
+
+    <md-input-container flex class="md-icon-float md-block">
+      <label>Этаж</label>
+      <input ng-model="vm.address" type="text" ng-blur="vm.onAddressChange(vm.address)" />
+    </md-input-container>
+  </md-card-content>
+</md-card>
