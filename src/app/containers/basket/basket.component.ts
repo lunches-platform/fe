@@ -32,8 +32,6 @@ export class BasketController {
 
     this.initUser();
     this.initBasket();
-    this.initCustomer();
-    this.initAddress();
     this.initCardInfo();
   }
 
@@ -67,6 +65,21 @@ export class BasketController {
 
   restoreToBasket(order: IOrder) {
     this.basket = this.lBasketService.addOrderTo(this.basket, order);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
+
+  onUserChanged(user: IUser): void {
+    if (!user) {
+      return;
+    }
+
+    this.user = user;
+
+    this.lUserService.sync(this.user);
+
+    this.basket = this.lBasketService.setCustomerForAllOrdersIn(this.basket, this.user.fullName);
+    this.basket = this.lBasketService.setAddressForAllOrdersIn(this.basket, this.user.address);
+
     this.lBasketService.storeBasketInStorage(this.basket);
   }
 
@@ -106,14 +119,6 @@ export class BasketController {
     this.ordersForReview = cloneDeep(this.basket.orders);
   }
 
-  private initCustomer(): void {
-    this.$scope.$watch(() => this.customer, this.onCustomerChanged.bind(this));
-  }
-
-  private initAddress(): void {
-    this.$scope.$watch(() => this.address, this.onAddressChanged.bind(this));
-  }
-
   private initCardInfo(): void {
     this.cardHolder = 'Иванов Иван Иванович';
     this.cardNumber = '1234-5678-8765-4321';
@@ -130,24 +135,6 @@ export class BasketController {
   }
 
   // private event handlers ----------------------------------------------------
-  private onCustomerChanged(customer: string): void {
-    if (!customer) {
-      return;
-    }
-
-    this.user = this.lUserService.updateFullNameFor(this.user, customer);
-    this.lUserService.sync(this.user);
-    this.basket = this.lBasketService.setCustomerForAllOrdersIn(this.basket, customer);
-    this.lBasketService.storeBasketInStorage(this.basket);
-  }
-
-  private onAddressChanged(address: string): void {
-    this.user = this.lUserService.updateAddressFor(this.user, address);
-    this.lUserService.sync(this.user);
-    this.basket = this.lBasketService.setAddressForAllOrdersIn(this.basket, address);
-    this.lBasketService.storeBasketInStorage(this.basket);
-  }
-
 }
 
 // component definition --------------------------------------------------------

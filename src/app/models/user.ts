@@ -6,13 +6,13 @@ type ILocalStorageService = angular.local.storage.ILocalStorageService;
 export interface IUser {
   id: number;
   fullName: string;
-  role: number;
+  role: string;
   address?: string;
 }
 
-export enum Role {
-  Guest,
-  Customer
+export class Role {
+  public static get GUEST(): string { return 'guest'; }
+  public static get CUSTOMER(): string { return 'customer'; }
 }
 
 export class UserService {
@@ -27,9 +27,9 @@ export class UserService {
   me(): IUser {
     let me = this.localStorageService.get<IUser>('me');
 
-    this.$log.info('UserService: No current user found in local storage. Create guest');
-
     if (!me) {
+      this.$log.info('UserService: No current user found in local storage. Create guest');
+
       this.localStorageService.set<IUser>('me', this.createGuest());
       me = this.localStorageService.get<IUser>('me');
     }
@@ -38,7 +38,7 @@ export class UserService {
   }
 
   isGuest(user: IUser): boolean {
-    return Boolean(user.role === Role.Guest);
+    return Boolean(user.role === Role.GUEST);
   }
 
   updateFullNameFor(user: IUser, name: string): IUser {
@@ -49,10 +49,29 @@ export class UserService {
     return this.updateIn(user, 'address', address);
   }
 
-  sync(user: IUser): IPromise<IUser> {
+  sync(user: IUser): void {
+    if (!this.storeInLocalStorage(user)) {
+      this.$log.info('UserService: Unable to store user in local storage');
+    }
+
+    this.storeInDb(user)
+      .catch(err => {
+        this.$log.info('UserService: Unable to store user in database');
+      });
+  }
+
+  private storeInLocalStorage(user: IUser): boolean {
+    return this.localStorageService.set<IUser>('me', user);
+  }
+
+  private storeInDb(user: IUser): IPromise<IUser> {
     // todo: do not hardcode BE URL: DEZ-774
     const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullName;
-    return this.$http.put<IUser>(url, user).then(res => res.data);
+    if (user.id) {
+      return this.$http.put<IUser>(url, user).then(res => res.data);
+    } else {
+      return this.$http.post<IUser>(url, user).then(res => res.data);
+    }
   }
 
   private updateIn(inputUser: IUser, key: string, value: any): IUser {
@@ -64,8 +83,8 @@ export class UserService {
   private createGuest(): IUser {
     return {
       id: 0,
-      fullName: 'Гость',
-      role: Role.Guest
+      fullName: 'Guest',
+      role: Role.GUEST
     };
   }
 }
