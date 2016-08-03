@@ -4,7 +4,7 @@ import {IComponentOptions} from 'angular';
 import {IChangesList} from '../../../config';
 
 import {IOrder, OrderService} from '../../models/order';
-import {ILineItem} from '../line-item/line-item.service';
+import {ILineItem} from '../../models/line-item';
 
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {

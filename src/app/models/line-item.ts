@@ -1,8 +1,8 @@
 import {map, cloneDeep} from 'lodash';
 
-import {uniqId} from '../../../config';
+import {uniqId} from '../../config';
 
-import {IProduct} from '../../models/product';
+import {IProduct} from './product';
 
 export interface ILineItem {
   id: number;
