@@ -5,7 +5,7 @@ import {IChangesList} from '../../../config';
 import {IBasketState} from '../../../routes';
 
 import {IOrder} from '../../models/order';
-import {LineItemService} from '../line-item/line-item.service';
+import {LineItemService} from '../../models/line-item';
 
 // internal types --------------------------------------------------------------
 interface ITriggerRemoveEvent {

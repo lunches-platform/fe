@@ -6,8 +6,7 @@ import {IWeekMenuState} from '../../../routes';
 
 import {IMenu, MenuService} from '../../models/menu';
 import {IOrder, OrderService} from '../../models/order';
-
-import {ILineItem, LineItemService} from '../line-item/line-item.service';
+import {ILineItem, LineItemService} from '../../models/line-item';
 
 // internal types --------------------------------------------------------------
 interface ITriggerOrderPlaceEvent {

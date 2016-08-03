@@ -21,13 +21,13 @@ import {PaymentStatusComponent} from './app/components/payment-status/payment-st
 import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
 import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
 
-import {LineItemService} from './app/components/line-item/line-item.service';
 
 import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
 import {UserService} from './app/models/user';
 import {ToastService} from './app/models/toast';
 import {BasketService} from './app/models/basket';
+import {LineItemService} from './app/models/line-item';
 
 import {DateFilter} from './app/filters/date.filter';
 

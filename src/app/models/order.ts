@@ -4,7 +4,7 @@ import {IHttpService, IQService, IPromise} from 'angular';
 import {uniqId} from '../../config';
 import {IUser, UserService} from './user';
 
-import {ILineItem, ILineItemRequestBody, LineItemService} from '../components/line-item/line-item.service';
+import {ILineItem, ILineItemRequestBody, LineItemService} from './line-item';
 import {IProduct} from './product';
 
 export interface IOrder {
