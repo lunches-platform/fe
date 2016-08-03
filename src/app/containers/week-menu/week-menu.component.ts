@@ -41,7 +41,6 @@ export class WeekMenuController {
     this.initUser();
     this.initMenu();
     this.initPastDaysSwitcher();
-    this.initSelectedWeek();
     this.initLoading();
     this.initBasket();
     this.initPageTitle();
@@ -104,7 +103,7 @@ export class WeekMenuController {
   }
 
   needToShowCurrentWeekOrderImpossible(): boolean {
-    return !this.hasActualMenu();
+    return !this.isOrderAllowedInTheCurrentWeek();
   }
 
   needToShowNoData(): boolean {
@@ -136,7 +135,11 @@ export class WeekMenuController {
   }
 
   private initSelectedWeek(): void {
-    this.selectedWeek = Week.Current;
+    if (this.isOrderAllowedInTheCurrentWeek()) {
+      this.selectedWeek = Week.Current;
+    } else {
+      this.selectedWeek = Week.Next;
+    }
   }
 
   private initPageTitle(): void {
@@ -162,6 +165,8 @@ export class WeekMenuController {
         if (this.actualMenu.length === 0) {
           this.pastDaysMenuHidden = false;
         }
+
+        this.initSelectedWeek();
       })
       .catch(err => this.$log.error(err))
       .finally(() => this.loading = false);
@@ -181,6 +186,10 @@ export class WeekMenuController {
 
   private hasPastDaysMenu(): boolean {
     return Boolean(this.pastDaysMenu.length);
+  }
+
+  private isOrderAllowedInTheCurrentWeek(): boolean {
+    return this.hasActualMenu();
   }
 
   // private event handlers ----------------------------------------------------

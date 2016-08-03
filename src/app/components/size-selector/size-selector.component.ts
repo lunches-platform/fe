@@ -51,8 +51,8 @@ export class SizeSelectorController {
 
   private initSizeToTitleMap(): void {
     this.sizeToTitleMap = {
-      medium: 'Средняя',
-      big: 'Большая'
+      medium: 'Средний',
+      big: 'Большой'
     };
   }
 
