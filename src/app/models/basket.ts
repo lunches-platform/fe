@@ -2,7 +2,7 @@ import {cloneDeep, filter} from 'lodash';
 import * as angular from 'angular';
 import {IQService, IPromise} from 'angular';
 
-import {IOrder, OrderService} from '../../models/order';
+import {IOrder, OrderService} from './order';
 
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 

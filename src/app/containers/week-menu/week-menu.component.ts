@@ -5,7 +5,7 @@ import {IWeekMenuState} from '../../../routes';
 import {IOrder} from '../../models/order';
 import {IMenu, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
-import {IBasket, BasketService} from '../../containers/basket/basket.service';
+import {IBasket, BasketService} from '../../models/basket';
 
 export enum Week {
   Current,

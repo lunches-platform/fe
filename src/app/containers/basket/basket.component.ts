@@ -6,7 +6,7 @@ import {IBasketState} from '../../../routes';
 import {IOrder, OrderService} from '../../models/order';
 import {IUser, UserService} from '../../models/user';
 import {ToastService} from '../../models/toast';
-import {IBasket, BasketService} from './basket.service';
+import {IBasket, BasketService} from '../../models/basket';
 
 export class BasketController {
   // bindings ------------------------------------------------------------------
