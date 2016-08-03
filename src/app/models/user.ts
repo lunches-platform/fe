@@ -49,10 +49,29 @@ export class UserService {
     return this.updateIn(user, 'address', address);
   }
 
-  sync(user: IUser): IPromise<IUser> {
+  sync(user: IUser): void {
+    if (!this.storeInLocalStorage(user)) {
+      this.$log.info('UserService: Unable to store user in local storage');
+    }
+
+    this.storeInDb(user)
+      .catch(err => {
+        this.$log.info('UserService: Unable to store user in database');
+      });
+  }
+
+  private storeInLocalStorage(user: IUser): boolean {
+    return this.localStorageService.set<IUser>('me', user);
+  }
+
+  private storeInDb(user: IUser): IPromise<IUser> {
     // todo: do not hardcode BE URL: DEZ-774
     const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullName;
-    return this.$http.put<IUser>(url, user).then(res => res.data);
+    if (user.id) {
+      return this.$http.put<IUser>(url, user).then(res => res.data);
+    } else {
+      return this.$http.post<IUser>(url, user).then(res => res.data);
+    }
   }
 
   private updateIn(inputUser: IUser, key: string, value: any): IUser {
