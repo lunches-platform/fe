@@ -68,6 +68,10 @@ export class ViewOrderController {
     return this.isCurrentDateBeforeShipmentDate();
   }
 
+  calcPrice(): number {
+    return this.lOrderService.calcPriceFor(this.order);
+  }
+
   // private init --------------------------------------------------------------
   $onChanges(changes: IChangesList) {
     if (changes['order']) { // tslint:disable-line:no-string-literal

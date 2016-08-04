@@ -4,7 +4,7 @@ import {IComponentOptions} from 'angular';
 import {IChangesList} from '../../../config';
 import {IBasketState} from '../../../routes';
 
-import {IOrder} from '../../models/order';
+import {IOrder, OrderService} from '../../models/order';
 import {LineItemService} from '../../models/line-item';
 
 // internal types --------------------------------------------------------------
@@ -31,7 +31,8 @@ export class BasketOrderController {
 
   constructor(
     private $state: IBasketState,
-    private lLineItemService: LineItemService
+    private lLineItemService: LineItemService,
+    private lOrderService: OrderService
   ) {
     'ngInject';
   }
@@ -58,6 +59,10 @@ export class BasketOrderController {
 
   isExist(): boolean {
     return !this.removed;
+  }
+
+  calcPrice(): number {
+    return this.lOrderService.calcPriceFor(this.order);
   }
 
   // private init --------------------------------------------------------------
