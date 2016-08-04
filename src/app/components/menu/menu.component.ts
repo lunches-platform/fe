@@ -1,5 +1,6 @@
 import {cloneDeep} from 'lodash';
 import {IScope, IComponentOptions} from 'angular';
+import * as moment from 'moment';
 
 import {IChangesList} from '../../../config';
 import {IWeekMenuState} from '../../../routes';
@@ -63,6 +64,10 @@ export class MenuController {
   // view helpers --------------------------------------------------------------
   isLineItemsAddedToOrder(): boolean {
     return this.lineItemsAddedToOrder;
+  }
+
+  timeBeforeOrderImpossible(): string {
+    return moment(this.menu.date).fromNow();
   }
 
   // private init --------------------------------------------------------------

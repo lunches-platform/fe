@@ -1,12 +1,15 @@
 <div layout="column" class="l-menu" >
   <md-card>
+
+    <md-card-header>
+      <md-card-header-text>
+        <span class="md-title">{{ vm.menu.date | lDate }}</span>
+        <span class="md-subhead">Запись заканчивается {{ vm.timeBeforeOrderImpossible() }}</span>
+      </md-card-header-text>
+    </md-card-header>
+
     <l-menu-cover menu="vm.menu"></l-menu-cover>
 
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{ vm.menu.date | lDate }}</span>
-      </md-card-title-text>
-    </md-card-title>
     <md-card-content>
       <span ng-repeat="product in vm.menu.products track by product.id">
         {{ product.name }}.
