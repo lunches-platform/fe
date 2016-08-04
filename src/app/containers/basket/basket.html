@@ -1,17 +1,5 @@
 <div class="l-basket">
-  <l-toolbar ng-if="!vm.isLoading()">
-    <l-toolbar-before-title>
-      <md-button ng-click="vm.goToWeekMenu()">
-        <md-icon aria-label="back to week menu">keyboard_arrow_left</md-icon> Меню
-      </md-button>
-    </l-toolbar-before-title>
-
-    <l-toolbar-at-right>
-      <md-button class="md-icon-button" ng-click="vm.goToMyOrders()" ng-if="vm.user">
-        <md-icon aria-label="my orders">receipt</md-icon>
-      </md-button>
-    </l-toolbar-at-right>
-  </l-toolbar>
+  <l-basket-toolbar ng-if="!vm.isLoading()"></l-basket-toolbar>
 
   <div ng-if="vm.hasData()" layout="column" layout-padding>
     <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>

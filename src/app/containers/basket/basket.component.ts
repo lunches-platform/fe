@@ -39,11 +39,11 @@ export class BasketController {
   makeOrder(): void {
     this.lOrderService.placeOrders(this.basket.orders)
       .then(res => {
-        this.lToastService.show('Orders have been placed!');
+        this.lToastService.show('Спасибо! Заказ размещен!');
         this.clearBasket();
       })
       .catch(err => {
-        this.lToastService.show('Error! Unable to place orders');
+        this.lToastService.show('Ошибка! Не удалось разместить заказ');
       })
       .finally(() => {
         this.$state.go('week-menu');

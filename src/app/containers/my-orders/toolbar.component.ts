@@ -6,8 +6,12 @@ export class ToolbarController {
     'ngInject';
   }
 
-  goToWeekMenu() {
+  goToWeekMenu(): void {
     this.$state.go('week-menu');
+  }
+
+  goToBasket(): void {
+    this.$state.go('basket');
   }
 }
 
@@ -15,10 +19,6 @@ export class ToolbarController {
 export const ToolbarComponent: IComponentOptions = {
   template: require('./toolbar.html'),
   controller: ToolbarController,
-  controllerAs: 'vm',
-  transclude: {
-    beforeTitle: '?lToolbarBeforeTitle',
-    atRight: '?lToolbarAtRight'
-  }
+  controllerAs: 'vm'
 };
 

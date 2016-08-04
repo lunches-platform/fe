@@ -3,8 +3,11 @@
 import * as angular from 'angular';
 
 import {BasketComponent} from './app/containers/basket/basket.component';
+import {ToolbarComponent as BasketToolbarComponent} from './app/containers/basket/toolbar.component';
 import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
+import {ToolbarComponent as WeekMenuToolbarComponent} from './app/containers/week-menu/toolbar.component';
 import {MyOrdersComponent} from './app/containers/my-orders/my-orders.component';
+import {ToolbarComponent as MyOrdersToolbarComponent} from './app/containers/my-orders/toolbar.component';
 
 import {MenuComponent} from './app/components/menu/menu.component';
 import {ViewMenuComponent} from './app/components/view-menu/view-menu.component';
@@ -13,7 +16,6 @@ import {SelectorComponent} from './app/components/selector/selector.component';
 import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
 import {QuantitySelectorComponent} from './app/components/quantity-selector/quantity-selector.component';
 import {BasketOrderComponent} from './app/components/basket-order/basket-order.component';
-import {ToolbarComponent} from './app/components/toolbar/toolbar.component';
 import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
 import {ViewOrderComponent} from './app/components/view-order/view-order.component';
 import {EditOrderComponent} from './app/components/edit-order/edit-order.component';
@@ -75,7 +77,6 @@ angular
   .component('lSizeSelector', SizeSelectorComponent)
   .component('lQuantitySelector', QuantitySelectorComponent)
   .component('lBasketOrder', BasketOrderComponent)
-  .component('lToolbar', ToolbarComponent)
   .component('lMyOrdersItem', MyOrdersItemComponent)
   .component('lViewOrder', ViewOrderComponent)
   .component('lEditOrder', EditOrderComponent)
@@ -84,6 +85,9 @@ angular
   .component('lMenuCover', MenuCoverComponent)
   .component('lUserCard', UserCardComponent)
   .component('lSwitch', SwitchComponent)
+  .component('lWeekMenuToolbar', WeekMenuToolbarComponent)
+  .component('lBasketToolbar', BasketToolbarComponent)
+  .component('lMyOrdersToolbar', MyOrdersToolbarComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
