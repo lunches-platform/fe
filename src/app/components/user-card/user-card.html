@@ -10,9 +10,14 @@
       <input ng-model="vm.fullName" type="text" ng-blur="vm.onFullNameChange(vm.fullName)" />
     </md-input-container>
 
+
     <md-input-container flex class="md-icon-float md-block">
       <label>Этаж</label>
-      <input ng-model="vm.address" type="text" ng-blur="vm.onAddressChange(vm.address)" />
+      <l-floor-selector
+        selected-floor="vm.address"
+        on-floor-selected="vm.onFloorSelected(floor)"
+        flex>
+      </l-floor-selector>
     </md-input-container>
   </md-card-content>
 </md-card>

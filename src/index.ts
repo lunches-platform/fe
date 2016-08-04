@@ -24,6 +24,7 @@ import {DateRangeSelectorComponent} from './app/components/date-range-selector/d
 import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
 import {UserCardComponent} from './app/components/user-card/user-card.component';
 import {SwitchComponent} from './app/components/switch/switch.component';
+import {FloorSelectorComponent} from './app/components/floor-selector/floor-selector.component';
 
 import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
@@ -88,6 +89,7 @@ angular
   .component('lWeekMenuToolbar', WeekMenuToolbarComponent)
   .component('lBasketToolbar', BasketToolbarComponent)
   .component('lMyOrdersToolbar', MyOrdersToolbarComponent)
+  .component('lFloorSelector', FloorSelectorComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
