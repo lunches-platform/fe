@@ -1,4 +1,4 @@
-import {map, cloneDeep} from 'lodash';
+import {map, cloneDeep, find, filter} from 'lodash';
 
 import {uniqId} from '../../config';
 
@@ -62,6 +62,25 @@ export class LineItemService {
     const item = cloneDeep(inputItem);
     item.size = size;
     return item;
+  }
+
+  addItemTo(inputItems: ILineItem[], item: ILineItem): ILineItem[] {
+    if (find(inputItems, ['id', item.id])) {
+      return inputItems;
+    }
+
+    let items = cloneDeep(inputItems);
+    items.push(item);
+
+    return items;
+  }
+
+  removeItemFrom(inputItems: ILineItem[], item: ILineItem): ILineItem[] {
+    let items = cloneDeep(inputItems);
+
+    items = filter(items, it => it.id !== item.id);
+
+    return items;
   }
 }
 

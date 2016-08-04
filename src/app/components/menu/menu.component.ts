@@ -25,12 +25,13 @@ export class MenuController {
 
   // internal
   order: IOrder;
-  lineItems: ILineItem[];
+  lineItemsAvailable: ILineItem[];
   price: number;
   size: string;
 
   private lineItemsAddedToOrder = false;
   private customLunch: boolean;
+  private selectedLineItems: ILineItem[];
 
   constructor(
     private $scope: IScope,
@@ -46,7 +47,7 @@ export class MenuController {
 
   // dom event handlers --------------------------------------------------------
   addToOrder(): void {
-    this.order = this.lOrderService.addLineItems(this.lineItems, this.order);
+    this.order = this.lOrderService.setLineItems(this.selectedLineItems, this.order);
 
     this.lineItemsAddedToOrder = true;
 
@@ -66,8 +67,18 @@ export class MenuController {
   onCustomizeLunch(): void {
     if (this.isPredefinedLunch()) {
       this.customLunch = true;
+      this.clearSelectedLineItems();
     } else {
       this.customLunch = false;
+      this.selectedLineItems = this.createPredefinedLineItems();
+    }
+  }
+
+  onLineItemToggled(item: ILineItem, checked: boolean): void {
+    if (checked) {
+      this.selectedLineItems = this.lLineItemService.addItemTo(this.selectedLineItems, item);
+    } else {
+      this.selectedLineItems = this.lLineItemService.removeItemFrom(this.selectedLineItems, item);
     }
   }
 
@@ -118,7 +129,8 @@ export class MenuController {
 
   private initOrder(): void {
     this.order = this.lOrderService.createOrderByDate(this.menu.date);
-    this.lineItems = this.lLineItemService.createLineItemsBy(this.menu.products);
+    this.lineItemsAvailable = this.createPredefinedLineItems();
+    this.selectedLineItems = this.createPredefinedLineItems();
   }
 
   private initPrice(): void {
@@ -137,7 +149,15 @@ export class MenuController {
 
   // private helpers -----------------------------------------------------------
   private updatePrice(): void {
-    this.price = this.lLineItemService.calcPriceForAll(this.lineItems);
+    this.price = this.lLineItemService.calcPriceForAll(this.selectedLineItems);
+  }
+
+  private clearSelectedLineItems(): void {
+    this.selectedLineItems = [];
+  }
+
+  private createPredefinedLineItems(): ILineItem[] {
+    return this.lLineItemService.createLineItemsBy(this.menu.products);
   }
 
   // private event handlers ----------------------------------------------------
@@ -148,7 +168,7 @@ export class MenuController {
   }
 
   private onSizeChanged(size: string): void {
-    this.lineItems = this.lLineItemService.setSizeForAll(this.lineItems, size);
+    this.selectedLineItems = this.lLineItemService.setSizeForAll(this.selectedLineItems, size);
     this.updatePrice();
   }
 }

@@ -77,9 +77,7 @@ export class BasketController {
 
     this.lUserService.sync(this.user);
 
-    this.basket = this.lBasketService.setCustomerForAllOrdersIn(this.basket, this.user.fullName);
-    this.basket = this.lBasketService.setAddressForAllOrdersIn(this.basket, this.user.address);
-
+    this.basket = this.setUserInfoToEachOrderIn(this.basket);
     this.lBasketService.storeBasketInStorage(this.basket);
   }
 
@@ -103,16 +101,24 @@ export class BasketController {
   // private init --------------------------------------------------------------
   private initBasket(): void {
     this.lBasketService.fetchBasket()
-      .then(basket => this.basket = basket)
+      .then(basket => {
+        this.basket = this.setUserInfoToEachOrderIn(basket);
+      })
       .catch(err => {
         this.$log.info('BasketController: Unable to fetch basket. Create new empty one');
 
         this.basket = this.lBasketService.createEmptyBasket();
-        this.lBasketService.storeBasketInStorage(this.basket);
+        this.basket = this.setUserInfoToEachOrderIn(this.basket);
       })
       .finally(() => {
         this.initOrdersForReview();
+        this.lBasketService.storeBasketInStorage(this.basket);
       });
+  }
+
+  private setUserInfoToEachOrderIn(inputBasket: IBasket): IBasket {
+    let basket = this.lBasketService.setCustomerForAllOrdersIn(inputBasket, this.user.fullName);
+    return this.lBasketService.setAddressForAllOrdersIn(basket, this.user.address);
   }
 
   private initOrdersForReview(): void {
