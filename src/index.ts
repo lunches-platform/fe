@@ -21,7 +21,7 @@ import {PaymentStatusComponent} from './app/components/payment-status/payment-st
 import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
 import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
 import {UserCardComponent} from './app/components/user-card/user-card.component';
-
+import {SwitchComponent} from './app/components/switch/switch.component';
 
 import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
@@ -83,6 +83,7 @@ angular
   .component('lDateRangeSelector', DateRangeSelectorComponent)
   .component('lMenuCover', MenuCoverComponent)
   .component('lUserCard', UserCardComponent)
+  .component('lSwitch', SwitchComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)

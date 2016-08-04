@@ -24,7 +24,7 @@
 }
 
 // todo: figure out nice solution for png icons
-md-list-item ._md-list-item-inner > .l-png-icon:first-child:not(.md-avatar-icon) {
+md-list-item .l-png-icon {
   margin-right: 32px;
 }
 

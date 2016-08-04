@@ -65,6 +65,13 @@ export class OrderService {
     };
   }
 
+  setLineItems(items: ILineItem[], inputOrder: IOrder): IOrder {
+    let order = cloneDeep(inputOrder);
+    order.items = items;
+    order.price = this.calcPriceFor(order);
+    return order;
+  }
+
   addLineItems(items: ILineItem[], _order: IOrder): IOrder {
     let order = cloneDeep(_order);
 
@@ -116,8 +123,7 @@ export class OrderService {
       this.calcPriceFor(order) &&
       order.address &&
       order.customer &&
-      order.shipmentDate &&
-      order.customer
+      order.shipmentDate
     );
   }
 
