@@ -38,8 +38,8 @@ export class UserCardController {
     this.triggerChangeEvent({user: this.user});
   }
 
-  onAddressChange(address: string): void {
-    this.user = this.lUserService.updateAddressFor(this.user, address);
+  onFloorSelected(floor: string): void {
+    this.user = this.lUserService.updateAddressFor(this.user, floor);
 
     if (isEqual(this.inputUser, this.user)) {
       return;
