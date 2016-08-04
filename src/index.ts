@@ -25,6 +25,7 @@ import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.compone
 import {UserCardComponent} from './app/components/user-card/user-card.component';
 import {SwitchComponent} from './app/components/switch/switch.component';
 import {FloorSelectorComponent} from './app/components/floor-selector/floor-selector.component';
+import {PaymentCardComponent} from './app/components/payment-card/payment-card.component';
 
 import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
@@ -90,6 +91,7 @@ angular
   .component('lBasketToolbar', BasketToolbarComponent)
   .component('lMyOrdersToolbar', MyOrdersToolbarComponent)
   .component('lFloorSelector', FloorSelectorComponent)
+  .component('lPaymentCard', PaymentCardComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)

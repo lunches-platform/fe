@@ -14,8 +14,6 @@ export class BasketController {
   basket: IBasket;
   customer: string;
   address: string;
-  cardNumber: string;
-  cardHolder: string;
   ordersForReview: IOrder[];
   user: IUser;
 
@@ -32,7 +30,6 @@ export class BasketController {
 
     this.initUser();
     this.initBasket();
-    this.initCardInfo();
   }
 
   // dom event handlers --------------------------------------------------------
@@ -82,10 +79,6 @@ export class BasketController {
   }
 
   // view helpers --------------------------------------------------------------
-  totalToPay(): number {
-    return this.lOrderService.calcPriceForAll(this.basket.orders);
-  }
-
   hasData(): boolean {
     return Boolean(this.basket.orders.length);
   }
@@ -123,11 +116,6 @@ export class BasketController {
 
   private initOrdersForReview(): void {
     this.ordersForReview = cloneDeep(this.basket.orders);
-  }
-
-  private initCardInfo(): void {
-    this.cardHolder = 'Иванов Иван Иванович';
-    this.cardNumber = '1234-5678-8765-4321';
   }
 
   private initUser(): void {
