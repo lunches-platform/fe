@@ -14,13 +14,23 @@
   }
 
   .l-menu-size {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-bottom: 16px;
+    padding: 16px;
   }
 }
 
 /* todo: move styles to <l-selector>: DEZ-768 */
 .l-selector {
   margin-top: 0px;
+}
+
+// todo: figure out nice solution for png icons
+md-list-item ._md-list-item-inner > .l-png-icon:first-child:not(.md-avatar-icon) {
+  margin-right: 32px;
+}
+
+// todo: figure out nice solution for png icons
+// it doesnt work, but required according to material design spec
+.l-png-icon {
+  color: rgba(0,0,0,0.54);
+  width: 24px;
 }
