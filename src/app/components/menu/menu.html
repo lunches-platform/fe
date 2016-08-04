@@ -11,10 +11,16 @@
     <l-menu-cover menu="vm.menu"></l-menu-cover>
 
     <md-card-content>
-      <span ng-repeat="product in vm.menu.products track by product.id">
-        {{ product.name }}.
-      </span>
+      <md-list>
+        <md-list-item ng-repeat="product in vm.menu.products track by product.id">
+          <img ng-src="{{ ::vm.productTypeToIconUrl(product.type) }}" alt="meat" class="material-icons l-png-icon" />
+          <md-switch ng-if="vm.isCustomLunch()" class="md-secondary"></md-switch>
+          <p>{{ product.name }}</p>
+        </md-list-item>
+      </md-list>
     </md-card-content>
+
+    <md-divider />
 
     <md-radio-group ng-if="!vm.isLineItemsAddedToOrder()" ng-model="vm.size" layout="row" class="l-menu-size">
       <md-radio-button value="medium" class="md-primary">Средний</md-radio-button>
@@ -30,8 +36,8 @@
     </div>
 
     <md-card-actions layout="row" layout-align="start center" ng-if="!vm.isLineItemsAddedToOrder()">
-      <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()" ng-disabled="!vm.price">Беру</md-button>
-      <md-button class="md-raised">Свой обед</md-button>
+      <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()" ng-disabled="!vm.price">{{ vm.orderButtonText() }}</md-button>
+      <md-button class="md-raised" ng-click="vm.onCustomizeLunch()">{{ vm.customizeLunchButtonText() }}</md-button>
       <span ng-if="vm.price" class="md-title price-label">{{ vm.price }} грн</span>
     </md-card-actions>
 
