@@ -36,9 +36,9 @@
     </div>
 
     <md-card-actions layout="row" layout-align="start center" ng-if="!vm.isLineItemsAddedToOrder()">
-      <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()" ng-disabled="!vm.price">{{ vm.orderButtonText() }}</md-button>
+      <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()" ng-disabled="!vm.calcPrice()">{{ vm.orderButtonText() }}</md-button>
       <md-button class="md-raised" ng-click="vm.onCustomizeLunch()">{{ vm.customizeLunchButtonText() }}</md-button>
-      <span ng-if="vm.price" class="md-title price-label">{{ vm.price }} грн</span>
+      <span ng-if="vm.calcPrice()" class="md-title price-label">{{ vm.calcPrice() }} грн</span>
     </md-card-actions>
 
   </md-card>

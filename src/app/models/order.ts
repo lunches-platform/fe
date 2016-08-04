@@ -68,7 +68,6 @@ export class OrderService {
   setLineItems(items: ILineItem[], inputOrder: IOrder): IOrder {
     let order = cloneDeep(inputOrder);
     order.items = items;
-    order.price = this.calcPriceFor(order);
     return order;
   }
 
@@ -78,8 +77,6 @@ export class OrderService {
     items.forEach(item => {
       order.items.push(item);
     });
-
-    order.price = this.calcPriceFor(order);
 
     return order;
   }
@@ -183,8 +180,6 @@ export class OrderService {
       return it.id === item.id ? item : it;
     });
 
-    order.price = this.calcPriceFor(order);
-
     return order;
   }
 
@@ -192,7 +187,6 @@ export class OrderService {
     let order = cloneDeep(inputOrder);
 
     order.items = filter(order.items, it => it.id !== item.id);
-    order.price = this.calcPriceFor(order);
 
     return order;
   }
@@ -204,7 +198,6 @@ export class OrderService {
 
     const order = cloneDeep(inputOrder);
     order.items.push(item);
-    order.price = this.calcPriceFor(order);
 
     return order;
   }

@@ -26,7 +26,6 @@ export class MenuController {
   // internal
   order: IOrder;
   lineItemsAvailable: ILineItem[];
-  price: number;
   size: string;
 
   private lineItemsAddedToOrder = false;
@@ -113,6 +112,10 @@ export class MenuController {
     // return ProductTypeUrls[type];
   }
 
+  calcPrice(): number {
+    return this.lLineItemService.calcPriceForAll(this.selectedLineItems);
+  }
+
   // private init --------------------------------------------------------------
   $onChanges(changes: IChangesList) {
     if (changes['menu']) { // tslint:disable-line:no-string-literal
@@ -122,7 +125,6 @@ export class MenuController {
 
   private init(): void {
     this.initOrder();
-    this.initPrice();
     this.initSize();
     this.initLunchCustomization();
   }
@@ -131,10 +133,6 @@ export class MenuController {
     this.order = this.lOrderService.createOrderByDate(this.menu.date);
     this.lineItemsAvailable = this.createPredefinedLineItems();
     this.selectedLineItems = this.createPredefinedLineItems();
-  }
-
-  private initPrice(): void {
-    this.price = 0;
   }
 
   private initSize(): void {
@@ -148,10 +146,6 @@ export class MenuController {
   }
 
   // private helpers -----------------------------------------------------------
-  private updatePrice(): void {
-    this.price = this.lLineItemService.calcPriceForAll(this.selectedLineItems);
-  }
-
   private clearSelectedLineItems(): void {
     this.selectedLineItems = [];
   }
@@ -169,7 +163,6 @@ export class MenuController {
 
   private onSizeChanged(size: string): void {
     this.selectedLineItems = this.lLineItemService.setSizeForAll(this.selectedLineItems, size);
-    this.updatePrice();
   }
 }
 
