@@ -1,19 +1,7 @@
 <div class="l-my-orders">
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-  <l-toolbar ng-if="!vm.isLoading()">
-    <l-toolbar-before-title>
-      <md-button ng-click="vm.goToWeekMenu()">
-        <md-icon aria-label="back to week menu">arrow_back</md-icon>
-      </md-button>
-    </l-toolbar-before-title>
-
-    <l-toolbar-at-right>
-      <md-button class="md-icon-button" ng-click="vm.goToBasket()">
-        <md-icon aria-label="basket">shopping_cart</md-icon>
-      </md-button>
-    </l-toolbar-at-right>
-  </l-toolbar>
+  <l-my-orders-toolbar ng-if="!vm.isLoading()"></l-my-orders-toolbar>
 
   <div ng-if="!vm.isLoading()" layout="column" layout-padding>
     <div ng-if="vm.hasData()">

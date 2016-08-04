@@ -40,7 +40,7 @@ export class MyOrdersController {
 
     this.lOrderService.syncOrderFor(this.user, order)
       .catch(err => {
-        this.lToastService.show('Unable to update order');
+        this.lToastService.show('Ошибка обновления заказа');
         this.update(oldOrder);
       });
   }
