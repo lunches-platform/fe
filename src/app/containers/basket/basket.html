@@ -6,18 +6,21 @@
 
     <l-payment-card orders="vm.basket.orders"></l-payment-card>
 
-    <md-divider />
+    <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrdersValid()">Оформить заказ</md-button>
 
-    <div flex>
-      <h3 class="md-title">Ваши заказы</h3>
+    <div class="md-headline" layout-padding>Ваши заказы</div>
 
-      <l-basket-order
-        ng-repeat="order in vm.ordersForReview"
-        order="order"
-        on-remove="vm.removeFromBasket(order)"
-        on-restore="vm.restoreToBasket(order)">
-      </l-basket-order>
-    </div>
+    <md-card>
+      <div ng-repeat="order in vm.ordersForReview">
+        <l-basket-order
+          order="order"
+          on-remove="vm.removeFromBasket(order)"
+          on-restore="vm.restoreToBasket(order)">
+        </l-basket-order>
+
+        <md-divider />
+      </div>
+    </md-card>
 
     <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrdersValid()">Оформить заказ</md-button>
   </div>

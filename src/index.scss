@@ -28,6 +28,11 @@ md-list-item .l-png-icon {
   margin-right: 32px;
 }
 
+md-list-item._md-no-proxy.l-no-list-item-padding {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 // todo: figure out nice solution for png icons
 // it doesnt work, but required according to material design spec
 .l-png-icon {
@@ -37,4 +42,22 @@ md-list-item .l-png-icon {
 
 .l-total-to-pay {
   padding: 16px;
+}
+
+.l-basket-order-footer {
+  padding: 16px;
+}
+
+.l-basket-order-price-label {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 16px;
+}
+
+.l-basket-order md-card-content {
+  padding-bottom: 0px;
+}
+
+.l-user-card md-card-content {
+  padding-bottom: 0px;
 }
