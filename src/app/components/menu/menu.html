@@ -12,7 +12,7 @@
 
     <md-card-content>
       <md-list>
-        <md-list-item ng-repeat="lineItem in vm.lineItemsAvailable track by lineItem.product.id">
+        <md-list-item ng-repeat="lineItem in vm.lineItemsAvailable track by lineItem.product.id" class="l-no-left-padding">
           <img ng-src="{{ ::vm.productTypeToIconUrl(lineItem.product.type) }}" alt="meat" class="material-icons l-png-icon" />
           <l-switch ng-if="vm.isCustomLunch()" on-switch="vm.onLineItemToggled(lineItem, checked)" class="md-secondary"></l-switch>
           <p>{{ lineItem.product.name }}</p>

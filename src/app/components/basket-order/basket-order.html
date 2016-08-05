@@ -1,24 +1,28 @@
-<div layout="column" class="l-basket-order" >
-  <h2 flex class="md-headline title">{{ vm.order.shipmentDate | lDate }}</h2>
+<div class="l-basket-order" layout="column">
+  <md-card-content>
+    <h2 flex class="md-title title">{{ vm.order.shipmentDate | lDate }}</h2>
 
-  <div ng-if="vm.isExist()">
-    <div class="line-items" flex>
-      <div ng-repeat="item in vm.order.items" flex="100">
-        <div class="md-subhead">{{ item.product.name }}</div>
-        <div flex class="md-caption">{{ item.product.ingredients.join(', ') }}</div>
-      </div>
+    <md-list ng-if="vm.isExist()">
+      <md-list-item ng-repeat="item in vm.order.items" class="l-no-list-item-padding">
+        <p>{{ item.product.name }}</p>
+      </md-list-item>
+    </md-list>
+
+    <div ng-if="vm.isRemoved()" layout="row" class="md-body-1">
+      Обед удален из корзины.
     </div>
-    <md-button class="md-raised" ng-click="vm.remove()">Удалить из корзины</md-button>
-    <span class="md-headline price-label">{{ vm.calcPrice() }} грн</span>
+  </md-card-content>
+
+  <div layout="row" ng-if="vm.isExist()">
+    <md-button ng-click="vm.remove()">Отменить</md-button>
+    <span flex></span>
+    <span class="md-title l-basket-order-price-label">{{ vm.calcPrice() }} грн</span>
   </div>
 
-  <div ng-if="vm.isRemoved()" layout="row" layout-align="center center">
-    <div class="md-body1">Обед удален из корзины.
-      <md-button class="md-raised" ng-click="vm.addAnother()">Сделать другой заказ</md-button>
-      <md-button class="md-raised md-primary" ng-click="vm.restore()">Вернуть обратно</md-button>
-    </div>
+  <div layout="row" ng-if="vm.isRemoved()">
+    <md-button ng-click="vm.addAnother()">Другой заказ</md-button>
+    <md-button class="md-primary" ng-click="vm.restore()">Вернуть</md-button>
+    <span flex></span>
   </div>
 
-  <md-divider />
 </div>
-
