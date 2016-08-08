@@ -11,8 +11,7 @@ export interface IOrder {
   id: number;
   items: ILineItem[];
   shipmentDate: string;
-  address: string;
-  customer: string;
+  user: IUser;
   canceled: boolean;
   paid: boolean;
   createdAt?: string;
@@ -22,8 +21,7 @@ export interface IOrder {
 
 export interface IPlaceOrderRequestBody {
   items: ILineItemRequestBody[];
-  customer: string;
-  address: string;
+  userId: string;
   shipmentDate: string;
 }
 
@@ -43,8 +41,7 @@ export class OrderService {
     return {
       id: uniqId(),
       items: [],
-      customer: null,
-      address: null,
+      user: null,
       shipmentDate: date,
       price: 0,
       canceled: false,
@@ -56,8 +53,7 @@ export class OrderService {
     return {
       id: id,
       items: [],
-      customer: null,
-      address: null,
+      user: null,
       shipmentDate: date,
       price: 0,
       canceled: false,
@@ -81,15 +77,9 @@ export class OrderService {
     return order;
   }
 
-  setCustomer(customer: string, _order: IOrder): IOrder {
+  setUser(user: IUser, _order: IOrder): IOrder {
     let order = cloneDeep(_order);
-    order.customer = customer;
-    return order;
-  }
-
-  setAddress(address: string, _order: IOrder): IOrder {
-    let order = cloneDeep(_order);
-    order.address = address;
+    order.user = user;
     return order;
   }
 
@@ -106,7 +96,7 @@ export class OrderService {
   }
 
   // todo: add return type
-  placeOrders(orders: IOrder[]) {
+  placeOrders(orders: IOrder[]): IPromise<IOrder[]> {
     const url = 'http://api.cogniance.lunches.com.ua/orders';
     const allOrdersPlacedPromise = map(orders, order => {
       return this.$http.post(url, this.prepareOrderForApi(order));
@@ -118,8 +108,8 @@ export class OrderService {
   isValid(order: IOrder): boolean {
     return Boolean(
       this.calcPriceFor(order) &&
-      order.address &&
-      order.customer &&
+      order.user.fullname &&
+      order.user.address &&
       order.shipmentDate
     );
   }
@@ -134,12 +124,8 @@ export class OrderService {
     }, 0);
   }
 
-  setCustomerForAll(orders: IOrder[], customer: string): IOrder[] {
-    return map(orders, order => this.setCustomer(customer, order));
-  }
-
-  setAddressForAll(orders: IOrder[], address: string): IOrder[] {
-    return map(orders, order => this.setAddress(address, order));
+  setUserForAll(orders: IOrder[], user: IUser): IOrder[] {
+    return map(orders, order => this.setUser(user, order));
   }
 
   fetchMyOrders(startDate: string, endDate: string): IPromise<IOrder[]> {
@@ -212,8 +198,7 @@ export class OrderService {
   private prepareOrderForApi(order: IOrder): IPlaceOrderRequestBody {
     return {
       items: this.prepareLineItemsForApi(order.items),
-      customer: order.customer,
-      address: order.address,
+      userId: order.user.id,
       shipmentDate: order.shipmentDate,
     };
   }

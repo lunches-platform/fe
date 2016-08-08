@@ -3,6 +3,7 @@ import * as angular from 'angular';
 import {IQService, IPromise} from 'angular';
 
 import {IOrder, OrderService} from './order';
+import {IUser} from './user';
 
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
@@ -41,15 +42,9 @@ export class BasketService {
     }
   }
 
-  setCustomerForAllOrdersIn(_basket: IBasket, customer: string): IBasket {
+  setUserToEachOrderIn(_basket: IBasket, user: IUser): IBasket {
     let basket = cloneDeep(_basket);
-    basket.orders = this.lOrderService.setCustomerForAll(basket.orders, customer);
-    return basket;
-  }
-
-  setAddressForAllOrdersIn(_basket: IBasket, address: string): IBasket {
-    let basket = cloneDeep(_basket);
-    basket.orders = this.lOrderService.setAddressForAll(basket.orders, address);
+    basket.orders = this.lOrderService.setUserForAll(basket.orders, user);
     return basket;
   }
 

@@ -4,7 +4,7 @@ import {ILogService, IHttpService, IPromise} from 'angular';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 export interface IUser {
-  id: number;
+  id: string;
   fullname: string;
   address: string;
 }
@@ -43,19 +43,41 @@ export class UserService {
     return this.updateIn(user, 'address', address);
   }
 
-  sync(user: IUser): void {
+  update(user: IUser): IPromise<IUser> {
+    return this.updateInDb(user).then(user => {
+      this.storeToLocalStorage(user);
+
+      return user;
+    });
+  }
+
+  create(user: IUser): IPromise<IUser> {
+    return this.createInDb(user).then(user => {
+      this.storeToLocalStorage(user);
+
+      return user;
+    });
+  }
+
+  sync(user: IUser): IPromise<IUser> {
     if (!this.isValid(user)) {
-      this.$log.warn('UserService: User is not valid, skip sync', user);
+      this.$log.warn('UserService:sync: User is not valid, skip sync', user);
+      return;
     }
 
-    if (!this.storeInLocalStorage(user)) {
-      this.$log.info('UserService: Unable to store user in local storage');
-    }
+    return this.isGuest(user) ? this.create(user) : this.update(user);
+  }
 
-    this.storeInDb(user)
-      .catch(err => {
-        this.$log.info('UserService: Unable to store user in database');
-      });
+  createInDb(user: IUser): IPromise<IUser> {
+    // todo: do not hardcode BE URL: DEZ-774
+    const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
+    return this.$http.post<IUser>(baseUrl, user).then(res => res.data);
+  }
+
+  updateInDb(user: IUser): IPromise<IUser> {
+    // todo: do not hardcode BE URL: DEZ-774
+    const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
+    return this.$http.put<IUser>(baseUrl + '/' + user.fullname, user).then(res => res.data);
   }
 
   isEqual(user1: IUser, user2: IUser): boolean {
@@ -64,10 +86,14 @@ export class UserService {
 
   createGuest(): IUser {
     return {
-      id: 0,
+      id: null,
       fullname: '',
       address: ''
     };
+  }
+
+  isGuest(user: IUser): boolean {
+    return Boolean(!user.id);
   }
 
   searchUsersBy(name: string): IPromise<IUser> {
@@ -76,18 +102,8 @@ export class UserService {
     return this.$http.get<IUser>(url).then(res => res.data);
   }
 
-  private storeInLocalStorage(user: IUser): boolean {
+  private storeToLocalStorage(user: IUser): boolean {
     return this.localStorageService.set<IUser>('me', user);
-  }
-
-  private storeInDb(user: IUser): IPromise<IUser> {
-    // todo: do not hardcode BE URL: DEZ-774
-    const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
-    if (user.id) {
-      return this.$http.put<IUser>(baseUrl + '/' + user.fullname, user).then(res => res.data);
-    } else {
-      return this.$http.post<IUser>(baseUrl, user).then(res => res.data);
-    }
   }
 
   private updateIn(inputUser: IUser, key: string, value: any): IUser {
