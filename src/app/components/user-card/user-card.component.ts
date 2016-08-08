@@ -19,7 +19,7 @@ export class UserCardController {
   triggerChangeEvent: ITriggerChangeEvent;
 
   // internal
-  fullName: string;
+  fullname: string;
   address: string;
   user: IUser;
 
@@ -30,24 +30,31 @@ export class UserCardController {
   }
 
   // dom event handlers --------------------------------------------------------
-  onFullNameChange(fullName: string): void {
-    this.user = this.lUserService.updateFullNameFor(this.user, fullName);
+  onFullNameChange(fullname: string): void {
+    this.fullname = fullname;
+    this.user = this.lUserService.updateFullNameFor(this.user, this.fullname);
 
-    if (this.lUserService.isEqual(this.inputUser, this.user)) {
+    this.triggerChangeEventIfValid();
+  }
+
+  onUserSelected(user: IUser) {
+    if (!user) {
       return;
     }
 
-    this.triggerChangeEvent({user: this.user});
+    this.user = user;
+
+    this.triggerChangeEventIfValid();
   }
 
   onFloorSelected(floor: string): void {
     this.user = this.lUserService.updateAddressFor(this.user, floor);
 
-    if (this.lUserService.isEqual(this.inputUser, this.user)) {
-      return;
-    }
+    this.triggerChangeEventIfValid();
+  }
 
-    this.triggerChangeEvent({user: this.user});
+  searchUsersBy(name: string) {
+    return this.lUserService.searchUsersBy(name);
   }
 
   // private init --------------------------------------------------------------
@@ -60,11 +67,9 @@ export class UserCardController {
   }
 
   private initForm(): void {
-    if (this.lUserService.isValid(this.user)) {
-      this.address = this.user.address;
+    this.address = this.user.address || null;
 
-      this.fullName = this.user.fullName;
-    }
+    this.fullname = this.user.fullname || null;
   }
 
   private initUser(): void {
@@ -77,6 +82,14 @@ export class UserCardController {
     this.user = cloneDeep(inputUser);
 
     this.initForm();
+  }
+
+  private triggerChangeEventIfValid() {
+    if (this.lUserService.isEqual(this.inputUser, this.user)) {
+      return;
+    }
+
+    this.triggerChangeEvent({user: this.user});
   }
 }
 

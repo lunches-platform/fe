@@ -106,7 +106,7 @@ export class BasketController {
   }
 
   private setUserInfoToEachOrderIn(inputBasket: IBasket): IBasket {
-    let basket = this.lBasketService.setCustomerForAllOrdersIn(inputBasket, this.user.fullName);
+    let basket = this.lBasketService.setCustomerForAllOrdersIn(inputBasket, this.user.fullname);
     return this.lBasketService.setAddressForAllOrdersIn(basket, this.user.address);
   }
 
