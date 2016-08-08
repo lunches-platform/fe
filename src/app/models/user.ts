@@ -5,7 +5,7 @@ type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 export interface IUser {
   id: number;
-  fullName: string;
+  fullname: string;
   address: string;
 }
 
@@ -32,11 +32,11 @@ export class UserService {
   }
 
   isValid(user: IUser): boolean {
-    return Boolean(user.fullName && user.address);
+    return Boolean(user.fullname && user.address);
   }
 
   updateFullNameFor(user: IUser, name: string): IUser {
-    return this.updateIn(user, 'fullName', name);
+    return this.updateIn(user, 'fullname', name);
   }
 
   updateAddressFor(user: IUser, address: string): IUser {
@@ -45,7 +45,7 @@ export class UserService {
 
   sync(user: IUser): void {
     if (!this.isValid(user)) {
-      this.$log.info('UserService: User is not valid, skip sync', user);
+      this.$log.warn('UserService: User is not valid, skip sync', user);
     }
 
     if (!this.storeInLocalStorage(user)) {
@@ -65,9 +65,15 @@ export class UserService {
   createGuest(): IUser {
     return {
       id: 0,
-      fullName: '',
+      fullname: '',
       address: ''
     };
+  }
+
+  searchUsersBy(name: string): IPromise<IUser> {
+    // todo: do not hardcode BE URL: DEZ-774
+    const url = 'http://api.cogniance.lunches.com.ua/users?like=' + name;
+    return this.$http.get<IUser>(url).then(res => res.data);
   }
 
   private storeInLocalStorage(user: IUser): boolean {
@@ -76,11 +82,11 @@ export class UserService {
 
   private storeInDb(user: IUser): IPromise<IUser> {
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/users/' + user.fullName;
+    const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
     if (user.id) {
-      return this.$http.put<IUser>(url, user).then(res => res.data);
+      return this.$http.put<IUser>(baseUrl + '/' + user.fullname, user).then(res => res.data);
     } else {
-      return this.$http.post<IUser>(url, user).then(res => res.data);
+      return this.$http.post<IUser>(baseUrl, user).then(res => res.data);
     }
   }
 

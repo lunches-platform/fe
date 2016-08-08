@@ -147,7 +147,7 @@ export class OrderService {
 
     // todo: do not hardcode BE URL: DEZ-774
     const basePath = 'http://api.cogniance.lunches.com.ua';
-    const url = basePath + '/customers/' + me.fullName + '/orders?startDate=' + startDate + '&endDate=' + endDate;
+    const url = basePath + '/customers/' + me.fullname + '/orders?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IOrder[]>(url).then(res => res.data);
   }
 
@@ -167,7 +167,7 @@ export class OrderService {
 
   syncOrderFor(user: IUser, order: IOrder): IPromise<IOrder> {
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullName + '/orders/' + order.id;
+    const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullname + '/orders/' + order.id;
     return this.$http
       .put<IOrder>(url, order)
       .then(res => res.data);

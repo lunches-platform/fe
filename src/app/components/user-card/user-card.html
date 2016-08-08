@@ -5,11 +5,17 @@
     </md-card-title-text>
   </md-card-title>
   <md-card-content>
-    <md-input-container flex class="md-icon-float md-block">
-      <label>Имя</label>
-      <input ng-model="vm.fullName" type="text" ng-blur="vm.onFullNameChange(vm.fullName)" />
-    </md-input-container>
-
+    <md-autocomplete
+        md-search-text-change="vm.onFullNameChange(vm.fullname)"
+        md-search-text="vm.fullname"
+        md-selected-item-change="vm.onUserSelected(user)"
+        md-items="user in vm.searchUsersBy(vm.fullname)"
+        md-item-text="user.fullname"
+        md-floating-label="Имя">
+      <md-item-template>
+        <span md-highlight-text="vm.fullname" md-highlight-flags="^i">{{user.fullname}}</span>
+      </md-item-template>
+    </md-autocomplete>
 
     <md-input-container flex class="md-icon-float md-block">
       <label>Этаж</label>
