@@ -34,8 +34,12 @@ export class BasketController {
 
   // dom event handlers --------------------------------------------------------
   makeOrder(): void {
-    this.lOrderService.placeOrders(this.basket.orders)
-      .then(res => {
+    this.lUserService.sync(this.user)
+      .then(user => {
+        this.updateUserInCache(user);
+        return this.lOrderService.placeOrders(this.basket.orders);
+      })
+      .then(() => {
         this.lToastService.show('Спасибо! Заказ размещен!');
         this.clearBasket();
       })
@@ -68,9 +72,7 @@ export class BasketController {
   onUserChanged(user: IUser): void {
     this.user = user;
 
-    this.lUserService.sync(this.user);
-
-    this.basket = this.setUserInfoToEachOrderIn(this.basket);
+    this.basket = this.lBasketService.setUserToEachOrderIn(this.basket, user);
     this.lBasketService.storeBasketInStorage(this.basket);
   }
 
@@ -91,23 +93,18 @@ export class BasketController {
   private initBasket(): void {
     this.lBasketService.fetchBasket()
       .then(basket => {
-        this.basket = this.setUserInfoToEachOrderIn(basket);
+        this.basket = this.lBasketService.setUserToEachOrderIn(basket, this.user);
       })
       .catch(err => {
         this.$log.info('BasketController: Unable to fetch basket. Create new empty one');
 
         this.basket = this.lBasketService.createEmptyBasket();
-        this.basket = this.setUserInfoToEachOrderIn(this.basket);
+        this.basket = this.lBasketService.setUserToEachOrderIn(this.basket, this.user);
       })
       .finally(() => {
         this.initOrdersForReview();
         this.lBasketService.storeBasketInStorage(this.basket);
       });
-  }
-
-  private setUserInfoToEachOrderIn(inputBasket: IBasket): IBasket {
-    let basket = this.lBasketService.setCustomerForAllOrdersIn(inputBasket, this.user.fullname);
-    return this.lBasketService.setAddressForAllOrdersIn(basket, this.user.address);
   }
 
   private initOrdersForReview(): void {
@@ -121,6 +118,12 @@ export class BasketController {
   // private helpers -----------------------------------------------------------
   private clearBasket(): void {
     this.basket = this.lBasketService.clearBasket(this.basket);
+    this.lBasketService.storeBasketInStorage(this.basket);
+  }
+
+  private updateUserInCache(user: IUser): void {
+    this.user = user;
+    this.basket = this.lBasketService.setUserToEachOrderIn(this.basket, user);
     this.lBasketService.storeBasketInStorage(this.basket);
   }
 
