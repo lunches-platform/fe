@@ -66,10 +66,6 @@ export class BasketController {
   }
 
   onUserChanged(user: IUser): void {
-    if (!user) {
-      return;
-    }
-
     this.user = user;
 
     this.lUserService.sync(this.user);

@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash';
+import {cloneDeep, isEqual} from 'lodash';
 import {ILogService, IHttpService, IPromise} from 'angular';
 
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
@@ -7,7 +7,7 @@ export interface IUser {
   id: number;
   fullName: string;
   role: string;
-  address?: string;
+  address: string;
 }
 
 export class Role {
@@ -37,8 +37,12 @@ export class UserService {
     return me;
   }
 
+  isValid(user: IUser): boolean {
+    return Boolean(user.fullName && user.address);
+  }
+
   isGuest(user: IUser): boolean {
-    return Boolean(user.role === Role.GUEST);
+    return Boolean(user.role === Role.GUEST || !user.role);
   }
 
   updateFullNameFor(user: IUser, name: string): IUser {
@@ -50,6 +54,10 @@ export class UserService {
   }
 
   sync(user: IUser): void {
+    if (!this.isValid(user)) {
+      this.$log.info('UserService: User is not valid, skip sync', user);
+    }
+
     if (!this.storeInLocalStorage(user)) {
       this.$log.info('UserService: Unable to store user in local storage');
     }
@@ -58,6 +66,19 @@ export class UserService {
       .catch(err => {
         this.$log.info('UserService: Unable to store user in database');
       });
+  }
+
+  isEqual(user1: IUser, user2: IUser): boolean {
+    return isEqual(user1, user2);
+  }
+
+  createGuest(): IUser {
+    return {
+      id: 0,
+      fullName: '',
+      role: Role.GUEST,
+      address: ''
+    };
   }
 
   private storeInLocalStorage(user: IUser): boolean {
@@ -78,13 +99,5 @@ export class UserService {
     const user = cloneDeep(inputUser);
     user[key] = value;
     return user;
-  }
-
-  private createGuest(): IUser {
-    return {
-      id: 0,
-      fullName: 'Guest',
-      role: Role.GUEST
-    };
   }
 }

@@ -1,4 +1,4 @@
-import {cloneDeep, isEqual} from 'lodash';
+import {cloneDeep} from 'lodash';
 import {IComponentOptions} from 'angular';
 
 import {IChangesList} from '../../../config';
@@ -25,13 +25,15 @@ export class UserCardController {
 
   constructor(private lUserService: UserService) {
     'ngInject';
+
+    this.initUser();
   }
 
   // dom event handlers --------------------------------------------------------
   onFullNameChange(fullName: string): void {
     this.user = this.lUserService.updateFullNameFor(this.user, fullName);
 
-    if (isEqual(this.inputUser, this.user)) {
+    if (this.lUserService.isEqual(this.inputUser, this.user)) {
       return;
     }
 
@@ -41,7 +43,7 @@ export class UserCardController {
   onFloorSelected(floor: string): void {
     this.user = this.lUserService.updateAddressFor(this.user, floor);
 
-    if (isEqual(this.inputUser, this.user)) {
+    if (this.lUserService.isEqual(this.inputUser, this.user)) {
       return;
     }
 
@@ -58,8 +60,15 @@ export class UserCardController {
   }
 
   private initForm(): void {
-    this.fullName = this.user.fullName || null;
-    this.address = this.user.address || null;
+    if (!this.lUserService.isGuest(this.user)) {
+      this.address = this.user.address;
+
+      this.fullName = this.user.fullName;
+    }
+  }
+
+  private initUser(): void {
+    this.user = this.lUserService.createGuest();
   }
 
   // private event handlers ----------------------------------------------------
