@@ -64,13 +64,7 @@ export class MenuController {
   }
 
   onCustomizeLunch(): void {
-    if (this.isPredefinedLunch()) {
-      this.customLunch = true;
-      this.clearSelectedLineItems();
-    } else {
-      this.customLunch = false;
-      this.selectedLineItems = this.createPredefinedLineItems();
-    }
+    this.toggleCustomLunch();
   }
 
   onLineItemToggled(item: ILineItem, checked: boolean): void {
@@ -146,10 +140,6 @@ export class MenuController {
   }
 
   // private helpers -----------------------------------------------------------
-  private clearSelectedLineItems(): void {
-    this.selectedLineItems = [];
-  }
-
   private createPredefinedLineItems(): ILineItem[] {
     return this.lLineItemService.createLineItemsBy(this.menu.products);
   }
@@ -159,6 +149,12 @@ export class MenuController {
     this.menu = cloneDeep(menu);
 
     this.init();
+  }
+
+  private toggleCustomLunch(): void {
+    this.customLunch = !this.customLunch;
+    this.selectedLineItems = this.createPredefinedLineItems();
+    this.selectedLineItems = this.lLineItemService.setSizeForAll(this.selectedLineItems, this.size);
   }
 
   private onSizeChanged(size: string): void {
