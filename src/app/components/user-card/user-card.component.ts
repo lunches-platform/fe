@@ -60,7 +60,7 @@ export class UserCardController {
   }
 
   private initForm(): void {
-    if (!this.lUserService.isGuest(this.user)) {
+    if (this.lUserService.isValid(this.user)) {
       this.address = this.user.address;
 
       this.fullName = this.user.fullName;

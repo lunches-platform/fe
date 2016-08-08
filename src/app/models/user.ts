@@ -6,13 +6,7 @@ type ILocalStorageService = angular.local.storage.ILocalStorageService;
 export interface IUser {
   id: number;
   fullName: string;
-  role: string;
   address: string;
-}
-
-export class Role {
-  public static get GUEST(): string { return 'guest'; }
-  public static get CUSTOMER(): string { return 'customer'; }
 }
 
 export class UserService {
@@ -39,10 +33,6 @@ export class UserService {
 
   isValid(user: IUser): boolean {
     return Boolean(user.fullName && user.address);
-  }
-
-  isGuest(user: IUser): boolean {
-    return Boolean(user.role === Role.GUEST || !user.role);
   }
 
   updateFullNameFor(user: IUser, name: string): IUser {
@@ -76,7 +66,6 @@ export class UserService {
     return {
       id: 0,
       fullName: '',
-      role: Role.GUEST,
       address: ''
     };
   }
@@ -87,7 +76,7 @@ export class UserService {
 
   private storeInDb(user: IUser): IPromise<IUser> {
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullName;
+    const url = 'http://api.cogniance.lunches.com.ua/users/' + user.fullName;
     if (user.id) {
       return this.$http.put<IUser>(url, user).then(res => res.data);
     } else {
