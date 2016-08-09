@@ -1,6 +1,8 @@
 import {isNil} from 'lodash';
 import {IScope, IComponentOptions} from 'angular';
 
+import {IChangesList} from '../../../config';
+
 // internal types --------------------------------------------------------------
 interface ITriggerSwitchEvent {
   (arg: { checked: boolean }): void;
@@ -8,6 +10,9 @@ interface ITriggerSwitchEvent {
 
 export class SwitchController {
   // bindings ------------------------------------------------------------------
+  // input
+  inputSwithed: boolean;
+
   // output
   triggerSwitchEvent: ITriggerSwitchEvent;
 
@@ -17,15 +22,34 @@ export class SwitchController {
   constructor(private $scope: IScope) {
     'ngInject';
 
-    this.initSwitchedItem();
+    this.initSwitched();
   }
 
   // private init --------------------------------------------------------------
-  private initSwitchedItem(): void {
+  $onChanges(changes: IChangesList) {
+    /* tslint:disable:no-string-literal */
+    if (changes['inputSwitched']) {
+      this.onInputSwitched(changes['inputSwitched'].currentValue);
+    }
+    /* tslint:enable:no-string-literal */
+  }
+
+  private initSwitched(): void {
+    this.checked = false;
+    this.inputSwithed = false;
+
     this.$scope.$watch('vm.checked', this.onSwitched.bind(this));
   }
 
   // private event handlers ----------------------------------------------------
+  private onInputSwitched(checked: boolean): void {
+    if (isNil(checked)) {
+      return;
+    }
+
+    this.checked = checked;
+  }
+
   private onSwitched(checked: boolean): void {
     if (isNil(checked)) {
       return;
@@ -41,6 +65,8 @@ export const SwitchComponent: IComponentOptions = {
   controller: SwitchController,
   controllerAs: 'vm',
   bindings: {
+    inputSwitched: '<?switched',
     triggerSwitchEvent: '&onSwitch'
-  }
+  },
+  transclude: true
 };
