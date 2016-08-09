@@ -1,11 +1,16 @@
 <div class="l-week-menu">
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-  <l-week-menu-toolbar ng-if="!vm.isLoading()"></l-week-menu-toolbar>
+  <l-week-menu-toolbar
+    ng-if="!vm.isLoading()"
+    selected-menu-type="vm.selectedMenuType"
+    on-menu-type-switched="vm.onMenuTypeSwitched(menuType)"
+    >
+  </l-week-menu-toolbar>
 
   <div ng-if="!vm.isLoading()" layout="column">
 
-    <md-tabs md-dynamic-height md-border-bottom md-selected="vm.selectedWeek">
+    <md-tabs md-dynamic-height md-border-bottom md-swipe-content md-selected="vm.selectedWeek">
 
       <!-- CURRENT WEEK TAB -->
       <md-tab label="Текущая">
@@ -38,14 +43,14 @@
         <!-- CURRENT WEEK VIEW -->
         <l-view-menu
           ng-show="vm.needToShowCurrentWeekViewMenu()"
-          ng-repeat="menu in vm.pastDaysMenu"
+          ng-repeat="menu in vm.pastDaysMenu[vm.selectedMenuType]"
           menu="menu"
           flex>
         </l-view-menu>
 
         <!-- CURRENT WEEK ORDER -->
         <l-menu
-          ng-repeat="menu in vm.actualMenu"
+          ng-repeat="menu in vm.actualMenu[vm.selectedMenuType]"
           menu="menu"
           on-order-placed="vm.onOrderPlaced(order)"
           flex>
@@ -57,7 +62,7 @@
         <!-- NEXT WEEK ORDER -->
         <l-menu
           flex
-          ng-repeat="menu in vm.nextWeekMenu"
+          ng-repeat="menu in vm.nextWeekMenu[vm.selectedMenuType]"
           menu="menu"
           on-order-placed="vm.onOrderPlaced(order)">
         </l-menu>

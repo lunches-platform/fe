@@ -10,7 +10,14 @@ export interface IMenu {
   id: number;
   date: string;
   products: IProduct[];
+  type: MenuType;
 }
+
+export interface IWeekMenu<Type, ItemType> {
+  Type: ItemType[];
+}
+
+export type MenuType = 'regular' | 'diet';
 
 export class MenuService {
 
@@ -18,7 +25,7 @@ export class MenuService {
     'ngInject';
   }
 
-  fetchTwoWeekMenu(): IPromise<IMenu[][]> {
+  fetchTwoWeekMenu(): IPromise<IWeekMenu<MenuType, IMenu>[]> {
     const startDate = moment().startOf('week').format(SHORT_DATE_FORMAT);
     const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
 
@@ -27,31 +34,38 @@ export class MenuService {
     return this.$http.get<IMenu[]>(url, {cache: true}).then(res => this.splitToCurrentAndNextWeekMenu(res.data));
   }
 
-  splitToCurrentAndNextWeekMenu(menus: IMenu[]): IMenu[][] {
-    const currentWeekMenu = [];
-    const nextWeekMenu = [];
+  // todo: simplify
+  splitToCurrentAndNextWeekMenu(menus: IMenu[]): IWeekMenu<MenuType, IMenu>[] {
+    // todo: avoid any
+    const currentWeekMenu: any = {diet: [], regular: []};
+    const nextWeekMenu: any = {diet: [], regular: []};
 
     each(menus, menu => {
       if (this.isInsideCurrentWeek(menu.date)) {
-        currentWeekMenu.push(menu);
+        currentWeekMenu[menu.type].push(menu);
       } else if (this.isInsideNextWeek(menu.date)) {
-        nextWeekMenu.push(menu);
+        nextWeekMenu[menu.type].push(menu);
       }
     });
 
     return [currentWeekMenu, nextWeekMenu];
   }
 
-  splitToPastAndActualDaysMenu(menus: IMenu[]): IMenu[][] {
-    const pastDaysMenu = [];
-    const actualDaysMenu = [];
+  // todo: simplify
+  splitToPastAndActualDaysMenu(weekMenuByType: IWeekMenu<MenuType, IMenu>): IWeekMenu<MenuType, IMenu>[] {
+    // todo: avoid any
+    const pastDaysMenu: any = {diet: [], regular: []};
+    const actualDaysMenu: any = {diet: [], regular: []};
 
-    each(menus, menu => {
-      if (moment(menu.date).isBefore(moment())) {
-        pastDaysMenu.push(menu);
-      } else {
-        actualDaysMenu.push(menu);
-      }
+    console.log(weekMenuByType);
+    each(weekMenuByType, weekMenu => {
+      each(weekMenu, dayMenu => {
+        if (moment(dayMenu.date).isBefore(moment())) {
+          pastDaysMenu[dayMenu.type].push(dayMenu);
+        } else {
+          actualDaysMenu[dayMenu.type].push(dayMenu);
+        }
+      });
     });
 
     return [pastDaysMenu, actualDaysMenu];
