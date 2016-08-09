@@ -2,6 +2,8 @@
   <div class="md-toolbar-tools" layout="row">
     <div flex>Заказ на неделю</div>
 
+    <l-switch switched="vm.isSwitched()" on-switch="vm.onMenuTypeSwitched(checked)" class="md-secondary"></l-switch>
+
     <md-button class="md-icon-button" ng-click="vm.goToMyOrders()">
       <md-icon aria-label="my orders">receipt</md-icon>
     </md-button>
