@@ -24,7 +24,7 @@ export class MenuService {
 
     // todo: do not hardcode BE URL: DEZ-774
     const url = 'http://api.cogniance.lunches.com.ua/menus?startDate=' + startDate + '&endDate=' + endDate;
-    return this.$http.get<IMenu[]>(url).then(res => this.splitToCurrentAndNextWeekMenu(res.data));
+    return this.$http.get<IMenu[]>(url, {cache: true}).then(res => this.splitToCurrentAndNextWeekMenu(res.data));
   }
 
   splitToCurrentAndNextWeekMenu(menus: IMenu[]): IMenu[][] {

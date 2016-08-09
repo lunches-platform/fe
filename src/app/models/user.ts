@@ -1,5 +1,5 @@
 import {cloneDeep, isEqual} from 'lodash';
-import {ILogService, IHttpService, IPromise} from 'angular';
+import {ILogService, IHttpService, IPromise, IQService} from 'angular';
 
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
@@ -13,6 +13,7 @@ export class UserService {
   constructor(
     private $http: IHttpService,
     private $log: ILogService,
+    private $q: IQService,
     private localStorageService: ILocalStorageService
   ) {
     'ngInject';
@@ -62,7 +63,7 @@ export class UserService {
   sync(user: IUser): IPromise<IUser> {
     if (!this.isValid(user)) {
       this.$log.warn('UserService:sync: User is not valid, skip sync', user);
-      return;
+      return this.$q.reject();
     }
 
     return this.isGuest(user) ? this.create(user) : this.update(user);
@@ -71,13 +72,13 @@ export class UserService {
   createInDb(user: IUser): IPromise<IUser> {
     // todo: do not hardcode BE URL: DEZ-774
     const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
-    return this.$http.post<IUser>(baseUrl, user).then(res => res.data);
+    return this.$http.post<IUser>(baseUrl, {username: user.fullname, address: user.address}).then(res => res.data);
   }
 
   updateInDb(user: IUser): IPromise<IUser> {
     // todo: do not hardcode BE URL: DEZ-774
     const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
-    return this.$http.put<IUser>(baseUrl + '/' + user.fullname, user).then(res => res.data);
+    return this.$http.put<IUser>(baseUrl + '/' + user.fullname, {address: user.address}).then(res => res.data);
   }
 
   isEqual(user1: IUser, user2: IUser): boolean {
