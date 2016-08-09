@@ -57,7 +57,6 @@ export class MenuService {
     const pastDaysMenu: any = {diet: [], regular: []};
     const actualDaysMenu: any = {diet: [], regular: []};
 
-    console.log(weekMenuByType);
     each(weekMenuByType, weekMenu => {
       each(weekMenu, dayMenu => {
         if (moment(dayMenu.date).isBefore(moment())) {

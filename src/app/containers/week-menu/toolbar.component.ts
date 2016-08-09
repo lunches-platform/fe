@@ -18,8 +18,13 @@ export class ToolbarController {
   // output
   triggerMenuTypeSwitchEvent: ITriggerMenuTypeSwitchEvent;
 
+  // internal
+  title: string;
+
   constructor(private $state: IBaseState) {
     'ngInject';
+
+    this.initTitle();
   }
 
   goToBasket(): void {
@@ -39,7 +44,16 @@ export class ToolbarController {
       return;
     }
 
+    this.updateTitle(checked);
     this.triggerMenuTypeSwitchEvent({menuType: (checked ? 'diet' : 'regular')});
+  }
+
+  private updateTitle(checked: boolean): void {
+    this.title = checked  ? 'Диетическое меню' : 'Запись на неделю';
+  }
+
+  private initTitle(): void {
+    this.title = 'Запись на неделю';
   }
 }
 
