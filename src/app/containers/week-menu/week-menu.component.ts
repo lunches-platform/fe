@@ -3,7 +3,7 @@ import {ILogService, IScope} from 'angular';
 import {IWeekMenuState} from '../../../routes';
 
 import {IOrder} from '../../models/order';
-import {IMenu, MenuService} from '../../models/menu';
+import {IMenu, IWeekMenu, MenuType, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from '../../models/basket';
 
@@ -17,13 +17,14 @@ export class WeekMenuController {
   // internal
   basket: IBasket;
   selectedWeek: number;
-  nextWeekMenu: IMenu[];
-  currentWeekMenu: IMenu[];
+  selectedMenuType: MenuType;
+  nextWeekMenu: IWeekMenu<MenuType, IMenu>;
+  currentWeekMenu: IWeekMenu<MenuType, IMenu>;
   user: IUser;
 
   // these two are just shortcut for currentWeekMenu
-  actualMenu: IMenu[];
-  pastDaysMenu: IMenu[];
+  actualMenu: IWeekMenu<MenuType, IMenu>;
+  pastDaysMenu: IWeekMenu<MenuType, IMenu>;
 
   private pastDaysMenuHidden: boolean;
   private loading: boolean;
@@ -59,6 +60,10 @@ export class WeekMenuController {
 
   onWeekChanged(week: Week): void {
     this.selectedWeek = week;
+  }
+
+  onMenuTypeSwitched(menuType: MenuType): void {
+    this.selectedMenuType = menuType;
   }
 
   selectNextWeek(): void {
@@ -130,8 +135,9 @@ export class WeekMenuController {
   }
 
   private initMenu(): void {
-    this.pastDaysMenu = [];
-    this.actualMenu = [];
+    // this.pastDaysMenu = {diet: [] as IMenu[], regular: [] as IMenu[]};
+    // this.actualMenu = {diet: [], regular: []};
+    this.selectedMenuType = 'regular';
   }
 
   private initSelectedWeek(): void {
@@ -153,6 +159,7 @@ export class WeekMenuController {
   }
 
   // private helpers -----------------------------------------------------------
+  // todo: simplify
   private fetchData(): void {
     this.loading = true;
 
@@ -162,7 +169,7 @@ export class WeekMenuController {
         [this.pastDaysMenu, this.actualMenu] = this.lMenuService.splitToPastAndActualDaysMenu(this.currentWeekMenu);
 
         // todo: move to separate method?
-        if (this.actualMenu.length === 0) {
+        if (!this.hasActualMenu()) {
           this.pastDaysMenuHidden = false;
         }
 
@@ -173,19 +180,19 @@ export class WeekMenuController {
   }
 
   private isCurrentMenuEmpty(): boolean {
-     return this.selectedWeek === Week.Current && !Boolean(this.currentWeekMenu.length);
+    return (this.selectedWeek === Week.Current && !Boolean(this.currentWeekMenu[this.selectedMenuType].length));
   }
 
   private isNextMenuEmpty(): boolean {
-     return this.selectedWeek === Week.Next && !Boolean(this.nextWeekMenu.length);
+     return this.selectedWeek === Week.Next && !Boolean(this.nextWeekMenu[this.selectedMenuType].length);
   }
 
   private hasActualMenu(): boolean {
-    return Boolean(this.actualMenu.length);
+    return Boolean(this.actualMenu[this.selectedMenuType].length);
   }
 
   private hasPastDaysMenu(): boolean {
-    return Boolean(this.pastDaysMenu.length);
+    return Boolean(this.pastDaysMenu[this.selectedMenuType].length);
   }
 
   private isOrderAllowedInTheCurrentWeek(): boolean {
