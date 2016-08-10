@@ -18,6 +18,7 @@ export interface ILineItemRequestBody {
 }
 
 export class LineItemService {
+
   createLineItem(
     product: IProduct,
     size: string = 'medium',
@@ -34,16 +35,6 @@ export class LineItemService {
 
   calcWeightFor(item: ILineItem): number {
     return item.product.sizeToWeight[item.size] * item.quantity;
-  }
-
-  calcPriceFor(item: ILineItem): number {
-    return item.product.price / 100 * this.calcWeightFor(item);
-  }
-
-  calcPriceForAll(items: ILineItem[]): number {
-    return items.reduce((sum, item) => {
-      return sum + this.calcPriceFor(item);
-    }, 0);
   }
 
   createLineItemsBy(products: IProduct[]): ILineItem[] {

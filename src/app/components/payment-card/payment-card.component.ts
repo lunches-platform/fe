@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash';
+import {cloneDeep, sumBy} from 'lodash';
 import {IComponentOptions} from 'angular';
 
 import {IChangesList} from '../../../config';
@@ -22,7 +22,7 @@ export class PaymentCardController {
 
   // view helpers --------------------------------------------------------------
   totalToPay(): number {
-    return this.lOrderService.calcPriceForAll(this.inputOrders);
+    return sumBy(this.inputOrders, 'price');
   }
 
   // private init --------------------------------------------------------------

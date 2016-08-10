@@ -1,4 +1,4 @@
-import {cloneDeep, find, reduce, every, map, filter} from 'lodash';
+import {cloneDeep, find, sumBy, every, map, filter} from 'lodash';
 import {IHttpService, IQService, IPromise} from 'angular';
 
 import {uniqId} from '../../config';
@@ -6,6 +6,7 @@ import {IUser, UserService} from './user';
 
 import {ILineItem, ILineItemRequestBody, LineItemService} from './line-item';
 import {IProduct} from './product';
+import {PriceService} from './price';
 
 export interface IOrder {
   id: number;
@@ -32,7 +33,8 @@ export class OrderService {
     private $http: IHttpService,
     private $q: IQService,
     private lLineItemService: LineItemService,
-    private lUserService: UserService
+    private lUserService: UserService,
+    private lPriceService: PriceService
   ) {
     'ngInject';
   }
@@ -64,16 +66,7 @@ export class OrderService {
   setLineItems(items: ILineItem[], inputOrder: IOrder): IOrder {
     let order = cloneDeep(inputOrder);
     order.items = items;
-    return order;
-  }
-
-  addLineItems(items: ILineItem[], _order: IOrder): IOrder {
-    let order = cloneDeep(_order);
-
-    items.forEach(item => {
-      order.items.push(item);
-    });
-
+    order.price = this.lPriceService.calcPriceForAll(items, order.shipmentDate);
     return order;
   }
 
@@ -81,10 +74,6 @@ export class OrderService {
     let order = cloneDeep(_order);
     order.user = user;
     return order;
-  }
-
-  calcPriceFor(order: IOrder): number {
-    return this.lLineItemService.calcPriceForAll(order.items);
   }
 
   updateSizeForProductIn(order: IOrder, product: IProduct, size: string): IOrder {
@@ -107,7 +96,6 @@ export class OrderService {
 
   isValid(order: IOrder): boolean {
     return Boolean(
-      this.calcPriceFor(order) &&
       order.user.fullname &&
       order.user.address &&
       order.shipmentDate
@@ -119,9 +107,7 @@ export class OrderService {
   }
 
   calcPriceForAll(orders: IOrder[]): number {
-    return reduce(orders, (sum, order) => {
-      return sum + this.calcPriceFor(order);
-    }, 0);
+    return sumBy(orders, 'price');
   }
 
   setUserForAll(orders: IOrder[], user: IUser): IOrder[] {
@@ -133,7 +119,7 @@ export class OrderService {
 
     // todo: do not hardcode BE URL: DEZ-774
     const basePath = 'http://api.cogniance.lunches.com.ua';
-    const url = basePath + '/customers/' + me.fullname + '/orders?startDate=' + startDate + '&endDate=' + endDate;
+    const url = basePath + '/users/' + me.fullname + '/orders?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IOrder[]>(url).then(res => res.data);
   }
 
@@ -166,6 +152,8 @@ export class OrderService {
       return it.id === item.id ? item : it;
     });
 
+    order.price = this.lPriceService.calcPriceForAll(order.items, order.shipmentDate);
+
     return order;
   }
 
@@ -173,6 +161,7 @@ export class OrderService {
     let order = cloneDeep(inputOrder);
 
     order.items = filter(order.items, it => it.id !== item.id);
+    order.price = this.lPriceService.calcPriceForAll(order.items, order.shipmentDate);
 
     return order;
   }
@@ -184,6 +173,7 @@ export class OrderService {
 
     const order = cloneDeep(inputOrder);
     order.items.push(item);
+    order.price = this.lPriceService.calcPriceForAll(order.items, order.shipmentDate);
 
     return order;
   }
@@ -221,6 +211,8 @@ export class OrderService {
     if (lineItem) {
       lineItem[key] = cloneDeep(value);
     }
+
+    order.price = this.lPriceService.calcPriceForAll(order.items, order.shipmentDate);
 
     return order;
   }

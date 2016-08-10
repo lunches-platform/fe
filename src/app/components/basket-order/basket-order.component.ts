@@ -61,10 +61,6 @@ export class BasketOrderController {
     return !this.removed;
   }
 
-  calcPrice(): number {
-    return this.lOrderService.calcPriceFor(this.order);
-  }
-
   // private init --------------------------------------------------------------
   $onChanges(changes: IChangesList) {
     if (changes['order']) { // tslint:disable-line:no-string-literal
