@@ -16,7 +16,7 @@
   <div layout="row" ng-if="vm.isExist()">
     <md-button ng-click="vm.remove()">Отменить</md-button>
     <span flex></span>
-    <span class="md-title l-basket-order-price-label">{{ vm.calcPrice() }} грн</span>
+    <span class="md-title l-basket-order-price-label">{{ vm.order.price }} грн</span>
   </div>
 
   <div layout="row" ng-if="vm.isRemoved()">

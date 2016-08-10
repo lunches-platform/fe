@@ -5,10 +5,11 @@ import * as moment from 'moment';
 import {IChangesList} from '../../../config';
 import {IWeekMenuState} from '../../../routes';
 
-import {IMenu, MenuService} from '../../models/menu';
+import {IMenu} from '../../models/menu';
 import {IOrder, OrderService} from '../../models/order';
 import {ILineItem, LineItemService} from '../../models/line-item';
 import {ProductTypeUrls, randomProductType} from '../../models/product';
+import {PriceService} from '../../models/price';
 
 // internal types --------------------------------------------------------------
 interface ITriggerOrderPlaceEvent {
@@ -37,7 +38,7 @@ export class MenuController {
     private $state: IWeekMenuState,
     private lOrderService: OrderService,
     private lLineItemService: LineItemService,
-    private lMenuService: MenuService
+    private lPriceService: PriceService
   ) {
     'ngInject';
 
@@ -67,7 +68,8 @@ export class MenuController {
     this.toggleCustomLunch();
   }
 
-  onLineItemToggled(item: ILineItem, checked: boolean): void {
+  onLineItemToggled(inputItem: ILineItem, checked: boolean): void {
+    let item = this.lLineItemService.setSizeFor(inputItem, this.size);
     if (checked) {
       this.selectedLineItems = this.lLineItemService.addItemTo(this.selectedLineItems, item);
     } else {
@@ -107,7 +109,7 @@ export class MenuController {
   }
 
   calcPrice(): number {
-    return this.lLineItemService.calcPriceForAll(this.selectedLineItems);
+    return this.lPriceService.calcPriceForAll(this.selectedLineItems, this.menu.date);
   }
 
   // private init --------------------------------------------------------------
@@ -153,11 +155,17 @@ export class MenuController {
 
   private toggleCustomLunch(): void {
     this.customLunch = !this.customLunch;
-    this.selectedLineItems = this.createPredefinedLineItems();
-    this.selectedLineItems = this.lLineItemService.setSizeForAll(this.selectedLineItems, this.size);
+    if (this.customLunch) {
+      this.selectedLineItems = [];
+    } else {
+      this.selectedLineItems = this.createPredefinedLineItems();
+      this.selectedLineItems = this.lLineItemService.setSizeForAll(this.selectedLineItems, this.size);
+    }
   }
 
   private onSizeChanged(size: string): void {
+    this.size = size;
+
     this.selectedLineItems = this.lLineItemService.setSizeForAll(this.selectedLineItems, size);
   }
 }

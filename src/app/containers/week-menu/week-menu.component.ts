@@ -6,6 +6,7 @@ import {IOrder} from '../../models/order';
 import {IMenu, IWeekMenu, MenuType, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from '../../models/basket';
+import {PriceService} from '../../models/price';
 
 export enum Week {
   Current,
@@ -35,7 +36,8 @@ export class WeekMenuController {
     private $log: ILogService,
     private lMenuService: MenuService,
     private lBasketService: BasketService,
-    private lUserService: UserService
+    private lUserService: UserService,
+    private lPriceService: PriceService
   ) {
     'ngInject';
 
@@ -174,6 +176,8 @@ export class WeekMenuController {
         }
 
         this.initSelectedWeek();
+
+        return this.lPriceService.fetchPriceGroupsForActualDays();
       })
       .catch(err => this.$log.error(err))
       .finally(() => this.loading = false);

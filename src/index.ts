@@ -33,6 +33,7 @@ import {UserService} from './app/models/user';
 import {ToastService} from './app/models/toast';
 import {BasketService} from './app/models/basket';
 import {LineItemService} from './app/models/line-item';
+import {PriceService} from './app/models/price';
 
 import {DateFilter} from './app/filters/date.filter';
 
@@ -99,6 +100,7 @@ angular
   .service('lBasketService', BasketService)
   .service('lUserService', UserService)
   .service('lToastService', ToastService)
+  .service('lPriceService', PriceService)
 
   .filter('lDate', DateFilter)
   ;
