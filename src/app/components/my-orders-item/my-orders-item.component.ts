@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import {IChangesList} from '../../../config';
 
 import {IOrder, OrderService} from '../../models/order';
-import {ProductTypeUrls, randomProductType} from '../../models/product';
+import {ProductTypeUrls} from '../../models/product';
 
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {
@@ -62,7 +62,8 @@ export class MyOrdersItemController {
   }
 
   productTypeToIconUrl(type: string): string {
-    return ProductTypeUrls[randomProductType()];
+    return ProductTypeUrls['garnish'];
+    // return ProductTypeUrls[randomProductType()];
     // todo: uncomment when API provides product type
     // return ProductTypeUrls[type];
   }
