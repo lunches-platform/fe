@@ -3,9 +3,8 @@
 
   <l-my-orders-toolbar ng-if="!vm.isLoading()"></l-my-orders-toolbar>
 
-  <div ng-if="!vm.isLoading()" layout="column" layout-padding>
+  <div ng-if="!vm.isLoading()" layout="column">
     <div ng-if="vm.hasData()">
-      <h3 class="md-title">Ваши заказы</h3>
 
       <l-date-range-selector
         range="vm.selectedDateRange"

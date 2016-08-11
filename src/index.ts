@@ -17,8 +17,6 @@ import {SizeSelectorComponent} from './app/components/size-selector/size-selecto
 import {QuantitySelectorComponent} from './app/components/quantity-selector/quantity-selector.component';
 import {BasketOrderComponent} from './app/components/basket-order/basket-order.component';
 import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
-import {ViewOrderComponent} from './app/components/view-order/view-order.component';
-import {EditOrderComponent} from './app/components/edit-order/edit-order.component';
 import {PaymentStatusComponent} from './app/components/payment-status/payment-status.component';
 import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
 import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
@@ -26,6 +24,7 @@ import {UserCardComponent} from './app/components/user-card/user-card.component'
 import {SwitchComponent} from './app/components/switch/switch.component';
 import {FloorSelectorComponent} from './app/components/floor-selector/floor-selector.component';
 import {PaymentCardComponent} from './app/components/payment-card/payment-card.component';
+import {SizeLabelComponent} from './app/components/size-label/size-label.component';
 
 import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
@@ -81,8 +80,6 @@ angular
   .component('lQuantitySelector', QuantitySelectorComponent)
   .component('lBasketOrder', BasketOrderComponent)
   .component('lMyOrdersItem', MyOrdersItemComponent)
-  .component('lViewOrder', ViewOrderComponent)
-  .component('lEditOrder', EditOrderComponent)
   .component('lPaymentStatus', PaymentStatusComponent)
   .component('lDateRangeSelector', DateRangeSelectorComponent)
   .component('lMenuCover', MenuCoverComponent)
@@ -93,6 +90,7 @@ angular
   .component('lMyOrdersToolbar', MyOrdersToolbarComponent)
   .component('lFloorSelector', FloorSelectorComponent)
   .component('lPaymentCard', PaymentCardComponent)
+  .component('lSizeLabel', SizeLabelComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
