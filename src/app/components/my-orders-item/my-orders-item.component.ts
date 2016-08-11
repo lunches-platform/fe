@@ -53,7 +53,7 @@ export class MyOrdersItemController {
     return !this.isCanceled();
   }
 
-  needToShowCancelButton(): boolean {
+  isCancelAllowed(): boolean {
     return this.isCurrentDateBeforeShipmentDate();
   }
 

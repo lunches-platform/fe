@@ -1,4 +1,5 @@
 @import './app/components/payment-status/payment-status';
+@import './app/components/size-label/size-label';
 
 /* todo: move styles to <l-quantity-selector>: DEZ-766 */
 .l-quantity-selector-component {
@@ -60,4 +61,8 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
 
 .l-user-card md-card-content {
   padding-bottom: 0px;
+}
+
+.l-green {
+  color: green;
 }

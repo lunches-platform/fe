@@ -24,6 +24,7 @@ import {UserCardComponent} from './app/components/user-card/user-card.component'
 import {SwitchComponent} from './app/components/switch/switch.component';
 import {FloorSelectorComponent} from './app/components/floor-selector/floor-selector.component';
 import {PaymentCardComponent} from './app/components/payment-card/payment-card.component';
+import {SizeLabelComponent} from './app/components/size-label/size-label.component';
 
 import {MenuService} from './app/models/menu';
 import {OrderService} from './app/models/order';
@@ -89,6 +90,7 @@ angular
   .component('lMyOrdersToolbar', MyOrdersToolbarComponent)
   .component('lFloorSelector', FloorSelectorComponent)
   .component('lPaymentCard', PaymentCardComponent)
+  .component('lSizeLabel', SizeLabelComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)

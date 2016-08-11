@@ -18,24 +18,26 @@
       </md-list>
     </md-card-content>
 
-    <md-divider />
+    <md-divider></md-divider>
 
-    {{ vm.order.items[0].size }}
-    <l-payment-status paid="vm.order.paid"></l-payment-status>
+    <div layout="row" layout-padding>
+      <l-size-label size="vm.order.items[0].size"></l-size-label>
+      <l-payment-status paid="vm.order.paid"></l-payment-status>
+      <span class="md-title price-label">{{ vm.order.price }} грн</span>
+    </div>
 
-    <md-divider />
+    <md-divider></md-divider>
 
     <md-card-actions layout="row" layout-align="start center" ng-if="vm.isExist()">
-      <md-button class="md-raised" ng-click="vm.onCancel()" ng-if="vm.needToShowCancelButton()">Отменить</md-button>
-      <md-button class="md-raised" ng-click="vm.onEditOrder()" ng-if="vm.needToShowEditButton()">Редактировать</md-button>
-      <span class="md-title price-label">{{ vm.order.price }} грн</span>
+      <md-button ng-click="vm.onCancel()" ng-disabled="!vm.isCancelAllowed()">Отменить</md-button>
+      <span class="md-body-1" ng-if="!vm.isCancelAllowed()">Заказ отменить уже нельзя</span>
     </md-card-actions>
 
     <md-card-actions layout="row" layout-align="start center" ng-if="vm.isCanceled()">
-      <div class="md-body1">Вы отменили этот заказ.
-        <md-button class="md-raised" ng-click="vm.onNewOrder()">Сделать другой заказ</md-button>
-        <md-button class="md-raised md-primary" ng-click="vm.onRestore()">Вернуть обратно</md-button>
-      </div>
+      <span class="md-body-1 l-green">Заказ отменен</span>
+      <span flex></span>
+      <md-button class="md-primary" ng-click="vm.onNewOrder()">Новый</md-button>
+      <md-button ng-click="vm.onRestore()">Вернуть</md-button>
     </md-card-actions>
 
   </md-card>
