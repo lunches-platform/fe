@@ -1,9 +1,10 @@
 import {cloneDeep} from 'lodash';
 import {IComponentOptions} from 'angular';
+import * as moment from 'moment';
 
 import {IChangesList} from '../../../config';
 
-import {IOrder} from '../../models/order';
+import {IOrder, OrderService} from '../../models/order';
 
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {
@@ -26,20 +27,34 @@ export class MyOrdersItemController {
 
   // internal
 
-  constructor() {
+  constructor(private lOrderService: OrderService) {
     'ngInject';
   }
-
   // dom event handlers --------------------------------------------------------
-  onChange(order: IOrder): void {
-    this.triggerChangeEvent({order: order, oldOrder: this.order});
-  }
-
   onNewOrder(): void {
     this.triggerNewOrderEvent();
   }
 
+  onCancel(): void {
+    this.triggerChangeEvent({order: this.lOrderService.cancel(this.order), oldOrder: this.order});
+  }
+
+  onRestore(): void {
+    this.triggerChangeEvent({order: this.lOrderService.restore(this.order), oldOrder: this.order});
+  }
+
   // view helpers --------------------------------------------------------------
+  isCanceled(): boolean {
+    return this.order.canceled;
+  }
+
+  isExist(): boolean {
+    return !this.isCanceled();
+  }
+
+  needToShowCancelButton(): boolean {
+    return this.isCurrentDateBeforeShipmentDate();
+  }
 
   // private init --------------------------------------------------------------
   $onChanges(changes: IChangesList) {
@@ -51,6 +66,11 @@ export class MyOrdersItemController {
   // private event handlers ----------------------------------------------------
   private onInputOrderChanged(order: IOrder) {
     this.order = cloneDeep(order);
+  }
+
+  // private helpers -----------------------------------------------------------
+  private isCurrentDateBeforeShipmentDate(): boolean {
+    return moment().isBefore(moment(this.order.shipmentDate));
   }
 }
 
