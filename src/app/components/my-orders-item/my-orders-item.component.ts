@@ -5,11 +5,6 @@ import {IChangesList} from '../../../config';
 
 import {IOrder} from '../../models/order';
 
-enum Mode {
-  View,
-  Edit
-}
-
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {
   (arg: { order: IOrder, oldOrder: IOrder }): void;
@@ -30,44 +25,27 @@ export class MyOrdersItemController {
   triggerNewOrderEvent: ITriggerNewOrderEvent;
 
   // internal
-  mode: Mode;
 
   constructor() {
-    this.initMode();
+    'ngInject';
   }
 
   // dom event handlers --------------------------------------------------------
   onChange(order: IOrder): void {
     this.triggerChangeEvent({order: order, oldOrder: this.order});
-    this.mode = Mode.View;
   }
 
   onNewOrder(): void {
     this.triggerNewOrderEvent();
   }
 
-  onEditOrder(): void {
-    this.mode = Mode.Edit;
-  }
-
   // view helpers --------------------------------------------------------------
-  isViewMode(): boolean {
-    return this.mode === Mode.View;
-  }
-
-  isEditMode(): boolean {
-    return this.mode === Mode.Edit;
-  }
 
   // private init --------------------------------------------------------------
   $onChanges(changes: IChangesList) {
     if (changes['order']) { // tslint:disable-line:no-string-literal
       this.onInputOrderChanged(this.order);
     }
-  }
-
-  private initMode(): void {
-    this.mode = Mode.View;
   }
 
   // private event handlers ----------------------------------------------------

@@ -18,7 +18,6 @@ import {QuantitySelectorComponent} from './app/components/quantity-selector/quan
 import {BasketOrderComponent} from './app/components/basket-order/basket-order.component';
 import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
 import {ViewOrderComponent} from './app/components/view-order/view-order.component';
-import {EditOrderComponent} from './app/components/edit-order/edit-order.component';
 import {PaymentStatusComponent} from './app/components/payment-status/payment-status.component';
 import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
 import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
@@ -82,7 +81,6 @@ angular
   .component('lBasketOrder', BasketOrderComponent)
   .component('lMyOrdersItem', MyOrdersItemComponent)
   .component('lViewOrder', ViewOrderComponent)
-  .component('lEditOrder', EditOrderComponent)
   .component('lPaymentStatus', PaymentStatusComponent)
   .component('lDateRangeSelector', DateRangeSelectorComponent)
   .component('lMenuCover', MenuCoverComponent)
