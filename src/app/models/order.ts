@@ -139,7 +139,7 @@ export class OrderService {
 
   syncOrderFor(user: IUser, order: IOrder): IPromise<IOrder> {
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/customers/' + user.fullname + '/orders/' + order.id;
+    const url = 'http://api.cogniance.lunches.com.ua/users/' + user.fullname + '/orders/' + order.id;
     return this.$http
       .put<IOrder>(url, order)
       .then(res => res.data);
@@ -176,6 +176,11 @@ export class OrderService {
     order.price = this.lPriceService.calcPriceForAll(order.items, order.shipmentDate);
 
     return order;
+  }
+
+  // todo: get correct cover
+  getCoverOf(order: IOrder): string {
+    return order.items[0].product.images[0].url;
   }
 
   private updateIn(inputOrder: IOrder, key: string, value: any): IOrder {

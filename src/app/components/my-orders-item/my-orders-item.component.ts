@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import {IChangesList} from '../../../config';
 
 import {IOrder, OrderService} from '../../models/order';
+import {ProductTypeUrls, randomProductType} from '../../models/product';
 
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {
@@ -54,6 +55,16 @@ export class MyOrdersItemController {
 
   needToShowCancelButton(): boolean {
     return this.isCurrentDateBeforeShipmentDate();
+  }
+
+  coverUrl(): string {
+    return this.lOrderService.getCoverOf(this.order);
+  }
+
+  productTypeToIconUrl(type: string): string {
+    return ProductTypeUrls[randomProductType()];
+    // todo: uncomment when API provides product type
+    // return ProductTypeUrls[type];
   }
 
   // private init --------------------------------------------------------------
