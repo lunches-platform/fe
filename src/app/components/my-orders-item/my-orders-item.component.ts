@@ -62,10 +62,7 @@ export class MyOrdersItemController {
   }
 
   productTypeToIconUrl(type: string): string {
-    return ProductTypeUrls['garnish'];
-    // return ProductTypeUrls[randomProductType()];
-    // todo: uncomment when API provides product type
-    // return ProductTypeUrls[type];
+    return ProductTypeUrls[type];
   }
 
   // private init --------------------------------------------------------------

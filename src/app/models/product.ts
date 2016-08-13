@@ -33,13 +33,3 @@ export const ProductTypeUrls = {
 };
 
 export const productTypes = Object.keys(ProductTypeUrls);
-
-// todo: remove when API provides product type in response
-let i = 0;
-export function randomProductType(): string {
-  if (i >= productTypes.length) {
-    i = 0;
-  }
-
-  return productTypes[i++];
-}
