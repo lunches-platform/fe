@@ -8,7 +8,7 @@ import {IWeekMenuState} from '../../../routes';
 import {IMenu} from '../../models/menu';
 import {IOrder, OrderService} from '../../models/order';
 import {ILineItem, LineItemService} from '../../models/line-item';
-import {ProductTypeUrls, randomProductType} from '../../models/product';
+import {ProductTypeUrls} from '../../models/product';
 import {PriceService} from '../../models/price';
 
 // internal types --------------------------------------------------------------
@@ -103,9 +103,7 @@ export class MenuController {
   }
 
   productTypeToIconUrl(type: string): string {
-    return ProductTypeUrls[randomProductType()];
-    // todo: uncomment when API provides product type
-    // return ProductTypeUrls[type];
+    return ProductTypeUrls[type];
   }
 
   calcPrice(): number {
