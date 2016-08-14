@@ -21,7 +21,8 @@ export type MenuType = 'regular' | 'diet';
 
 export class MenuService {
 
-  constructor(private $http: IHttpService) {
+  // todo: add type for lConfig
+  constructor(private $http: IHttpService, private lConfig) {
     'ngInject';
   }
 
@@ -30,7 +31,7 @@ export class MenuService {
     const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
 
     // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/menus?startDate=' + startDate + '&endDate=' + endDate;
+    const url = this.lConfig.apiUrl + '/menus?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IMenu[]>(url, {cache: true}).then(res => this.splitToCurrentAndNextWeekMenu(res.data));
   }
 

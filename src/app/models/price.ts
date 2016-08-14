@@ -29,7 +29,9 @@ export class PriceService {
   constructor(
     private $http: IHttpService,
     private $log: ILogService,
-    private localStorageService: ILocalStorageService
+    private localStorageService: ILocalStorageService,
+    // todo: add type
+    private lConfig
   ) {
     'ngInject';
   }
@@ -38,8 +40,7 @@ export class PriceService {
     const startDate = moment().format(SHORT_DATE_FORMAT);
     const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
 
-    // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/prices?startDate=' + startDate + '&endDate=' + endDate;
+    const url = this.lConfig.apiUrl + '/prices?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IPriceGroup[]>(url, {cache: true}).then(res => {
       const pricesByDate = this.priceGroupsByDateToPricesByDate(res.data);
       this.storeToLocalStorage(pricesByDate);

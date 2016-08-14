@@ -1,10 +1,11 @@
 import {IHttpBackendService} from 'angular';
 import {twoWeekMenuResponse} from './two-week-menu';
 
-export function fakeApiConfig($httpBackend: IHttpBackendService) {
+// todo: add type for lConfig
+export function fakeApiConfig($httpBackend: IHttpBackendService, lConfig) {
   'ngInject';
 
-  $httpBackend.whenGET('http://api.cogniance.lunches.com.ua/menus/week/current').respond((method, url, data) => {
+  $httpBackend.whenGET(lConfig.apiUrl + '/menus/week/current').respond((method, url, data) => {
     return [200, twoWeekMenuResponse, {}];
   });
 }

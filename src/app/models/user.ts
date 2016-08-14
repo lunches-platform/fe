@@ -1,4 +1,4 @@
-import {cloneDeep, isEqual} from 'lodash';
+import {cloneDeep, isEqual, get} from 'lodash';
 import {ILogService, IHttpService, IPromise, IQService} from 'angular';
 
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
@@ -9,12 +9,24 @@ export interface IUser {
   address: string;
 }
 
+enum Address {
+  Country,
+  City,
+  Company,
+  Street,
+  BuldingNumber,
+  PostalCode,
+  Floor
+}
+
 export class UserService {
   constructor(
     private $http: IHttpService,
     private $log: ILogService,
     private $q: IQService,
-    private localStorageService: ILocalStorageService
+    private localStorageService: ILocalStorageService,
+    // todo: add type
+    private lConfig
   ) {
     'ngInject';
   }
@@ -40,8 +52,14 @@ export class UserService {
     return this.updateIn(user, 'fullname', name);
   }
 
-  updateAddressFor(user: IUser, address: string): IUser {
-    return this.updateIn(user, 'address', address);
+  updateAddressFloorFor(user: IUser, floor: string): IUser {
+    let addressDetails = user.address.split(', ');
+    addressDetails[Address.Floor] = floor;
+    return this.updateIn(user, 'address', addressDetails.join(', '));
+  }
+
+  hasFullAddress(user: IUser): boolean {
+    return Boolean(user.address.length > 1);
   }
 
   update(user: IUser): IPromise<IUser> {
@@ -70,15 +88,13 @@ export class UserService {
   }
 
   createInDb(user: IUser): IPromise<IUser> {
-    // todo: do not hardcode BE URL: DEZ-774
-    const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
-    return this.$http.post<IUser>(baseUrl, {username: user.fullname, address: user.address}).then(res => res.data);
+    const url = this.lConfig.apiUrl + '/users';
+    return this.$http.post<IUser>(url, {username: user.fullname, address: user.address}).then(res => res.data);
   }
 
   updateInDb(user: IUser): IPromise<IUser> {
-    // todo: do not hardcode BE URL: DEZ-774
-    const baseUrl = 'http://api.cogniance.lunches.com.ua/users';
-    return this.$http.put<IUser>(baseUrl + '/' + user.fullname, {address: user.address}).then(res => res.data);
+    const baseUrl = this.lConfig.apiUrl;
+    return this.$http.put<IUser>(baseUrl + '/users/' + user.fullname, {address: user.address}).then(res => res.data);
   }
 
   isEqual(user1: IUser, user2: IUser): boolean {
@@ -98,9 +114,39 @@ export class UserService {
   }
 
   searchUsersBy(name: string): IPromise<IUser> {
-    // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/users?like=' + name;
+    const url = this.lConfig.apiUrl + '/users?like=' + name;
+
     return this.$http.get<IUser>(url).then(res => res.data);
+  }
+
+  setCompanyAddressFor(inputUser: IUser): IUser {
+    let user = cloneDeep(inputUser);
+    user.address = this.lConfig.address.details.join(', ');
+    return user;
+  }
+
+  fetchFloorFrom(address: string): string {
+    return this.fetchAddressPartFrom(address, Address.Floor);
+  }
+
+  isFloorEmptyIn(address: string): boolean {
+    return !Boolean(this.fetchFloorFrom(address));
+  }
+
+  setFloorFor(address: string, floor: string): string {
+    let addr = address.split(', ');
+    addr[Address.Floor] = floor;
+    return addr.join(', ');
+  }
+
+  setFloorForUser(inputUser: IUser, floor: string): IUser {
+    let user = cloneDeep(inputUser);
+    user.address = this.setFloorFor(user.address, floor);
+    return user;
+  }
+
+  private fetchAddressPartFrom(address: string, partIndex: number): string {
+    return get<string>(address.split(', '), partIndex);
   }
 
   private storeToLocalStorage(user: IUser): boolean {

@@ -30,6 +30,10 @@ export class FloorSelectorController {
 
   // dom event handlers --------------------------------------------------------
   onSelected(floor: ISelectorItem): void {
+    if (floor.id === this.inputFloor) {
+      return;
+    }
+
     this.triggerFloorSelectEvent({floor: floor.id});
   }
 

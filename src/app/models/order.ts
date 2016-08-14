@@ -34,7 +34,9 @@ export class OrderService {
     private $q: IQService,
     private lLineItemService: LineItemService,
     private lUserService: UserService,
-    private lPriceService: PriceService
+    private lPriceService: PriceService,
+    // todo: add type
+    private lConfig
   ) {
     'ngInject';
   }
@@ -86,7 +88,7 @@ export class OrderService {
 
   // todo: add return type
   placeOrders(orders: IOrder[]): IPromise<IOrder[]> {
-    const url = 'http://api.cogniance.lunches.com.ua/orders';
+    const url = this.lConfig.apiUrl + '/orders';
     const allOrdersPlacedPromise = map(orders, order => {
       return this.$http.post(url, this.prepareOrderForApi(order));
     });
@@ -118,8 +120,7 @@ export class OrderService {
     const me = this.lUserService.me();
 
     // todo: do not hardcode BE URL: DEZ-774
-    const basePath = 'http://api.cogniance.lunches.com.ua';
-    const url = basePath + '/users/' + me.fullname + '/orders?startDate=' + startDate + '&endDate=' + endDate;
+    const url = this.lConfig.apiUrl + '/users/' + me.fullname + '/orders?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IOrder[]>(url).then(res => res.data);
   }
 
@@ -138,8 +139,7 @@ export class OrderService {
   }
 
   syncOrderFor(user: IUser, order: IOrder): IPromise<IOrder> {
-    // todo: do not hardcode BE URL: DEZ-774
-    const url = 'http://api.cogniance.lunches.com.ua/users/' + user.fullname + '/orders/' + order.id;
+    const url = this.lConfig.apiUrl + '/users/' + user.fullname + '/orders/' + order.id;
     return this.$http
       .put<IOrder>(url, order)
       .then(res => res.data);
