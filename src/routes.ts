@@ -45,5 +45,13 @@ export function routesConfig(
       data: {
         title: 'Мои заказы'
       }
-    });
+    })
+    .state('payment', {
+      url: '/payment',
+      template: '<l-payment/>',
+      data: {
+        title: 'Оплата'
+      }
+    })
+    ;
 }

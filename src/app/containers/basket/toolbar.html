@@ -10,7 +10,7 @@
 
     <span flex></span>
 
-    <md-button class="md-icon-button" ng-click="vm.goToMyOrders()">
+    <md-button class="md-icon-button" ng-click="vm.goToMyOrders()" ng-if="vm.isUserRegistered()">
       <md-icon aria-label="my orders">receipt</md-icon>
     </md-button>
   </div>

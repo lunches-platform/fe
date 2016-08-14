@@ -7,6 +7,7 @@ export interface IUser {
   id: string;
   fullname: string;
   address: string;
+  clientId: string;
 }
 
 enum Address {
@@ -102,12 +103,17 @@ export class UserService {
     return {
       id: null,
       fullname: '',
-      address: ''
+      address: '',
+      clientId: ''
     };
   }
 
   isGuest(user: IUser): boolean {
-    return Boolean(!user.id);
+    return !this.isRegistered(user);
+  }
+
+  isRegistered(user: IUser): boolean {
+    return Boolean(user && user.id);
   }
 
   searchUsersBy(name: string): IPromise<IUser> {

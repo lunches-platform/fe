@@ -1,0 +1,42 @@
+<div class="l-payment">
+  <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
+
+  <l-payment-toolbar ng-if="!vm.isLoading()"></l-payment-toolbar>
+
+  <div ng-if="!vm.isLoading()" layout="column">
+    <md-card ng-if="vm.hasData()">
+
+      <md-card-content>
+        <md-radio-group ng-model="vm.paymentType" layout="row">
+          <md-radio-button value="card" class="md-primary">Карта</md-radio-button>
+          <md-radio-button value="cash">Наличка</md-radio-button>
+        </md-radio-group>
+
+        <div ng-if="vm.paymentType == 'card'">
+          <p>Переведите деньги на карту</p>
+          <p class="md-title">{{ vm.paymentCard.number }}</p>
+          <p class="md-title">{{ vm.paymentCard.holder }}</p>
+          <p>Укажите ваш ID клиента в комментарии к платежу</p>
+          <span class="md-title">ID: {{ vm.user.clientId }}</span></p>
+          <p>После поступления денег на счет, ваши заказы будут оплачены</p>
+        </div>
+
+        <div ng-if="vm.paymentType == 'cash'">
+          <p>Занесите деньги на ресепшн</p>
+          <p>Укажите ваш ID клиента в комментарии к платежу и сумму, которую вы внесли</p>
+          <span class="md-title">ID: {{ vm.user.clientId }}</span></p>
+          <p>После поступления денег на счет, ваши заказы будут оплачены</p>
+        </div>
+      </md-card-content>
+
+      <md-divider></md-divider>
+
+      <div flex class="md-title l-total-to-pay" layout="row" layout-align="end center">
+        <div>Всего к оплате: {{ vm.totalToPay() }} грн</div>
+      </div>
+    </md-card>
+
+    <div ng-if="vm.isEmpty()" layout-padding>Все оплачено<div>
+  </div>
+</div>
+

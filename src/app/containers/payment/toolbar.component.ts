@@ -1,15 +1,8 @@
 import {IComponentOptions} from 'angular';
-
 import {IBaseState} from '../../../routes';
 
-import {IUser, UserService} from '../../models/user';
-
 export class ToolbarController {
-  // bindings ------------------------------------------------------------------
-  // input
-  inputUser: IUser;
-
-  constructor(private $state: IBaseState, private lUserService: UserService) {
+  constructor(private $state: IBaseState) {
     'ngInject';
   }
 
@@ -21,8 +14,8 @@ export class ToolbarController {
     this.$state.go('my-orders');
   }
 
-  isUserRegistered(): boolean {
-    return this.lUserService.isRegistered(this.inputUser);
+  goToBasket(): void {
+    this.$state.go('basket');
   }
 }
 

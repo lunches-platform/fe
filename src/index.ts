@@ -8,6 +8,8 @@ import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component'
 import {ToolbarComponent as WeekMenuToolbarComponent} from './app/containers/week-menu/toolbar.component';
 import {MyOrdersComponent} from './app/containers/my-orders/my-orders.component';
 import {ToolbarComponent as MyOrdersToolbarComponent} from './app/containers/my-orders/toolbar.component';
+import {PaymentComponent} from './app/containers/payment/payment.component';
+import {ToolbarComponent as PaymentToolbarComponent} from './app/containers/payment/toolbar.component';
 
 import {MenuComponent} from './app/components/menu/menu.component';
 import {ViewMenuComponent} from './app/components/view-menu/view-menu.component';
@@ -23,7 +25,6 @@ import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.compone
 import {UserCardComponent} from './app/components/user-card/user-card.component';
 import {SwitchComponent} from './app/components/switch/switch.component';
 import {FloorSelectorComponent} from './app/components/floor-selector/floor-selector.component';
-import {PaymentCardComponent} from './app/components/payment-card/payment-card.component';
 import {SizeLabelComponent} from './app/components/size-label/size-label.component';
 
 import {MenuService} from './app/models/menu';
@@ -71,6 +72,7 @@ angular
   .component('lWeekMenu', WeekMenuComponent)
   .component('lBasket', BasketComponent)
   .component('lMyOrders', MyOrdersComponent)
+  .component('lPayment', PaymentComponent)
 
   .component('lMenu', MenuComponent)
   .component('lViewMenu', ViewMenuComponent)
@@ -89,8 +91,8 @@ angular
   .component('lBasketToolbar', BasketToolbarComponent)
   .component('lMyOrdersToolbar', MyOrdersToolbarComponent)
   .component('lFloorSelector', FloorSelectorComponent)
-  .component('lPaymentCard', PaymentCardComponent)
   .component('lSizeLabel', SizeLabelComponent)
+  .component('lPaymentToolbar', PaymentToolbarComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)

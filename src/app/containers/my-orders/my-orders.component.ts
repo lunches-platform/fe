@@ -62,6 +62,10 @@ export class MyOrdersController {
     this.$state.go('basket');
   }
 
+  onPay(order: IOrder): void {
+    this.$state.go('payment');
+  }
+
   // view helpers --------------------------------------------------------------
   hasData(): boolean {
     return Boolean(this.orders.length);

@@ -15,11 +15,13 @@
         ng-repeat="order in vm.orders"
         order="order"
         on-change="vm.onItemChange(order, oldOrder)"
-        on-new-order="vm.onNewOrder()">
+        on-new-order="vm.onNewOrder()"
+        on-pay="vm.onPay(order)"
+        >
       </l-my-orders-item>
     </div>
 
-    <div ng-if="vm.isEmpty()">
+    <div ng-if="vm.isEmpty()" layout-padding>
       Нет заказов за выбранный период времени
     <div>
   </div>

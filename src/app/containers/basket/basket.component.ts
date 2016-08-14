@@ -47,7 +47,7 @@ export class BasketController {
         this.lToastService.show('Ошибка! Не удалось разместить заказ');
       })
       .finally(() => {
-        this.$state.go('week-menu');
+        this.$state.go('payment');
       });
   }
 
