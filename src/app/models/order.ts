@@ -20,6 +20,13 @@ export interface IOrder {
   price?: number;
 }
 
+export interface IPaymentCard {
+  number: string;
+  holder: string;
+}
+
+export type PaymentType = 'cash' | 'card';
+
 export interface IPlaceOrderRequestBody {
   items: ILineItemRequestBody[];
   userId: string;
@@ -119,9 +126,18 @@ export class OrderService {
   fetchMyOrders(startDate: string, endDate: string): IPromise<IOrder[]> {
     const me = this.lUserService.me();
 
-    // todo: do not hardcode BE URL: DEZ-774
     const url = this.lConfig.apiUrl + '/users/' + me.fullname + '/orders?startDate=' + startDate + '&endDate=' + endDate;
     return this.$http.get<IOrder[]>(url).then(res => res.data);
+  }
+
+  fetchUnpaidOrdersFor(user: IUser): IPromise<IOrder[]> {
+    const url = this.lConfig.apiUrl + '/users/' + user.id + '/orders?paid=0';
+    return this.$http.get<IOrder[]>(url).then(res => res.data);
+  }
+
+  fetchPaymentCard(): IPromise<IPaymentCard> {
+    const url = this.lConfig.apiUrl + '/paymentCard';
+    return this.$http.get<IPaymentCard>(url).then(res => res.data);
   }
 
   cancel(order: IOrder): IOrder {

@@ -16,6 +16,10 @@ interface ITriggerNewOrderEvent {
   (): void;
 }
 
+interface ITriggerPayEvent {
+  (arg: { order: IOrder }): void;
+}
+
 export class MyOrdersItemController {
   // bindings ------------------------------------------------------------------
 
@@ -25,6 +29,7 @@ export class MyOrdersItemController {
   // output
   triggerChangeEvent: ITriggerChangeEvent;
   triggerNewOrderEvent: ITriggerNewOrderEvent;
+  triggerPayEvent: ITriggerPayEvent;
 
   // internal
 
@@ -42,6 +47,10 @@ export class MyOrdersItemController {
 
   onRestore(): void {
     this.triggerChangeEvent({order: this.lOrderService.restore(this.order), oldOrder: this.order});
+  }
+
+  onPay(): void {
+    this.triggerPayEvent({order: this.order});
   }
 
   // view helpers --------------------------------------------------------------
@@ -91,6 +100,7 @@ export const MyOrdersItemComponent: IComponentOptions = {
   bindings: {
     order: '<',
     triggerChangeEvent: '&onChange',
-    triggerNewOrderEvent: '&onNewOrder'
+    triggerNewOrderEvent: '&onNewOrder',
+    triggerPayEvent: '&onPay'
   }
 };

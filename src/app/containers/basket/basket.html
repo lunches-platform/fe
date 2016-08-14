@@ -1,10 +1,8 @@
 <div class="l-basket">
-  <l-basket-toolbar ng-if="!vm.isLoading()"></l-basket-toolbar>
+  <l-basket-toolbar ng-if="!vm.isLoading()" user="vm.user"></l-basket-toolbar>
 
   <div ng-if="vm.hasData()" layout="column">
     <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>
-
-    <l-payment-card orders="vm.basket.orders"></l-payment-card>
 
     <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrdersValid()">Оформить заказ</md-button>
 

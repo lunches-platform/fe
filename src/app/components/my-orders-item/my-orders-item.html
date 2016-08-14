@@ -22,7 +22,7 @@
 
     <div layout="row" layout-padding>
       <l-size-label size="vm.order.items[0].size"></l-size-label>
-      <l-payment-status paid="vm.order.paid"></l-payment-status>
+      <l-payment-status paid="vm.order.paid" ng-click="vm.onPay()"></l-payment-status>
       <span class="md-title price-label">{{ vm.order.price }} грн</span>
     </div>
 
