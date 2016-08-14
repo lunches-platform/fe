@@ -1,6 +1,8 @@
 import {cloneDeep} from 'lodash';
 import {IScope, ILogService} from 'angular';
 
+type ISidenavService = angular.material.ISidenavService;
+
 import {IBasketState} from '../../../routes';
 
 import {IOrder, OrderService} from '../../models/order';
@@ -21,6 +23,7 @@ export class BasketController {
     private $state: IBasketState,
     private $scope: IScope,
     private $log: ILogService,
+    private $mdSidenav: ISidenavService,
     private lBasketService: BasketService,
     private lOrderService: OrderService,
     private lToastService: ToastService,
@@ -49,6 +52,10 @@ export class BasketController {
       .finally(() => {
         this.$state.go('payment');
       });
+  }
+
+  onToggleSidebar(): void {
+    this.$mdSidenav('left').toggle();
   }
 
   goToWeekMenu(): void {

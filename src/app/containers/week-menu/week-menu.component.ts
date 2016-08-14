@@ -8,6 +8,8 @@ import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from '../../models/basket';
 import {PriceService} from '../../models/price';
 
+type ISidenavService = angular.material.ISidenavService;
+
 export enum Week {
   Current,
   Next
@@ -34,6 +36,7 @@ export class WeekMenuController {
     private $state: IWeekMenuState,
     private $scope: IScope,
     private $log: ILogService,
+    private $mdSidenav: ISidenavService,
     private lMenuService: MenuService,
     private lBasketService: BasketService,
     private lUserService: UserService,
@@ -58,6 +61,10 @@ export class WeekMenuController {
     if (!stored) {
       this.$log.error('WeekMenuController: Unable to store basket in storage');
     }
+  }
+
+  onToggleSidebar(): void {
+    this.$mdSidenav('left').toggle();
   }
 
   onWeekChanged(week: Week): void {
@@ -115,6 +122,10 @@ export class WeekMenuController {
 
   needToShowNoData(): boolean {
     return this.isCurrentMenuEmpty() || this.isNextMenuEmpty();
+  }
+
+  hasItemsInBasket(): boolean {
+    return Boolean(this.basket.orders.length);
   }
 
   // private init --------------------------------------------------------------

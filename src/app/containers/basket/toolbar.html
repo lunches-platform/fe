@@ -1,7 +1,7 @@
 <md-toolbar class="md-hue-2 md-whiteframe-4dp">
   <div class="md-toolbar-tools" layout="row">
-    <md-button class="md-icon-button" ng-click="vm.goToWeekMenu()">
-      <md-icon aria-label="back to week menu">arrow_back</md-icon>
+    <md-button class="md-icon-button" ng-click="vm.toggleSidebar()">
+      <md-icon aria-label="menu">menu</md-icon>
     </md-button>
 
     <h2>
@@ -9,6 +9,14 @@
     </h2>
 
     <span flex></span>
+
+    <md-button class="md-icon-button" ng-click="vm.goToWeekMenu()">
+      <md-icon aria-label="week menu">restaurant_menu</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button" ng-click="vm.goToPaymentPage()" ng-if="vm.isUserRegistered()">
+      <md-icon aria-label="payment">payment</md-icon>
+    </md-button>
 
     <md-button class="md-icon-button" ng-click="vm.goToMyOrders()" ng-if="vm.isUserRegistered()">
       <md-icon aria-label="my orders">receipt</md-icon>

@@ -1,6 +1,8 @@
 import {sumBy} from 'lodash';
 import {ILogService} from 'angular';
 
+type ISidenavService = angular.material.ISidenavService;
+
 import {IOrder, IPaymentCard, PaymentType, OrderService} from '../../models/order';
 import {IUser, UserService} from '../../models/user';
 
@@ -14,7 +16,12 @@ export class PaymentController {
 
   private loading: boolean;
 
-  constructor(private $log: ILogService, private lOrderService: OrderService, private lUserService: UserService) {
+  constructor(
+    private $log: ILogService,
+    private $mdSidenav: ISidenavService,
+    private lOrderService: OrderService,
+    private lUserService: UserService
+  ) {
     'ngInject';
 
     this.initLoading();
@@ -41,6 +48,10 @@ export class PaymentController {
 
   isEmpty(): boolean {
     return !this.hasData();
+  }
+
+  onToggleSidebar(): void {
+    this.$mdSidenav('left').toggle();
   }
 
   // private init --------------------------------------------------------------

@@ -1,15 +1,12 @@
 <md-toolbar class="md-hue-2 md-whiteframe-4dp">
   <div class="md-toolbar-tools" layout="row">
+    <md-button class="md-icon-button" ng-click="vm.toggleSidebar()">
+      <md-icon aria-label="menu">menu</md-icon>
+    </md-button>
+
     <div flex>{{ vm.title }}</div>
 
-    <l-switch switched="vm.isSwitched()" on-switch="vm.onMenuTypeSwitched(checked)" class="md-secondary"></l-switch>
+    <l-switch switched="vm.isSwitched()" on-switch="vm.onMenuTypeSwitched(checked)" class="md-secondary">Диета</l-switch>
 
-    <md-button class="md-icon-button" ng-click="vm.goToMyOrders()" ng-if="vm.isUserRegistered()">
-      <md-icon aria-label="my orders">receipt</md-icon>
-    </md-button>
-
-    <md-button class="md-icon-button" ng-click="vm.goToBasket()">
-      <md-icon aria-label="basket">shopping_cart</md-icon>
-    </md-button>
   </div>
 </md-toolbar>
