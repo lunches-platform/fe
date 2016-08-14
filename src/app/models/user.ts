@@ -10,12 +10,9 @@ export interface IUser {
 }
 
 enum Address {
-  Country,
-  City,
   Company,
   Street,
   BuldingNumber,
-  PostalCode,
   Floor
 }
 
