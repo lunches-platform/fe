@@ -6,21 +6,28 @@
   </md-card-title>
   <md-card-content>
     <md-autocomplete
-        md-search-text-change="vm.onFullNameChange(vm.fullname)"
-        md-search-text="vm.fullname"
-        md-selected-item-change="vm.onUserSelected(user)"
-        md-items="user in vm.searchUsersBy(vm.fullname)"
-        md-item-text="user.fullname"
-        md-floating-label="Имя">
+      md-search-text-change="vm.onFullNameChange(vm.fullname)"
+      md-search-text="vm.fullname"
+      md-selected-item-change="vm.onUserSelected(user)"
+      md-items="user in vm.searchUsersBy(vm.fullname)"
+      md-item-text="user.fullname"
+      md-floating-label="Имя">
+
       <md-item-template>
         <span md-highlight-text="vm.fullname" md-highlight-flags="^i">{{user.fullname}}</span>
       </md-item-template>
+
     </md-autocomplete>
 
-    <md-input-container flex class="md-icon-float md-block">
+    <md-input-container class="md-block" ng-if="vm.isRegularAddressField()">
+      <label>Адрес</label>
+      <input ng-model="vm.address">
+    </md-input-container>
+
+    <md-input-container flex class="md-icon-float md-block" ng-if="vm.isFloorInsteadOfAddress()">
       <label>Этаж</label>
       <l-floor-selector
-        selected-floor="vm.address"
+        selected-floor="vm.floor"
         on-floor-selected="vm.onFloorSelected(floor)"
         flex>
       </l-floor-selector>

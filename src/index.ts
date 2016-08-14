@@ -102,3 +102,19 @@ angular
 
   .filter('lDate', DateFilter)
   ;
+
+fetchConfig().then(bootstrap);
+
+function fetchConfig() {
+  const $http = angular.injector(['ng']).get('$http');
+
+  return $http.get('/config.json').then((response) => {
+    angular.module('app').constant('lConfig', response.data);
+  }, (errorResponse) => {
+    // todo: handle error case
+  });
+}
+
+function bootstrap() {
+  angular.element(document).ready(() => angular.bootstrap(document, ['app']));
+}

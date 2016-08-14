@@ -21,9 +21,11 @@ export class UserCardController {
   // internal
   fullname: string;
   address: string;
+  floor: string;
   user: IUser;
 
-  constructor(private lUserService: UserService) {
+  // todo: add type for lConfig
+  constructor(private lUserService: UserService, private lConfig) {
     'ngInject';
 
     this.initUser();
@@ -43,18 +45,34 @@ export class UserCardController {
     }
 
     this.user = user;
+    this.setFullAddressIfNeeded();
 
     this.triggerChangeEventIfValid();
   }
 
   onFloorSelected(floor: string): void {
-    this.user = this.lUserService.updateAddressFor(this.user, floor);
+    if (!floor) {
+      return;
+    }
+
+    this.floor = floor;
+
+    this.user = this.lUserService.updateAddressFloorFor(this.user, floor);
 
     this.triggerChangeEventIfValid();
   }
 
   searchUsersBy(name: string) {
     return this.lUserService.searchUsersBy(name);
+  }
+
+  // view helpers --------------------------------------------------------------
+  isFloorInsteadOfAddress(): boolean {
+    return this.lConfig.address.options.floorSelector;
+  }
+
+  isRegularAddressField(): boolean {
+    return !this.isFloorInsteadOfAddress();
   }
 
   // private init --------------------------------------------------------------
@@ -67,7 +85,13 @@ export class UserCardController {
   }
 
   private initForm(): void {
+    if (this.lUserService.isFloorEmptyIn(this.user.address)) {
+      this.user = this.lUserService.setFloorForUser(this.user, '1');
+      this.triggerChangeEventIfValid();
+    }
+
     this.address = this.user.address || null;
+    this.floor = this.lUserService.fetchFloorFrom(this.address);
 
     this.fullname = this.user.fullname || null;
   }
@@ -81,6 +105,8 @@ export class UserCardController {
     this.inputUser = cloneDeep(inputUser);
     this.user = cloneDeep(inputUser);
 
+    this.setFullAddressIfNeeded();
+
     this.initForm();
   }
 
@@ -90,6 +116,12 @@ export class UserCardController {
     }
 
     this.triggerChangeEvent({user: this.user});
+  }
+
+  private setFullAddressIfNeeded(): void {
+    if (!this.lUserService.hasFullAddress(this.user)) {
+      this.user = this.lUserService.setCompanyAddressFor(this.user);
+    }
   }
 }
 
