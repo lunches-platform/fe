@@ -6,8 +6,11 @@
     selected-menu-type="vm.selectedMenuType"
     on-menu-type-switched="vm.onMenuTypeSwitched(menuType)"
     user="vm.user"
+    on-toggle-sidebar="vm.onToggleSidebar()"
     >
   </l-week-menu-toolbar>
+
+  <l-sidebar user="vm.user"></l-sidebar>
 
   <div ng-if="!vm.isLoading()" layout="column">
 

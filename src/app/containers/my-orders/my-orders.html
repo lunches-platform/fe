@@ -1,7 +1,14 @@
 <div class="l-my-orders">
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-  <l-my-orders-toolbar ng-if="!vm.isLoading()"></l-my-orders-toolbar>
+  <l-my-orders-toolbar
+    ng-if="!vm.isLoading()"
+    user="vm.user"
+    on-toggle-sidebar="vm.onToggleSidebar()"
+  >
+  </l-my-orders-toolbar>
+
+  <l-sidebar user="vm.user"></l-sidebar>
 
   <div ng-if="!vm.isLoading()" layout="column">
     <div ng-if="vm.hasData()">

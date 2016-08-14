@@ -11,6 +11,10 @@ interface ITriggerMenuTypeSwitchEvent {
   (arg: { menuType: MenuType }): void;
 }
 
+interface ITriggerToggleSidebarEvent {
+  (): void;
+}
+
 export class ToolbarController {
   // bindings ------------------------------------------------------------------
   // input
@@ -19,6 +23,7 @@ export class ToolbarController {
 
   // output
   triggerMenuTypeSwitchEvent: ITriggerMenuTypeSwitchEvent;
+  triggerToggleSidebarEvent: ITriggerToggleSidebarEvent;
 
   // internal
   title: string;
@@ -43,6 +48,10 @@ export class ToolbarController {
 
   isUserRegistered(): boolean {
     return this.lUserService.isRegistered(this.inputUser);
+  }
+
+  toggleSidebar(): void {
+    this.triggerToggleSidebarEvent();
   }
 
   onMenuTypeSwitched(checked: boolean): void {
@@ -71,6 +80,7 @@ export const ToolbarComponent: IComponentOptions = {
   bindings: {
     inputMenuType: '<selectedMenuType',
     inputUser: '<user',
-    triggerMenuTypeSwitchEvent: '&onMenuTypeSwitched'
+    triggerMenuTypeSwitchEvent: '&onMenuTypeSwitched',
+    triggerToggleSidebarEvent: '&onToggleSidebar'
   }
 };

@@ -1,7 +1,14 @@
 <div class="l-payment">
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-  <l-payment-toolbar ng-if="!vm.isLoading()"></l-payment-toolbar>
+  <l-payment-toolbar
+    ng-if="!vm.isLoading()"
+    user="vm.user"
+    on-toggle-sidebar="vm.onToggleSidebar()"
+  >
+  </l-payment-toolbar>
+
+  <l-sidebar user="vm.user"></l-sidebar>
 
   <div ng-if="!vm.isLoading()" layout="column">
     <md-card ng-if="vm.hasData()">

@@ -1,5 +1,11 @@
 <div class="l-basket">
-  <l-basket-toolbar ng-if="!vm.isLoading()" user="vm.user"></l-basket-toolbar>
+  <l-basket-toolbar
+    ng-if="!vm.isLoading()"
+    on-toggle-sidebar="vm.onToggleSidebar()"
+    user="vm.user">
+  </l-basket-toolbar>
+
+  <l-sidebar user="vm.user"></l-sidebar>
 
   <div ng-if="vm.hasData()" layout="column">
     <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>

@@ -1,6 +1,8 @@
 import {ILogService, IComponentOptions} from 'angular';
 import * as moment from 'moment';
 
+type ISidenavService = angular.material.ISidenavService;
+
 import {IMyOrdersState} from '../../../routes';
 import {SHORT_DATE_FORMAT} from '../../../config';
 
@@ -22,6 +24,7 @@ export class MyOrdersController {
   constructor(
     private $state: IMyOrdersState,
     private $log: ILogService,
+    private $mdSidenav: ISidenavService,
     private lOrderService: OrderService,
     private lUserService: UserService,
     private lToastService: ToastService
@@ -64,6 +67,10 @@ export class MyOrdersController {
 
   onPay(order: IOrder): void {
     this.$state.go('payment');
+  }
+
+  onToggleSidebar(): void {
+    this.$mdSidenav('left').toggle();
   }
 
   // view helpers --------------------------------------------------------------
