@@ -14,7 +14,7 @@
       <md-icon aria-label="week menu">restaurant_menu</md-icon>
     </md-button>
 
-    <md-button class="md-icon-button" ng-click="vm.goToPaymentPage()">
+    <md-button class="md-icon-button" ng-click="vm.goToPaymentPage()" ng-if="vm.isUserRegistered()">
       <md-icon aria-label="payment">payment</md-icon>
     </md-button>
 

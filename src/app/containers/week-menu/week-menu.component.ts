@@ -124,6 +124,10 @@ export class WeekMenuController {
     return this.isCurrentMenuEmpty() || this.isNextMenuEmpty();
   }
 
+  hasItemsInBasket(): boolean {
+    return Boolean(this.basket.orders.length);
+  }
+
   // private init --------------------------------------------------------------
   private initBasket(): void {
     this.lBasketService.fetchBasket()
