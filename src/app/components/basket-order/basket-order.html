@@ -13,8 +13,10 @@
     </div>
   </md-card-content>
 
-  <div layout="row" ng-if="vm.isExist()">
+  <div layout="row" ng-if="vm.isExist()" layout-align="start center">
     <md-button ng-click="vm.remove()">Отменить</md-button>
+    <l-size-label size="vm.order.items[0].size"></l-size-label>
+
     <span flex></span>
     <span class="md-title l-basket-order-price-label">{{ vm.order.price }} грн</span>
   </div>
