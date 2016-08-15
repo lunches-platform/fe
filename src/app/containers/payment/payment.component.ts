@@ -3,6 +3,8 @@ import {ILogService} from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
+import {IBaseState} from '../../../routes';
+
 import {IOrder, IPaymentCard, PaymentType, OrderService} from '../../models/order';
 import {IUser, UserService} from '../../models/user';
 
@@ -17,6 +19,7 @@ export class PaymentController {
   private loading: boolean;
 
   constructor(
+    private $state: IBaseState,
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
     private lOrderService: OrderService,
@@ -52,6 +55,14 @@ export class PaymentController {
 
   onToggleSidebar(): void {
     this.$mdSidenav('left').toggle();
+  }
+
+  goToWeekMenu(): void {
+    this.$state.go('week-menu');
+  }
+
+  goToMyOrders(): void {
+    this.$state.go('my-orders');
   }
 
   // private init --------------------------------------------------------------
