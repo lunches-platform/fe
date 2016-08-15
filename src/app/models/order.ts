@@ -131,7 +131,7 @@ export class OrderService {
   }
 
   fetchUnpaidOrdersFor(user: IUser): IPromise<IOrder[]> {
-    const url = this.lConfig.apiUrl + '/users/' + user.id + '/orders?paid=0';
+    const url = this.lConfig.apiUrl + '/users/' + user.fullname + '/orders?paid=0';
     return this.$http.get<IOrder[]>(url).then(res => res.data);
   }
 

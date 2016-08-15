@@ -43,6 +43,18 @@
       </div>
     </md-card>
 
+    <div ng-if="vm.hasData()" layout="row">
+      <md-button aria-label="my orders" class="md-primary" flex="40" ng-click="vm.goToMyOrders()">
+        <md-icon>receipt</md-icon>
+        Мои заказы
+      </md-button>
+
+      <md-button aria-label="week menu" flex="60" ng-click="vm.goToWeekMenu()">
+        <md-icon>restaurant_menu</md-icon>
+        Меню на неделю
+      </md-button>
+    </div>
+
     <div ng-if="vm.isEmpty()" layout-padding>Все оплачено<div>
   </div>
 </div>

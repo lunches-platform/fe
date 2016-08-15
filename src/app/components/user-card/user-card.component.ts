@@ -121,6 +121,8 @@ export class UserCardController {
   private setFullAddressIfNeeded(): void {
     if (!this.lUserService.hasFullAddress(this.user)) {
       this.user = this.lUserService.setCompanyAddressFor(this.user);
+
+      this.triggerChangeEventIfValid();
     }
   }
 }
