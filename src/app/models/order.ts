@@ -154,11 +154,9 @@ export class OrderService {
     });
   }
 
-  syncOrderFor(user: IUser, order: IOrder): IPromise<IOrder> {
-    const url = this.lConfig.apiUrl + '/users/' + user.fullname + '/orders/' + order.id;
-    return this.$http
-      .put<IOrder>(url, order)
-      .then(res => res.data);
+  cancelInDb(order: IOrder): IPromise<IOrder> {
+    const url = this.lConfig.apiUrl + '/orders/' + order.id + '/cancel';
+    return this.$http.post<IOrder>(url, {reason: 'user request'}).then(res => res.data);
   }
 
   updateItemIn(inputOrder: IOrder, item: ILineItem): IOrder {
