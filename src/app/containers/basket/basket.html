@@ -10,6 +10,8 @@
   <div ng-if="vm.hasData()" layout="column">
     <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>
 
+    <div class="md-headline" layout="row" layout-padding layout-align="end center">Всего к оплате: {{ vm.totalToPay() }} грн</div>
+
     <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrdersValid()">Оформить заказ</md-button>
 
     <div class="md-headline" layout-padding>Ваши заказы</div>
@@ -25,6 +27,8 @@
         <md-divider></md-divider>
       </div>
     </md-card>
+
+    <div class="md-headline" layout="row" layout-padding layout-align="end center">Всего к оплате: {{ vm.totalToPay() }} грн</div>
 
     <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrdersValid()">Оформить заказ</md-button>
   </div>

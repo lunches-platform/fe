@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash';
+import {cloneDeep, sumBy} from 'lodash';
 import {IScope, ILogService} from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
@@ -96,6 +96,9 @@ export class BasketController {
     return this.lOrderService.isValidAll(this.basket.orders);
   }
 
+  totalToPay(): number {
+    return sumBy(this.basket.orders, 'price');
+  }
   // private init --------------------------------------------------------------
   private initBasket(): void {
     this.lBasketService.fetchBasket()
