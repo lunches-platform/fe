@@ -99,11 +99,11 @@ export class UserService {
     return isEqual(user1, user2);
   }
 
-  createGuest(): IUser {
+  createGuest(fullname?: string, address?: string): IUser {
     return {
       id: null,
-      fullname: '',
-      address: '',
+      fullname: fullname || '',
+      address: address || '',
       clientId: ''
     };
   }

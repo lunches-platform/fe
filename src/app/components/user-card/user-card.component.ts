@@ -34,7 +34,7 @@ export class UserCardController {
   // dom event handlers --------------------------------------------------------
   onFullNameChange(fullname: string): void {
     this.fullname = fullname;
-    this.user = this.lUserService.updateFullNameFor(this.user, this.fullname);
+    this.user = this.lUserService.createGuest(this.fullname, this.address);
 
     this.triggerChangeEventIfValid();
   }
