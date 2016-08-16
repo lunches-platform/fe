@@ -3,7 +3,7 @@
     <h1 class="md-toolbar-tools" ng-if="vm.isUserRegistered()">{{ vm.user.fullname }}</h1>
     <h1 class="md-toolbar-tools" ng-if="vm.isGuest()">Гость</h1>
 
-    <div layout-padding>
+    <div layout-padding ng-if="false">
       <p class="md-body-1" layout-padding>Баланс: <span>{{ vm.user.balance || 0 }} грн</span></p>
     </div>
   </md-toolbar>
@@ -21,9 +21,9 @@
         <md-icon aria-label="go to basket">shopping_cart</md-icon>
         <p>Корзина</p>
       </md-list-item>
-      <md-list-item ng-click="vm.goToPaymentPage()">
+      <md-list-item ng-click="vm.goToPaymentPage()" ng-if="vm.isUserRegistered()">
         <md-icon aria-label="payment">payment</md-icon>
-        <p>Оплатить</p>
+        <p>Оплата</p>
       </md-list-item>
     </md-list>
   </md-content>
