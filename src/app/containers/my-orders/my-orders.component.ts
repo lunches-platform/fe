@@ -38,13 +38,13 @@ export class MyOrdersController {
   }
 
   // dom event handlers --------------------------------------------------------
-  onItemChange(order: IOrder, oldOrder: IOrder): void {
-    this.update(order);
+  onCancel(order: IOrder, oldOrder: IOrder): void {
+    this.updateInCachedList(order);
 
-    this.lOrderService.syncOrderFor(this.user, order)
+    this.lOrderService.cancelInDb(order)
       .catch(err => {
-        this.lToastService.show('Ошибка обновления заказа');
-        this.update(oldOrder);
+        this.lToastService.show('Не удалось отменить заказ');
+        this.updateInCachedList(oldOrder);
       });
   }
 
@@ -112,7 +112,7 @@ export class MyOrdersController {
   }
 
   // private helpers -----------------------------------------------------------
-  private update(order: IOrder): void {
+  private updateInCachedList(order: IOrder): void {
     this.orders = this.lOrderService.updateOrderIn(this.orders, order);
   }
 

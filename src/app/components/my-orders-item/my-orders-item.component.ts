@@ -8,7 +8,7 @@ import {IOrder, OrderService} from '../../models/order';
 import {ProductTypeUrls} from '../../models/product';
 
 // internal types --------------------------------------------------------------
-interface ITriggerChangeEvent {
+interface ITriggerCancelEvent {
   (arg: { order: IOrder, oldOrder: IOrder }): void;
 }
 
@@ -27,7 +27,7 @@ export class MyOrdersItemController {
   order: IOrder;
 
   // output
-  triggerChangeEvent: ITriggerChangeEvent;
+  triggerCancelEvent: ITriggerCancelEvent;
   triggerNewOrderEvent: ITriggerNewOrderEvent;
   triggerPayEvent: ITriggerPayEvent;
 
@@ -42,11 +42,7 @@ export class MyOrdersItemController {
   }
 
   onCancel(): void {
-    this.triggerChangeEvent({order: this.lOrderService.cancel(this.order), oldOrder: this.order});
-  }
-
-  onRestore(): void {
-    this.triggerChangeEvent({order: this.lOrderService.restore(this.order), oldOrder: this.order});
+    this.triggerCancelEvent({order: this.lOrderService.cancel(this.order), oldOrder: this.order});
   }
 
   onPay(): void {
@@ -99,7 +95,7 @@ export const MyOrdersItemComponent: IComponentOptions = {
   controllerAs: 'vm',
   bindings: {
     order: '<',
-    triggerChangeEvent: '&onChange',
+    triggerCancelEvent: '&onCancel',
     triggerNewOrderEvent: '&onNewOrder',
     triggerPayEvent: '&onPay'
   }
