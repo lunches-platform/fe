@@ -5,30 +5,14 @@ import {IMenu, MenuService} from '../../models/menu';
 export class MenuCoverController {
   // bindings ------------------------------------------------------------------
   // input
-  menu: IMenu;
-  private coverIndex: number;
+  inputMenu: IMenu;
 
   constructor(private lMenuService: MenuService) {
     'ngInject';
-
-    this.initCover();
   }
 
   url(): string {
-    return this.lMenuService.getCoverOf(this.menu, this.coverIndex);
-  }
-
-  switchToNext(): void {
-    const nextCoverIndex = this.coverIndex + 1;
-    if (nextCoverIndex < this.menu.products.length) {
-      this.coverIndex = this.coverIndex + 1;
-    } else {
-      this.coverIndex = 0;
-    }
-  }
-
-  private initCover(): void {
-    this.coverIndex = 0;
+    return this.lMenuService.getCoverOf(this.inputMenu);
   }
 }
 
@@ -38,6 +22,6 @@ export const MenuCoverComponent: IComponentOptions = {
   controller: MenuCoverController,
   controllerAs: 'vm',
   bindings: {
-    menu: '<'
+    inputMenu: '<menu'
   }
 };
