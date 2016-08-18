@@ -78,8 +78,8 @@ export class MenuService {
   }
 
   // todo: get correct cover
-  getCoverOf(menu: IMenu, productIndex: number): string {
-    return menu.products[productIndex].images[0].url;
+  getCoverOf(menu: IMenu): string {
+    return menu.products[0].images[0].url;
   }
 
   private isInsideCurrentWeek(date: string): boolean {
