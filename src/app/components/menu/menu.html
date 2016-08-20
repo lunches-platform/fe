@@ -11,10 +11,17 @@
     <l-menu-cover menu="vm.menu"></l-menu-cover>
 
     <md-card-content>
-      <md-list>
+      <md-list ng-if="!vm.isOrdered()">
         <md-list-item ng-repeat="lineItem in vm.lineItemsAvailable track by lineItem.product.id" class="l-no-left-padding">
           <img ng-src="{{ ::vm.productTypeToIconUrl(lineItem.product.type) }}" alt="meat" class="material-icons l-png-icon" />
           <l-switch ng-if="vm.isCustomLunch()" on-switch="vm.onLineItemToggled(lineItem, checked)" class="md-secondary"></l-switch>
+          <p>{{ lineItem.product.name }}</p>
+        </md-list-item>
+      </md-list>
+
+      <md-list ng-if="vm.isOrdered()">
+        <md-list-item ng-repeat="lineItem in vm.selectedLineItems track by lineItem.product.id" class="l-no-left-padding">
+          <img ng-src="{{ ::vm.productTypeToIconUrl(lineItem.product.type) }}" alt="{{ lineItem.product.type }}" class="material-icons l-png-icon" />
           <p>{{ lineItem.product.name }}</p>
         </md-list-item>
       </md-list>
@@ -22,25 +29,25 @@
 
     <md-divider></md-divider>
 
-    <div layout="row" layout-padding ng-if="vm.isLineItemsAddedToOrder()">
+    <div layout="row" layout-padding ng-if="vm.isOrdered()">
       <l-size-label size="vm.size"></l-size-label>
       <span class="md-subhead">{{ vm.calcPrice() }} грн</span>
     </div>
 
-    <md-radio-group ng-if="!vm.isLineItemsAddedToOrder()" ng-model="vm.size" layout="row" class="l-menu-size">
+    <md-radio-group ng-if="!vm.isOrdered()" ng-model="vm.size" layout="row" class="l-menu-size">
       <md-radio-button value="medium" class="md-primary">Средний</md-radio-button>
       <md-radio-button value="big">Большой</md-radio-button>
     </md-radio-group>
 
     <md-divider></md-divider>
 
-    <div ng-if="vm.isLineItemsAddedToOrder()" layout="row" layout-align="center center">
+    <div ng-if="vm.isOrdered()" layout="row" layout-align="center center">
       <div class="md-body1">Обед добавлен в корзину.
         <md-button class="md-raised" ng-click="vm.orderAgain()">Заказать еще</md-button>
       </div>
     </div>
 
-    <md-card-actions layout="row" layout-align="start center" ng-if="!vm.isLineItemsAddedToOrder()">
+    <md-card-actions layout="row" layout-align="start center" ng-if="!vm.isOrdered()">
       <md-button class="md-raised md-primary order-button" ng-click="vm.addToOrder()" ng-disabled="!vm.calcPrice()">{{ vm.orderButtonText() }}</md-button>
       <md-button class="md-raised" ng-click="vm.onCustomizeLunch()">{{ vm.customizeLunchButtonText() }}</md-button>
       <span ng-if="vm.calcPrice()" class="md-title price-label">{{ vm.calcPrice() }} грн</span>
