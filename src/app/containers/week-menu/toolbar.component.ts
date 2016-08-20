@@ -64,11 +64,11 @@ export class ToolbarController {
   }
 
   private updateTitle(checked: boolean): void {
-    this.title = checked  ? 'Диетическое меню' : 'Запись на неделю';
+    this.title = checked  ? 'Диетическое меню' : 'Обычное меню';
   }
 
   private initTitle(): void {
-    this.title = 'Запись на неделю';
+    this.title = 'Обычное меню';
   }
 }
 
