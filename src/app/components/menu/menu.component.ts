@@ -78,7 +78,7 @@ export class MenuController {
   }
 
   // view helpers --------------------------------------------------------------
-  isLineItemsAddedToOrder(): boolean {
+  isOrdered(): boolean {
     return this.lineItemsAddedToOrder;
   }
 
