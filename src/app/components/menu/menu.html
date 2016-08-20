@@ -22,6 +22,11 @@
 
     <md-divider></md-divider>
 
+    <div layout="row" layout-padding ng-if="vm.isLineItemsAddedToOrder()">
+      <l-size-label size="vm.size"></l-size-label>
+      <span class="md-subhead">{{ vm.calcPrice() }} грн</span>
+    </div>
+
     <md-radio-group ng-if="!vm.isLineItemsAddedToOrder()" ng-model="vm.size" layout="row" class="l-menu-size">
       <md-radio-button value="medium" class="md-primary">Средний</md-radio-button>
       <md-radio-button value="big">Большой</md-radio-button>
