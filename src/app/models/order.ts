@@ -1,5 +1,6 @@
 import {cloneDeep, find, sumBy, every, map, filter} from 'lodash';
 import {IHttpService, IQService, IPromise} from 'angular';
+import * as moment from 'moment';
 
 import {uniqId} from '../../config';
 import {IUser, UserService} from './user';
@@ -52,18 +53,6 @@ export class OrderService {
   createOrderByDate(date: string): IOrder {
     return {
       id: uniqId(),
-      items: [],
-      user: null,
-      shipmentDate: date,
-      price: 0,
-      canceled: false,
-      paid: false
-    };
-  }
-
-  createOrderByDateAndId(date: string, id: number): IOrder {
-    return {
-      id: id,
       items: [],
       user: null,
       shipmentDate: date,
@@ -205,6 +194,16 @@ export class OrderService {
   getCoverOf(order: IOrder): string {
     const firstImage = order.items[0].product.images[0];
     return firstImage ? firstImage.url : '';
+  }
+
+  sortByDate(inputOrders: IOrder[]): IOrder[] {
+    let orders = cloneDeep(inputOrders);
+
+    orders.sort((left, right) => {
+      return moment.utc(left.shipmentDate).diff(moment.utc(right.shipmentDate), 'days');
+    });
+
+    return orders;
   }
 
   private updateIn(inputOrder: IOrder, key: string, value: any): IOrder {

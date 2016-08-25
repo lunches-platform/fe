@@ -30,6 +30,9 @@ export class BasketService {
   addOrderTo(_basket: IBasket, order: IOrder): IBasket {
     const basket = cloneDeep(_basket);
     basket.orders.push(order);
+
+    basket.orders = this.lOrderService.sortByDate(basket.orders);
+
     return basket;
   }
 
