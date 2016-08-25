@@ -194,7 +194,8 @@ export class OrderService {
 
   // todo: get correct cover
   getCoverOf(order: IOrder): string {
-    return order.items[0].product.images[0].url;
+    const firstImage = order.items[0].product.images[0];
+    return firstImage ? firstImage.url : '';
   }
 
   private updateIn(inputOrder: IOrder, key: string, value: any): IOrder {

@@ -79,7 +79,8 @@ export class MenuService {
 
   // todo: get correct cover
   getCoverOf(menu: IMenu): string {
-    return menu.products[0].images[0].url;
+    const firstImage = menu.products[0].images[0];
+    return firstImage ? firstImage.url : '';
   }
 
   private isInsideCurrentWeek(date: string): boolean {
