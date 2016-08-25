@@ -8,5 +8,15 @@
 
     <l-switch switched="vm.isSwitched()" on-switch="vm.onMenuTypeSwitched(checked)" class="md-secondary"></l-switch>
 
+    <md-menu md-position-mode="target-right target" >
+      <md-button aria-label="Открыть меню действий над страницей" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+        <md-icon md-menu-origin>more_vert</md-icon>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="vm.orderForWholeWeek()"><span md-menu-align-target>Заказать на всю неделю</span></md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
   </div>
 </md-toolbar>

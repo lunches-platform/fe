@@ -2,7 +2,7 @@ import {ILogService, IScope} from 'angular';
 
 import {IWeekMenuState} from '../../../routes';
 
-import {IOrder} from '../../models/order';
+import {IOrder, OrderService} from '../../models/order';
 import {IMenu, IWeekMenu, MenuType, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from '../../models/basket';
@@ -40,7 +40,8 @@ export class WeekMenuController {
     private lMenuService: MenuService,
     private lBasketService: BasketService,
     private lUserService: UserService,
-    private lPriceService: PriceService
+    private lPriceService: PriceService,
+    private lOrderService: OrderService
   ) {
     'ngInject';
 
@@ -56,11 +57,21 @@ export class WeekMenuController {
   // dom event handlers --------------------------------------------------------
   onOrderPlaced(order: IOrder): void {
     this.basket = this.lBasketService.addOrderTo(this.basket, order);
-    const stored = this.lBasketService.storeBasketInStorage(this.basket);
+    this.lBasketService.sync(this.basket);
+  }
 
-    if (!stored) {
-      this.$log.error('WeekMenuController: Unable to store basket in storage');
-    }
+  onWholeWeekOrder(): void {
+    let weekMenu = this.selectedWeek === Week.Current ? this.actualMenu[this.selectedMenuType] : this.nextWeekMenu[this.selectedMenuType];
+    let orders = this.lOrderService.createOrdersFrom(weekMenu);
+    this.basket = this.lBasketService.addOrdersTo(this.basket, orders);
+
+    this.lBasketService.sync(this.basket)
+      .then(() => {
+        this.goToBasket();
+      })
+      .catch(() => {
+        // todo: add fail over
+      });
   }
 
   onToggleSidebar(): void {
