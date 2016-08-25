@@ -1,4 +1,4 @@
-import {reduce, sortBy, each, mapValues, isNil} from 'lodash';
+import {reduce, sortBy, each, mapValues, isNil, isEmpty} from 'lodash';
 import {IPromise, IHttpService, ILogService} from 'angular';
 import * as moment from 'moment';
 
@@ -61,6 +61,10 @@ export class PriceService {
 
     let prices = this.getPricesFromLocalStorage(date);
 
+    if (isEmpty(prices)) {
+      return 0;
+    }
+
     const orderGroupKey = this.groupKeyForLineItems(orderLineItems);
     let price = prices[orderGroupKey];
     if (isNil(price)) {
@@ -116,6 +120,11 @@ export class PriceService {
   }
 
   private getPricesFromLocalStorage(date: string): PricesPerDay {
-    return this.localStorageService.get('pricesByDate')[date];
+    const prices = this.localStorageService.get('pricesByDate');
+    if (!prices) {
+      return {};
+    }
+
+    return prices[date] || {};
   }
 }
