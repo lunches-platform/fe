@@ -1,6 +1,6 @@
-import {cloneDeep, filter} from 'lodash';
+import {cloneDeep, filter, merge} from 'lodash';
 import * as angular from 'angular';
-import {IQService, IPromise} from 'angular';
+import {IQService, IPromise, ILogService} from 'angular';
 
 import {IOrder, OrderService} from './order';
 import {IUser} from './user';
@@ -14,6 +14,7 @@ export interface IBasket {
 export class BasketService {
   constructor(
     private $q: IQService,
+    private $log: ILogService,
     private localStorageService: ILocalStorageService,
     private lOrderService: OrderService
   ) {
@@ -32,6 +33,12 @@ export class BasketService {
     return basket;
   }
 
+  addOrdersTo(_basket: IBasket, orders: IOrder[]): IBasket {
+    const basket = cloneDeep(_basket);
+    merge(basket.orders, orders);
+    return basket;
+  }
+
   fetchBasket(): IPromise<IBasket> {
     const basket = this.localStorageService.get('basket');
 
@@ -42,14 +49,35 @@ export class BasketService {
     }
   }
 
+  sync(basket: IBasket): IPromise<IBasket> {
+    // todo: do we need to check validity here?
+    // todo: if yes, how to handle the full week order?
+    // if (!this.isValid(basket)) {
+    //   this.$log.warn('Basket:sync: Basket is not valid, skip sync', basket);
+    //   return this.$q.reject();
+    // }
+    return this.updateInStorages(basket);
+  }
+
+  // todo: add api storage
+  updateInStorages(basket: IBasket): IPromise<IBasket> {
+    const stored = this.storeBasketInLocalStorage(basket);
+
+    if (!stored) {
+      this.$log.error('Basket: Unable to store basket in local storage');
+    }
+
+    return this.fetchBasket();
+  }
+
+  isValid(basket: IBasket): boolean {
+    return this.lOrderService.isValidAll(basket.orders);
+  }
+
   setUserToEachOrderIn(_basket: IBasket, user: IUser): IBasket {
     let basket = cloneDeep(_basket);
     basket.orders = this.lOrderService.setUserForAll(basket.orders, user);
     return basket;
-  }
-
-  storeBasketInStorage(basket: IBasket): boolean {
-    return this.storeBasketInLocalStorage(basket);
   }
 
   clearBasket(basket: IBasket): IBasket {

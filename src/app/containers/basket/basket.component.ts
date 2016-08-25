@@ -68,19 +68,19 @@ export class BasketController {
 
   removeFromBasket(order: IOrder) {
     this.basket = this.lBasketService.removeOrderFrom(this.basket, order);
-    this.lBasketService.storeBasketInStorage(this.basket);
+    this.lBasketService.sync(this.basket);
   }
 
   restoreToBasket(order: IOrder) {
     this.basket = this.lBasketService.addOrderTo(this.basket, order);
-    this.lBasketService.storeBasketInStorage(this.basket);
+    this.lBasketService.sync(this.basket);
   }
 
   onUserChanged(user: IUser): void {
     this.user = user;
 
     this.basket = this.lBasketService.setUserToEachOrderIn(this.basket, user);
-    this.lBasketService.storeBasketInStorage(this.basket);
+    this.lBasketService.sync(this.basket);
   }
 
   // view helpers --------------------------------------------------------------
@@ -113,7 +113,7 @@ export class BasketController {
       })
       .finally(() => {
         this.initOrdersForReview();
-        this.lBasketService.storeBasketInStorage(this.basket);
+        this.lBasketService.sync(this.basket);
       });
   }
 
@@ -128,13 +128,13 @@ export class BasketController {
   // private helpers -----------------------------------------------------------
   private clearBasket(): void {
     this.basket = this.lBasketService.clearBasket(this.basket);
-    this.lBasketService.storeBasketInStorage(this.basket);
+    this.lBasketService.sync(this.basket);
   }
 
   private updateUserInCache(user: IUser): void {
     this.user = user;
     this.basket = this.lBasketService.setUserToEachOrderIn(this.basket, user);
-    this.lBasketService.storeBasketInStorage(this.basket);
+    this.lBasketService.sync(this.basket);
   }
 
   // private event handlers ----------------------------------------------------

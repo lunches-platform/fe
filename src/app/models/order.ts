@@ -6,6 +6,7 @@ import {IUser, UserService} from './user';
 
 import {ILineItem, ILineItemRequestBody, LineItemService} from './line-item';
 import {IProduct} from './product';
+import {IMenu} from './menu';
 import {PriceService} from './price';
 
 export interface IOrder {
@@ -70,6 +71,14 @@ export class OrderService {
       canceled: false,
       paid: false
     };
+  }
+
+  createOrdersFrom(menus: IMenu[]): IOrder[] {
+    return map(menus, menu => {
+      let order = this.createOrderByDate(menu.date);
+      let items = this.lLineItemService.createLineItemsBy(menu.products);
+      return this.setLineItems(items, order);
+    });
   }
 
   setLineItems(items: ILineItem[], inputOrder: IOrder): IOrder {

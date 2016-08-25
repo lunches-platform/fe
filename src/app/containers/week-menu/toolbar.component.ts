@@ -15,6 +15,10 @@ interface ITriggerToggleSidebarEvent {
   (): void;
 }
 
+interface ITriggerWholeWeekOrderEvent {
+  (): void;
+}
+
 export class ToolbarController {
   // bindings ------------------------------------------------------------------
   // input
@@ -24,6 +28,7 @@ export class ToolbarController {
   // output
   triggerMenuTypeSwitchEvent: ITriggerMenuTypeSwitchEvent;
   triggerToggleSidebarEvent: ITriggerToggleSidebarEvent;
+  triggerWholeWeekOrderEvent: ITriggerWholeWeekOrderEvent;
 
   // internal
   title: string;
@@ -34,20 +39,17 @@ export class ToolbarController {
     this.initTitle();
   }
 
+  // dom event handlers --------------------------------------------------------
+  orderForWholeWeek(): void {
+    this.triggerWholeWeekOrderEvent();
+  }
+
   goToBasket(): void {
     this.$state.go('basket');
   }
 
   goToMyOrders(): void {
     this.$state.go('my-orders');
-  }
-
-  isSwitched(): boolean {
-    return this.inputMenuType === 'diet';
-  }
-
-  isUserRegistered(): boolean {
-    return this.lUserService.isRegistered(this.inputUser);
   }
 
   toggleSidebar(): void {
@@ -63,12 +65,23 @@ export class ToolbarController {
     this.triggerMenuTypeSwitchEvent({menuType: (checked ? 'diet' : 'regular')});
   }
 
-  private updateTitle(checked: boolean): void {
-    this.title = checked  ? 'Диетическое меню' : 'Обычное меню';
+  // view helpers --------------------------------------------------------------
+  isSwitched(): boolean {
+    return this.inputMenuType === 'diet';
   }
 
+  isUserRegistered(): boolean {
+    return this.lUserService.isRegistered(this.inputUser);
+  }
+
+  // private init --------------------------------------------------------------
   private initTitle(): void {
     this.title = 'Обычное меню';
+  }
+
+  // private helpers -----------------------------------------------------------
+  private updateTitle(checked: boolean): void {
+    this.title = checked  ? 'Диетическое меню' : 'Обычное меню';
   }
 }
 
@@ -81,6 +94,7 @@ export const ToolbarComponent: IComponentOptions = {
     inputMenuType: '<selectedMenuType',
     inputUser: '<user',
     triggerMenuTypeSwitchEvent: '&onMenuTypeSwitched',
-    triggerToggleSidebarEvent: '&onToggleSidebar'
+    triggerToggleSidebarEvent: '&onToggleSidebar',
+    triggerWholeWeekOrderEvent: '&onWholeWeekOrder'
   }
 };
