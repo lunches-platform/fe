@@ -1,4 +1,4 @@
-<div class="l-payment">
+<div class="l-payment" layout="column" layout-fill>
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
   <l-payment-toolbar
@@ -10,7 +10,7 @@
 
   <l-sidebar user="vm.user"></l-sidebar>
 
-  <div ng-if="!vm.isLoading()" layout="column">
+  <md-content ng-if="!vm.isLoading()">
     <md-card ng-if="vm.hasData()">
 
       <md-card-content>
@@ -56,6 +56,6 @@
     </div>
 
     <div ng-if="vm.isEmpty()" layout-padding>Все оплачено<div>
-  </div>
+  </md-content>
 </div>
 

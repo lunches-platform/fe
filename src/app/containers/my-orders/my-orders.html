@@ -1,4 +1,4 @@
-<div class="l-my-orders">
+<div class="l-my-orders" layout="column" layout-fill>
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
   <l-my-orders-toolbar
@@ -10,7 +10,7 @@
 
   <l-sidebar user="vm.user"></l-sidebar>
 
-  <div ng-if="!vm.isLoading()" layout="column">
+  <md-content ng-if="!vm.isLoading()">
     <div ng-if="vm.hasData()">
 
       <l-date-range-selector
@@ -31,5 +31,5 @@
     <div ng-if="vm.isEmpty()" layout-padding>
       Нет заказов за выбранный период времени
     <div>
-  </div>
+  </md-content>
 </div>

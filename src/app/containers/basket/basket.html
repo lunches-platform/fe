@@ -1,4 +1,4 @@
-<div class="l-basket">
+<div class="l-basket" layout="column" layout-fill>
   <l-basket-toolbar
     ng-if="!vm.isLoading()"
     on-toggle-sidebar="vm.onToggleSidebar()"
@@ -7,7 +7,7 @@
 
   <l-sidebar user="vm.user"></l-sidebar>
 
-  <div ng-if="vm.hasData()" layout="column">
+  <md-content ng-if="vm.hasData()">
     <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>
 
     <div class="md-headline" layout="row" layout-padding layout-align="end center">Всего к оплате: {{ vm.totalToPay() }} грн</div>
@@ -31,7 +31,7 @@
     <div class="md-headline" layout="row" layout-padding layout-align="end center">Всего к оплате: {{ vm.totalToPay() }} грн</div>
 
     <md-button class="md-raised md-primary" ng-click="vm.makeOrder()" ng-disabled="!vm.isOrdersValid()">Оформить заказ</md-button>
-  </div>
+  </md-content>
 
   <div ng-if="vm.isEmpty()" layout="column" layout-padding>
     В корзине пусто

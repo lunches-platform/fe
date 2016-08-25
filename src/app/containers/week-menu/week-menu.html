@@ -1,4 +1,4 @@
-<div class="l-week-menu">
+<div class="l-week-menu" layout="column" layout-fill>
   <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
   <l-week-menu-toolbar
@@ -25,8 +25,7 @@
     </md-fab-trigger>
   </md-fab-speed-dial>
 
-  <div ng-if="!vm.isLoading()" layout="column">
-
+  <md-content ng-if="!vm.isLoading()">
     <md-tabs md-dynamic-height md-border-bottom md-swipe-content md-selected="vm.selectedWeek">
 
       <!-- CURRENT WEEK TAB -->
@@ -87,5 +86,5 @@
 
       </md-tab>
     </md-tabs>
-  </div>
+  </md-content>
 </div>
