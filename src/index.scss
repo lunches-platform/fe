@@ -74,3 +74,10 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
 .l-week-menu .l-speed-dial {
   position: fixed;
 }
+
+.l-my-orders-item {
+  .l-price-label {
+    padding: 0px 6px;
+    margin: 6px 8px;
+  }
+}
