@@ -22,10 +22,11 @@
 
     <md-divider></md-divider>
 
-    <div layout="row" layout-padding>
+    <div layout="row">
       <l-size-label size="vm.order.items[0].size"></l-size-label>
       <l-payment-status paid="vm.order.paid" ng-click="vm.onPay()"></l-payment-status>
-      <span class="md-subhead price-label">{{ vm.order.price }} грн</span>
+      <span flex></span>
+      <span class="md-subhead l-price-label" layout="row" layout-align="center center">{{ vm.order.price }} грн</span>
     </div>
 
     <md-divider></md-divider>
