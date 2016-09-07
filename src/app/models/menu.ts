@@ -26,13 +26,17 @@ export class MenuService {
     'ngInject';
   }
 
-  fetchTwoWeekMenu(): IPromise<IWeekMenu<MenuType, IMenu>[]> {
+  fetchTwoWeeksMenu(): IPromise<IWeekMenu<MenuType, IMenu>[]> {
+    return this.fetchPlainTwoWeeksMenu().then(twoWeeksMenu => this.splitToCurrentAndNextWeekMenu(twoWeeksMenu));
+  }
+
+  fetchPlainTwoWeeksMenu(): IPromise<IMenu[]> {
     const startDate = moment().startOf('week').format(SHORT_DATE_FORMAT);
     const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
 
     // todo: do not hardcode BE URL: DEZ-774
     const url = this.lConfig.apiUrl + '/menus?startDate=' + startDate + '&endDate=' + endDate;
-    return this.$http.get<IMenu[]>(url, {cache: true}).then(res => this.splitToCurrentAndNextWeekMenu(res.data));
+    return this.$http.get<IMenu[]>(url, {cache: true}).then(res => res.data);
   }
 
   // todo: simplify

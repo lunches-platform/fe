@@ -53,5 +53,12 @@ export function routesConfig(
         title: 'Оплата'
       }
     })
+    .state('prices', {
+      url: '/prices',
+      template: '<l-prices/>',
+      data: {
+        title: 'Менеджер цен'
+      }
+    })
     ;
 }

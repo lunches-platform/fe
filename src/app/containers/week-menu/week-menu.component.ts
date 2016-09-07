@@ -187,7 +187,7 @@ export class WeekMenuController {
   private fetchData(): void {
     this.loading = true;
 
-    this.lMenuService.fetchTwoWeekMenu()
+    this.lMenuService.fetchTwoWeeksMenu()
       .then(twoWeeks => {
         [this.currentWeekMenu, this.nextWeekMenu] = twoWeeks;
         [this.pastDaysMenu, this.actualMenu] = this.lMenuService.splitToPastAndActualDaysMenu(this.currentWeekMenu);

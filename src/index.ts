@@ -10,6 +10,8 @@ import {MyOrdersComponent} from './app/containers/my-orders/my-orders.component'
 import {ToolbarComponent as MyOrdersToolbarComponent} from './app/containers/my-orders/toolbar.component';
 import {PaymentComponent} from './app/containers/payment/payment.component';
 import {ToolbarComponent as PaymentToolbarComponent} from './app/containers/payment/toolbar.component';
+import {PricesComponent} from './app/containers/prices/prices.component';
+import {ToolbarComponent as PricesToolbarComponent} from './app/containers/prices/toolbar.component';
 
 import {MenuComponent} from './app/components/menu/menu.component';
 import {ViewMenuComponent} from './app/components/view-menu/view-menu.component';
@@ -95,6 +97,8 @@ angular
   .component('lSizeLabel', SizeLabelComponent)
   .component('lPaymentToolbar', PaymentToolbarComponent)
   .component('lSidebar', SidebarComponent)
+  .component('lPrices', PricesComponent)
+  .component('lPricesToolbar', PricesToolbarComponent)
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
