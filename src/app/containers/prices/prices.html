@@ -1,0 +1,20 @@
+<div class="l-prices" layout="column" layout-fill>
+  <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
+
+  <l-prices-toolbar
+    ng-if="!vm.isLoading()"
+    user="vm.user"
+    on-toggle-sidebar="vm.onToggleSidebar()"
+  >
+  </l-prices-toolbar>
+
+  <l-sidebar user="vm.user"></l-sidebar>
+
+  <md-content ng-if="!vm.isLoading()">
+    <md-card>
+      <md-card-content>
+        <md-button class="md-raised md-primary" ng-click="vm.fillPrices()">Наполнить цены</md-button>
+      </md-card-content>
+    </md-card>
+  </md-content>
+</div>
