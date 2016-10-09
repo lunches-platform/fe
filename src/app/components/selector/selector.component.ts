@@ -1,7 +1,5 @@
 import {cloneDeep, isEqual} from 'lodash';
-import {IScope, IComponentOptions} from 'angular';
-
-import {IChangesList} from '../../../config';
+import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
 
 // exported types --------------------------------------------------------------
 export interface ISelectorItem {
@@ -33,7 +31,7 @@ export class SelectorController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList) {
+  $onChanges(changes: IOnChangesObject) {
     /* tslint:disable:no-string-literal */
     if (changes['inputSelectedItem']) {
       this.onInputSelectedItemChanged(changes['inputSelectedItem'].currentValue);

@@ -1,6 +1,11 @@
 /// <reference path="../typings/index.d.ts" />
 
 import * as angular from 'angular';
+import 'angular-ui-router';
+import 'angular-material';
+import 'angular-local-storage';
+import 'angular-material/angular-material.css';
+
 
 import {BasketComponent} from './app/containers/basket/basket.component';
 import {ToolbarComponent as BasketToolbarComponent} from './app/containers/basket/toolbar.component';
@@ -38,13 +43,9 @@ import {BasketService} from './app/models/basket';
 import {LineItemService} from './app/models/line-item';
 import {PriceService} from './app/models/price';
 
+import './app/state/state';
+
 import {DateFilter} from './app/filters/date.filter';
-
-import 'angular-ui-router';
-import 'angular-material';
-import 'angular-local-storage';
-
-import 'angular-material/angular-material.css';
 
 import {routesConfig} from './routes';
 import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorConfig} from './config';

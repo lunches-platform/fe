@@ -4,6 +4,7 @@ const gutil = require('gulp-util');
 const webpack = require('webpack');
 const webpackConf = require('../conf/webpack.conf');
 const webpackDistConf = require('../conf/webpack-dist.conf');
+const gulpConf = require('../conf/gulp.conf');
 const browsersync = require('browser-sync');
 
 gulp.task('webpack:dev', done => {
@@ -15,6 +16,7 @@ gulp.task('webpack:watch', done => {
 });
 
 gulp.task('webpack:dist', done => {
+  process.env.NODE_ENV = 'production';
   webpackWrapper(false, webpackDistConf, done);
 });
 
@@ -23,7 +25,7 @@ function webpackWrapper(watch, conf, done) {
 
   const webpackChangeHandler = (err, stats) => {
     if (err) {
-      conf.errorHandler('Webpack')(err);
+      gulpConf.errorHandler('Webpack')(err);
     }
     gutil.log(stats.toString({
       colors: true,

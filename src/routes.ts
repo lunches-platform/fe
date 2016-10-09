@@ -27,35 +27,35 @@ export function routesConfig(
   $stateProvider
     .state('week-menu', {
       url: '/',
-      template: '<l-week-menu/>',
+      component: 'lWeekMenu',
       data: {
         title: null
       }
     })
     .state('basket', {
       url: '/basket',
-      template: '<l-basket/>',
+      component: 'lBasket',
       data: {
         title: 'Корзина'
       }
     })
     .state('my-orders', {
       url: '/my-orders',
-      template: '<l-my-orders/>',
+      component: 'lMyOrders',
       data: {
         title: 'Мои заказы'
       }
     })
     .state('payment', {
       url: '/payment',
-      template: '<l-payment/>',
+      component: 'lPayment',
       data: {
         title: 'Оплата'
       }
     })
     .state('prices', {
       url: '/prices',
-      template: '<l-prices/>',
+      component: 'lPrices',
       data: {
         title: 'Менеджер цен'
       }

@@ -1,6 +1,4 @@
-import {IComponentOptions} from 'angular';
-
-import {IChangesList} from '../../../config';
+import {IComponentOptions, IOnChangesObject} from 'angular';
 
 import {ISelectorItem} from '../selector/selector.component';
 
@@ -38,7 +36,7 @@ export class FloorSelectorController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList) {
+  $onChanges(changes: IOnChangesObject) {
     /* tslint:disable:no-string-literal */
     if (changes['inputFloor']) {
       this.onInputFloorChanged(changes['inputFloor'].currentValue);

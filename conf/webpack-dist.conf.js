@@ -3,6 +3,8 @@ const conf = require('./gulp.conf');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const pkg = require('../package.json');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -16,12 +18,10 @@ module.exports = {
       },
       {
         test: /\.(css|scss)$/,
-        loaders: [
-          'style',
-          'css',
-          'sass',
-          'postcss'
-        ]
+        loaders: ExtractTextPlugin.extract({
+          fallbackLoader: 'style',
+          loader: 'css?minimize!sass!postcss'
+        })
       },
       {
         test: /\.ts$/,
@@ -32,9 +32,10 @@ module.exports = {
         ]
       },
       {
-        test: /\.html$/,
-        exclude: /index\.html$/,
-        loader: 'ng-cache?prefix=[dir]/[dir]'
+        test: /.html$/,
+        loaders: [
+          'html'
+        ]
       }
     ]
   },
@@ -42,17 +43,18 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: conf.path.src('index.html'),
-      inject: true
+      template: conf.path.src('index.html')
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compress: {unused: true, dead_code: true} // eslint-disable-line camelcase
-    })
+      compress: {unused: true, dead_code: true, warnings: false} // eslint-disable-line camelcase
+    }),
+    new ExtractTextPlugin('index-[contenthash].css'),
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor'})
   ],
   postcss: () => [autoprefixer],
   output: {
     path: path.join(process.cwd(), conf.paths.dist),
-    filename: 'index-[hash].js'
+    filename: '[name]-[hash].js'
   },
   resolve: {
     extensions: [
@@ -63,12 +65,12 @@ module.exports = {
       '.ts'
     ]
   },
-  entry: [
-    `./${conf.path.src('index')}`,
-    `./${conf.path.tmp('templateCacheHtml.ts')}`
-  ],
+  entry: {
+    app: `./${conf.path.src('index')}`,
+    vendor: Object.keys(pkg.dependencies)
+  },
   ts: {
-    configFileName: 'conf/ts.conf.json'
+    configFileName: 'tsconfig.json'
   },
   tslint: {
     configuration: require('../tslint.json')

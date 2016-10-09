@@ -1,8 +1,6 @@
-import {cloneDeep} from 'lodash';
-import {IComponentOptions} from 'angular';
 import * as moment from 'moment';
-
-import {IChangesList} from '../../../config';
+import {cloneDeep} from 'lodash';
+import {IComponentOptions, IOnChangesObject} from 'angular';
 
 import {IOrder, OrderService} from '../../models/order';
 import {ProductTypeUrls} from '../../models/product';
@@ -71,7 +69,7 @@ export class MyOrdersItemController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList) {
+  $onChanges(changes: IOnChangesObject) {
     if (changes['order']) { // tslint:disable-line:no-string-literal
       this.onInputOrderChanged(this.order);
     }
