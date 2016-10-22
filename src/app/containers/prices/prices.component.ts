@@ -1,11 +1,10 @@
-import {each} from 'lodash';
 import {ILogService} from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
 import {IBaseState} from '../../../routes';
 
-import {IMenu, IWeekMenu, MenuType, MenuService} from '../../models/menu';
+import {IMenu, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
 import {PriceService} from '../../models/price';
 

@@ -1,7 +1,10 @@
+// third-party deps
 import {cloneDeep} from 'lodash';
 import {IComponentOptions, IOnChangesObject} from 'angular';
 
+// internal deps
 import {IUser, UserService} from '../../models/user';
+import {IAppConfig} from '../../../config';
 
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {
@@ -23,7 +26,7 @@ export class UserCardController {
   user: IUser;
 
   // todo: add type for lConfig
-  constructor(private lUserService: UserService, private lConfig) {
+  constructor(private lUserService: UserService, private lConfig: IAppConfig) {
     'ngInject';
 
     this.initUser();

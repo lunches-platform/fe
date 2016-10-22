@@ -1,9 +1,10 @@
+// third-party deps
 import {each, filter} from 'lodash';
 import * as moment from 'moment';
 import {IHttpService, IPromise} from 'angular';
 
-import {SHORT_DATE_FORMAT} from '../../config';
-
+// internal deps
+import {SHORT_DATE_FORMAT, IAppConfig} from '../../config';
 import {IProduct} from './product';
 
 export interface IMenu {
@@ -22,7 +23,7 @@ export type MenuType = 'regular' | 'diet';
 export class MenuService {
 
   // todo: add type for lConfig
-  constructor(private $http: IHttpService, private lConfig) {
+  constructor(private $http: IHttpService, private lConfig: IAppConfig) {
     'ngInject';
   }
 
