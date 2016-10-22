@@ -40,9 +40,10 @@ module.exports = {
         ]
       },
       {
-        test: /\.html$/,
-        exclude: /index\.html$/,
-        loader: 'ng-cache?prefix=[dir]/[dir]'
+        test: /.html$/,
+        loaders: [
+          'html'
+        ]
       }
     ]
   },
@@ -50,13 +51,12 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: conf.path.src('index.html'),
-      inject: true
+      template: conf.path.src('index.html')
     })
   ],
   postcss: () => [autoprefixer],
   debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   output: {
     path: path.join(process.cwd(), conf.paths.tmp),
     filename: 'index.js'
@@ -72,7 +72,7 @@ module.exports = {
   },
   entry: `./${conf.path.src('index')}`,
   ts: {
-    configFileName: 'conf/ts.conf.json'
+    configFileName: 'tsconfig.json'
   },
   tslint: {
     configuration: require('../tslint.json')

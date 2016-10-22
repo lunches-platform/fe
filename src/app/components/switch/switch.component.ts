@@ -1,7 +1,5 @@
 import {isNil} from 'lodash';
-import {IScope, IComponentOptions} from 'angular';
-
-import {IChangesList} from '../../../config';
+import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
 
 // internal types --------------------------------------------------------------
 interface ITriggerSwitchEvent {
@@ -26,7 +24,7 @@ export class SwitchController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList) {
+  $onChanges(changes: IOnChangesObject) {
     /* tslint:disable:no-string-literal */
     if (changes['inputSwitched']) {
       this.onInputSwitched(changes['inputSwitched'].currentValue);

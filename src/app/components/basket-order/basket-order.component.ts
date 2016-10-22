@@ -1,7 +1,6 @@
 import {cloneDeep} from 'lodash';
-import {IComponentOptions} from 'angular';
+import {IComponentOptions, IOnChangesObject} from 'angular';
 
-import {IChangesList} from '../../../config';
 import {IBasketState} from '../../../routes';
 
 import {IOrder, OrderService} from '../../models/order';
@@ -62,7 +61,7 @@ export class BasketOrderController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList) {
+  $onChanges(changes: IOnChangesObject) {
     if (changes['order']) { // tslint:disable-line:no-string-literal
       this.onInputOrderChanged(this.order);
     }

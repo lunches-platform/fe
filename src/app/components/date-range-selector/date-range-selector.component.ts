@@ -1,8 +1,8 @@
-import {cloneDeep} from 'lodash';
-import {IComponentOptions, IScope} from 'angular';
 import * as moment from 'moment';
+import {cloneDeep} from 'lodash';
+import {IComponentOptions, IScope, IOnChangesObject} from 'angular';
 
-import {IChangesList, SHORT_DATE_FORMAT} from '../../../config';
+import {SHORT_DATE_FORMAT} from '../../../config';
 
 // exported types --------------------------------------------------------------
 export interface IDateRange {
@@ -35,7 +35,7 @@ export class DateRangeSelectorController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList) {
+  $onChanges(changes: IOnChangesObject) {
     /* tslint:disable:no-string-literal */
     if (changes['inputDateRange']) {
       this.onInputDateRangeChanged(changes['inputDateRange'].currentValue);

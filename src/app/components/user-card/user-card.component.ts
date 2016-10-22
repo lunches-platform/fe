@@ -1,7 +1,5 @@
 import {cloneDeep} from 'lodash';
-import {IComponentOptions} from 'angular';
-
-import {IChangesList} from '../../../config';
+import {IComponentOptions, IOnChangesObject} from 'angular';
 
 import {IUser, UserService} from '../../models/user';
 
@@ -76,7 +74,7 @@ export class UserCardController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList): void {
+  $onChanges(changes: IOnChangesObject): void {
     /* tslint:disable:no-string-literal */
     if (changes['inputUser']) {
       this.onInputUserChanged(changes['inputUser'].currentValue);

@@ -1,8 +1,7 @@
-import {cloneDeep} from 'lodash';
-import {IScope, IComponentOptions} from 'angular';
 import * as moment from 'moment';
+import {cloneDeep} from 'lodash';
+import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
 
-import {IChangesList} from '../../../config';
 import {IWeekMenuState} from '../../../routes';
 
 import {IMenu} from '../../models/menu';
@@ -111,7 +110,7 @@ export class MenuController {
   }
 
   // private init --------------------------------------------------------------
-  $onChanges(changes: IChangesList) {
+  $onChanges(changes: IOnChangesObject) {
     if (changes['menu']) { // tslint:disable-line:no-string-literal
       this.onInputMenuChanged(this.menu);
     }

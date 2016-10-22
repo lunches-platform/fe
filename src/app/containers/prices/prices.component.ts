@@ -43,8 +43,8 @@ export class PricesController {
   }
 
   fillPrices(): void {
-    const twoWeeksMenuPriceGroups = this.lPriceService.createPriceGroupsForAllMenus(this.twoWeeksMenu);
-    this.lPriceService.pushPriceGroups(twoWeeksMenuPriceGroups);
+    // const twoWeeksMenuPriceGroups = this.lPriceService.createPriceGroupsForAllMenus(this.twoWeeksMenu);
+    // this.lPriceService.pushPriceGroups(twoWeeksMenuPriceGroups);
   }
 
   // view helpers --------------------------------------------------------------

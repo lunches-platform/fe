@@ -199,7 +199,7 @@ export class WeekMenuController {
 
         this.initSelectedWeek();
 
-        return this.lPriceService.fetchPriceGroupsForActualDays();
+        // return this.lPriceService.fetchPriceGroupsForActualDays();
       })
       .catch(err => this.$log.error(err))
       .finally(() => this.loading = false);

@@ -24,15 +24,16 @@ module.exports = {
         ]
       },
       {
-        test: /\.html$/,
-        exclude: /index\.html$/,
-        loader: 'ng-cache?prefix=[dir]/[dir]'
+        test: /.html$/,
+        loaders: [
+          'html'
+        ]
       }
     ]
   },
   plugins: [],
   debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   resolve: {
     extensions: [
       '',
@@ -43,7 +44,7 @@ module.exports = {
     ]
   },
   ts: {
-    configFileName: 'conf/ts.conf.json'
+    configFileName: 'tsconfig.json'
   },
   tslint: {
     configuration: require('../tslint.json')

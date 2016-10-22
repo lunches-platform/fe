@@ -2,7 +2,7 @@
 
 import 'moment/locale/ru';
 import * as moment from 'moment';
-import {IRootScopeService, IChangesObject} from 'angular';
+import {IRootScopeService} from 'angular';
 import {IStateService} from 'angular-ui-router';
 type ILocalStorageServiceProvider = angular.local.storage.ILocalStorageServiceProvider;
 type IDateLocaleProvider = angular.material.IDateLocaleProvider;
@@ -13,11 +13,6 @@ export interface ILRootScope extends IRootScopeService {
 }
 
 export const SHORT_DATE_FORMAT = 'YYYY-MM-DD';
-
-// todo: is it correct place?
-export interface IChangesList {
-  [property: string]: IChangesObject;
-}
 
 function makeCounter() {
   let i = 0;
