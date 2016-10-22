@@ -25,7 +25,11 @@ export class ProductType {
   public static get SALAD(): string { return 'salad'; }
 }
 
-export const ProductTypeUrls = {
+interface IProductTypeUrls {
+  [key: string]: string;
+}
+
+export const ProductTypeUrls: IProductTypeUrls = {
   // fish: 'http://res.cloudinary.com/df0ff62zx/image/upload/v1470304194/b1oqor4s8k0tu4ob0clz.png',
   meat: 'http://res.cloudinary.com/df0ff62zx/image/upload/v1470304194/b1oqor4s8k0tu4ob0clz.png',
   garnish: 'http://res.cloudinary.com/df0ff62zx/image/upload/v1470304241/mnpuyr0zraqkycykmjmp.png',

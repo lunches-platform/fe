@@ -6,46 +6,58 @@ import 'angular-material';
 import 'angular-local-storage';
 import 'angular-material/angular-material.css';
 
-import {BasketComponent} from './app/containers/basket/basket.component';
-import {ToolbarComponent as BasketToolbarComponent} from './app/containers/basket/toolbar.component';
-import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
-import {ToolbarComponent as WeekMenuToolbarComponent} from './app/containers/week-menu/toolbar.component';
-import {MyOrdersComponent} from './app/containers/my-orders/my-orders.component';
-import {ToolbarComponent as MyOrdersToolbarComponent} from './app/containers/my-orders/toolbar.component';
-import {PaymentComponent} from './app/containers/payment/payment.component';
-import {ToolbarComponent as PaymentToolbarComponent} from './app/containers/payment/toolbar.component';
-import {PricesComponent} from './app/containers/prices/prices.component';
-import {ToolbarComponent as PricesToolbarComponent} from './app/containers/prices/toolbar.component';
+import {BasketComponent} from './app.ng1/containers/basket/basket.component';
+import {ToolbarComponent as BasketToolbarComponent} from './app.ng1/containers/basket/toolbar.component';
+import {WeekMenuComponent} from './app.ng1/containers/week-menu/week-menu.component';
+import {ToolbarComponent as WeekMenuToolbarComponent} from './app.ng1/containers/week-menu/toolbar.component';
+import {MyOrdersComponent} from './app.ng1/containers/my-orders/my-orders.component';
+import {ToolbarComponent as MyOrdersToolbarComponent} from './app.ng1/containers/my-orders/toolbar.component';
+import {PaymentComponent} from './app.ng1/containers/payment/payment.component';
+import {ToolbarComponent as PaymentToolbarComponent} from './app.ng1/containers/payment/toolbar.component';
+import {PricesComponent} from './app.ng1/containers/prices/prices.component';
+import {ToolbarComponent as PricesToolbarComponent} from './app.ng1/containers/prices/toolbar.component';
 
-import {MenuComponent} from './app/components/menu/menu.component';
-import {ViewMenuComponent} from './app/components/view-menu/view-menu.component';
-import {LineItemComponent} from './app/components/line-item/line-item.component';
-import {SelectorComponent} from './app/components/selector/selector.component';
-import {SizeSelectorComponent} from './app/components/size-selector/size-selector.component';
-import {QuantitySelectorComponent} from './app/components/quantity-selector/quantity-selector.component';
-import {BasketOrderComponent} from './app/components/basket-order/basket-order.component';
-import {MyOrdersItemComponent} from './app/components/my-orders-item/my-orders-item.component';
-import {PaymentStatusComponent} from './app/components/payment-status/payment-status.component';
-import {DateRangeSelectorComponent} from './app/components/date-range-selector/date-range-selector.component';
-import {MenuCoverComponent} from './app/components/menu-cover/menu-cover.component';
-import {UserCardComponent} from './app/components/user-card/user-card.component';
-import {SwitchComponent} from './app/components/switch/switch.component';
-import {FloorSelectorComponent} from './app/components/floor-selector/floor-selector.component';
-import {SizeLabelComponent} from './app/components/size-label/size-label.component';
-import {SidebarComponent} from './app/components/sidebar/sidebar.component';
+import {MenuComponent} from './app.ng1/components/menu/menu.component';
+import {ViewMenuComponent} from './app.ng1/components/view-menu/view-menu.component';
+import {LineItemComponent} from './app.ng1/components/line-item/line-item.component';
+import {SelectorComponent} from './app.ng1/components/selector/selector.component';
+import {SizeSelectorComponent} from './app.ng1/components/size-selector/size-selector.component';
+import {QuantitySelectorComponent} from './app.ng1/components/quantity-selector/quantity-selector.component';
+import {BasketOrderComponent} from './app.ng1/components/basket-order/basket-order.component';
+import {MyOrdersItemComponent} from './app.ng1/components/my-orders-item/my-orders-item.component';
+import {PaymentStatusComponent} from './app.ng1/components/payment-status/payment-status.component';
+import {DateRangeSelectorComponent} from './app.ng1/components/date-range-selector/date-range-selector.component';
+import {MenuCoverComponent} from './app.ng1/components/menu-cover/menu-cover.component';
+import {UserCardComponent} from './app.ng1/components/user-card/user-card.component';
+import {SwitchComponent} from './app.ng1/components/switch/switch.component';
+import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-selector.component';
+import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.component';
+import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
 
-import {MenuService} from './app/models/menu';
-import {OrderService} from './app/models/order';
-import {UserService} from './app/models/user';
-import {ToastService} from './app/models/toast';
-import {BasketService} from './app/models/basket';
-import {LineItemService} from './app/models/line-item';
-import {PriceService} from './app/models/price';
+import {MenuService} from './app.ng1/models/menu';
+import {OrderService} from './app.ng1/models/order';
+import {UserService} from './app.ng1/models/user';
+import {ToastService} from './app.ng1/models/toast';
+import {BasketService} from './app.ng1/models/basket';
+import {LineItemService} from './app.ng1/models/line-item';
+import {PriceService} from './app.ng1/models/price';
 
-import {DateFilter} from './app/filters/date.filter';
+import {DateFilter} from './app.ng1/filters/date.filter';
 
 import {routesConfig} from './routes';
 import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorConfig} from './config';
+
+// angular 2
+// import '@angular/platform-browser';
+// import '@angular/platform-browser-dynamic';
+// import '@angular/core';
+// import '@angular/common';
+// import '@angular/http';
+// import '@angular/router';
+// import 'rxjs/Rx';
+
+// import {upgradeAdapter} from './app/upgrade-adapter';
+// import {AppComponent} from './app/app.component';
 
 import './index.scss';
 
@@ -97,6 +109,11 @@ angular
   .component('lSidebar', SidebarComponent)
   .component('lPrices', PricesComponent)
   .component('lPricesToolbar', PricesToolbarComponent)
+  // if no any specified we have such error:
+  // "Argument of type 'Function' is not assignable to parameter of type 'any[]'"
+  // it looks like angular typings issue
+  // .directive('lApp', upgradeAdapter.downgradeNg2Component(AppComponent))
+  // .directive('myApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
@@ -123,4 +140,5 @@ function fetchConfig() {
 
 function bootstrap() {
   angular.element(document).ready(() => angular.bootstrap(document, ['app']));
+  // angular.element(document).ready(() => upgradeAdapter.bootstrap(document.body, ['app'], {strictDi: true}));
 }

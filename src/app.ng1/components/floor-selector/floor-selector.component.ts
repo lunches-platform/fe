@@ -7,6 +7,10 @@ interface ITriggerFloorSelectEvent {
   (arg: { floor: string }): void;
 }
 
+interface IFloorToTitleMap {
+  [key: string]: string;
+}
+
 export class FloorSelectorController {
   // bindings ------------------------------------------------------------------
   // input
@@ -19,7 +23,7 @@ export class FloorSelectorController {
   selectedFloor: ISelectorItem;
   floors: ISelectorItem[];
 
-  private floorToTitleMap;
+  private floorToTitleMap: IFloorToTitleMap;
 
   constructor() {
     this.initFloorToTitleMap();

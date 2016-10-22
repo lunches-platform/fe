@@ -158,7 +158,7 @@ export class UserService {
     return this.localStorageService.set<IUser>('me', user);
   }
 
-  private updateIn(inputUser: IUser, key: string, value: any): IUser {
+  private updateIn(inputUser: IUser, key: string, value: string): IUser {
     const user = cloneDeep(inputUser);
     user[key] = value;
     return user;

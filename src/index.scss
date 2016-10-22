@@ -1,5 +1,5 @@
-@import './app/components/payment-status/payment-status';
-@import './app/components/size-label/size-label';
+@import './app.ng1/components/payment-status/payment-status';
+@import './app.ng1/components/size-label/size-label';
 
 /* todo: move styles to <l-quantity-selector>: DEZ-766 */
 .l-quantity-selector-component {
@@ -71,8 +71,10 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
   color: red;
 }
 
-.l-week-menu .l-speed-dial {
-  position: fixed;
+.l-week-menu {
+  .l-speed-dial {
+    position: fixed;
+  }
 }
 
 .l-my-orders-item {
