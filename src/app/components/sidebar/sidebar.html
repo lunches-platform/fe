@@ -3,11 +3,8 @@
     <h1 class="md-toolbar-tools" ng-if="vm.isUserRegistered()">{{ vm.user.fullname }}</h1>
     <h1 class="md-toolbar-tools" ng-if="vm.isGuest()">Гость</h1>
 
-    <div layout-padding ng-if="false">
-      <p class="md-body-1" layout-padding>Баланс: <span>{{ vm.user.balance || 0 }} грн</span></p>
-    </div>
     <div layout-padding>
-      <p class="md-body-1" layout-padding>Баланс: <span>в разработке :)</span></p>
+      <p class="md-body-1" layout-padding>Баланс: <span>{{ vm.user.balance || 0 }} грн</span></p>
     </div>
   </md-toolbar>
   <md-content layout-padding>
