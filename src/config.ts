@@ -7,6 +7,20 @@ import {IStateService} from 'angular-ui-router';
 type ILocalStorageServiceProvider = angular.local.storage.ILocalStorageServiceProvider;
 type IDateLocaleProvider = angular.material.IDateLocaleProvider;
 
+// todo: move to somewhere
+export interface IAddress {
+  details: string[];
+  options: {
+    floorSelector: boolean;
+  };
+}
+
+// todo: move to somewhere
+export interface IAppConfig {
+  apiUrl: string;
+  address: IAddress;
+}
+
 // todo: is it correct place?
 export interface ILRootScope extends IRootScopeService {
   $state: IStateService;

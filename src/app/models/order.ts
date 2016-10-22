@@ -1,14 +1,16 @@
+// third-party deps
 import {cloneDeep, find, sumBy, every, map, filter} from 'lodash';
 import {IHttpService, IQService, IPromise} from 'angular';
 import * as moment from 'moment';
 
-import {uniqId} from '../../config';
+// internal deps
 import {IUser, UserService} from './user';
-
+import {uniqId} from '../../config';
 import {ILineItem, ILineItemRequestBody, LineItemService} from './line-item';
 import {IProduct} from './product';
 import {IMenu} from './menu';
 import {PriceService} from './price';
+import {IAppConfig} from '../../config';
 
 export interface IOrder {
   id: number;
@@ -44,8 +46,7 @@ export class OrderService {
     private lLineItemService: LineItemService,
     private lUserService: UserService,
     private lPriceService: PriceService,
-    // todo: add type
-    private lConfig
+    private lConfig: IAppConfig
   ) {
     'ngInject';
   }

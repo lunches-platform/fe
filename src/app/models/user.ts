@@ -1,7 +1,10 @@
+// third-party deps
 import {cloneDeep, isEqual, get} from 'lodash';
 import {ILogService, IHttpService, IPromise, IQService} from 'angular';
-
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
+
+// internal deps
+import {IAppConfig} from '../../config';
 
 export interface IUser {
   id: string;
@@ -23,8 +26,7 @@ export class UserService {
     private $log: ILogService,
     private $q: IQService,
     private localStorageService: ILocalStorageService,
-    // todo: add type
-    private lConfig
+    private lConfig: IAppConfig
   ) {
     'ngInject';
   }

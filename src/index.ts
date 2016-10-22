@@ -6,7 +6,6 @@ import 'angular-material';
 import 'angular-local-storage';
 import 'angular-material/angular-material.css';
 
-
 import {BasketComponent} from './app/containers/basket/basket.component';
 import {ToolbarComponent as BasketToolbarComponent} from './app/containers/basket/toolbar.component';
 import {WeekMenuComponent} from './app/containers/week-menu/week-menu.component';
@@ -42,8 +41,6 @@ import {ToastService} from './app/models/toast';
 import {BasketService} from './app/models/basket';
 import {LineItemService} from './app/models/line-item';
 import {PriceService} from './app/models/price';
-
-import './app/state/state';
 
 import {DateFilter} from './app/filters/date.filter';
 

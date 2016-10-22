@@ -1,14 +1,11 @@
-import {reduce, sortBy, each, mapValues, isNil, isEmpty, map, union} from 'lodash';
-import {IPromise, IHttpService, ILogService, ITimeoutService} from 'angular';
-import * as moment from 'moment';
-
-import {SHORT_DATE_FORMAT} from '../../config';
-
-import {ILineItem} from './line-item';
-import {IMenu} from './menu';
-import {IProduct} from './product';
-
+// third-party deps
+import {reduce, sortBy, isNil, isEmpty} from 'lodash';
+import {IHttpService, ILogService, ITimeoutService} from 'angular';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
+
+// internal deps
+import {ILineItem} from './line-item';
+import {IAppConfig} from '../../config';
 
 export interface IPriceGroupItem {
   productId: number;
@@ -89,8 +86,7 @@ export class PriceService {
     private $log: ILogService,
     private $timeout: ITimeoutService,
     private localStorageService: ILocalStorageService,
-    // todo: add type
-    private lConfig
+    private lConfig: IAppConfig
   ) {
     'ngInject';
   }
