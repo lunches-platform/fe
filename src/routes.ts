@@ -25,13 +25,13 @@ export function routesConfig(
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    // .state('app', {
-    //   url: '/app',
-    //   component: 'lApp',
-    //   data: {
-    //     title: null
-    //   }
-    // })
+    .state('app', {
+      url: '/app',
+      component: 'lApp',
+      data: {
+        title: null
+      }
+    })
     .state('week-menu', {
       url: '/',
       component: 'lWeekMenu',

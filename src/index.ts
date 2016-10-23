@@ -1,6 +1,20 @@
 /// <reference path="../typings/index.d.ts" />
-
 import * as angular from 'angular';
+
+// angular 2 support libs
+import 'core-js/client/shim.min';
+import 'zone.js/dist/zone';
+import 'reflect-metadata/Reflect';
+import 'rxjs/Rx';
+
+// angular 2
+import '@angular/platform-browser';
+import '@angular/platform-browser-dynamic';
+import '@angular/core';
+import '@angular/common';
+import '@angular/http';
+import '@angular/router';
+
 import 'angular-ui-router';
 import 'angular-material';
 import 'angular-local-storage';
@@ -45,25 +59,18 @@ import {PriceService} from './app.ng1/models/price';
 import {DateFilter} from './app.ng1/filters/date.filter';
 
 import {routesConfig} from './routes';
-import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorConfig} from './config';
+import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorConfig, IAppConfig} from './config';
 
 // angular 2
-// import '@angular/platform-browser';
-// import '@angular/platform-browser-dynamic';
-// import '@angular/core';
-// import '@angular/common';
-// import '@angular/http';
-// import '@angular/router';
-// import 'rxjs/Rx';
-
-// import {upgradeAdapter} from './app/upgrade-adapter';
-// import {AppComponent} from './app/app.component';
+import {upgradeAdapter} from './app/upgrade-adapter';
+import {AppComponent} from './app/app.component';
 
 import './index.scss';
 
 // fake-api: comment out when API implemented
 // import 'angular-mocks';
 // import {fakeApiConfig} from './fake-api/config';
+
 
 angular
   .module('app', [
@@ -112,8 +119,8 @@ angular
   // if no any specified we have such error:
   // "Argument of type 'Function' is not assignable to parameter of type 'any[]'"
   // it looks like angular typings issue
-  // .directive('lApp', upgradeAdapter.downgradeNg2Component(AppComponent))
-  // .directive('myApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
+  .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
+  // .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
@@ -131,14 +138,13 @@ fetchConfig().then(bootstrap);
 function fetchConfig() {
   const $http = angular.injector(['ng']).get('$http');
 
-  return $http.get('/config.json').then((response) => {
+  return $http.get<IAppConfig>('/config.json').then(response => {
     angular.module('app').constant('lConfig', response.data);
-  }, (errorResponse) => {
+  }, () => {
     // todo: handle error case
   });
 }
 
 function bootstrap() {
-  angular.element(document).ready(() => angular.bootstrap(document, ['app']));
-  // angular.element(document).ready(() => upgradeAdapter.bootstrap(document.body, ['app'], {strictDi: true}));
+  angular.element(document).ready(() => upgradeAdapter.bootstrap(document.body, ['app']));
 }
