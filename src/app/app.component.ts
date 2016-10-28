@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 
-import {INCREMENT, DECREMENT, RESET, SET} from './counter';
+import {increment, incrementIfOdd, decrement, reset, set} from './actions';
 import {RandomNumberService} from './random-number.service';
 
 interface AppState {
@@ -31,35 +31,33 @@ export class AppComponent {
   }
 
   increment() {
-    this.store.dispatch({type: INCREMENT});
+    this.store.dispatch(increment());
   }
 
   decrement() {
-    this.store.dispatch({type: DECREMENT});
+    this.store.dispatch(decrement());
   }
 
   reset() {
-    this.store.dispatch({type: RESET});
+    this.store.dispatch(reset());
   }
 
   incrementIfOdd(): void {
-    if (this.getCurrentCounter() % 2 !== 0) {
-      this.increment();
-    }
+    this.store.dispatch(incrementIfOdd(this.getCurrentCounter()));
   }
 
   incrementAsync(delay: number = 1000): void {
-    setTimeout(() => this.increment(), delay);
+    setTimeout(() => this.store.dispatch(increment()), delay);
   }
 
   random(): void {
-    this.store.dispatch({type: SET, payload: this.randomNumberService.pick()});
+    this.store.dispatch(set(this.randomNumberService.pick()));
   }
 
   private getCurrentCounter(): number {
     let currentCounter: number;
 
-    // todo: will it add new handler each time and eat memory?
+    // sync way!
     this.counter$.subscribe(s => currentCounter = s);
 
     return currentCounter;
