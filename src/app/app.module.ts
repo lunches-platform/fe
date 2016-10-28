@@ -4,14 +4,18 @@ import {StoreModule} from '@ngrx/store';
 
 import {counterReducer} from './counter';
 import {AppComponent} from './app.component';
+import {RandomNumberService} from './random-number.service';
 
 @NgModule({
+  declarations: [
+    AppComponent
+  ],
+  providers: [
+    RandomNumberService
+  ],
   imports: [
     BrowserModule,
     StoreModule.provideStore({counter: counterReducer})
-  ],
-  declarations: [
-    AppComponent
   ],
   bootstrap: [AppComponent]
 })
