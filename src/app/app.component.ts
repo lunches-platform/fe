@@ -10,29 +10,51 @@ interface AppState {
 @Component({
   selector: 'l-app',
   template: `
-    <button (click)="increment()">Increment</button>
-    <div>Current Count: {{ counter | async }}</div>
-    <button (click)="decrement()">Decrement</button>
-
-    <button (click)="reset()">Reset Counter</button>
+    <p>
+      Clicked: {{ counter$ | async }} times
+      <button (click)="increment()">+</button>
+      <button (click)="decrement()">-</button>
+      <button (click)="incrementIfOdd()">Increment if odd</button>
+      <button (click)="incrementAsync(2222)">Increment async</button>
+      <button (click)="reset()">Reset Counter</button>
+    </p>
   `
 })
 export class AppComponent {
-  counter: Observable<number>;
+  counter$: Observable<number>;
 
   constructor(private store: Store<AppState>){
-    this.counter = store.select<number>('counter');
+    this.counter$ = store.select<number>('counter');
   }
 
-  increment(){
+  increment() {
     this.store.dispatch({type: INCREMENT});
   }
 
-  decrement(){
+  decrement() {
     this.store.dispatch({type: DECREMENT});
   }
 
-  reset(){
+  reset() {
     this.store.dispatch({type: RESET});
+  }
+
+  incrementIfOdd(): void {
+    if (this.getCurrentCounter() % 2 !== 0) {
+      this.increment();
+    }
+  }
+
+  incrementAsync(delay: number = 1000): void {
+    setTimeout(() => this.increment(), delay);
+  }
+
+  getCurrentCounter(): number {
+    let currentCounter: number;
+
+    // todo: will it add new handler each time and eat memory?
+    this.counter$.subscribe(s => currentCounter = s);
+
+    return currentCounter;
   }
 }
