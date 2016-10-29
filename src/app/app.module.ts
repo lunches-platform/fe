@@ -2,20 +2,21 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {StoreModule} from '@ngrx/store';
 
-import {counterReducer} from './counter';
+import {CounterModule} from './counter';
+import {SharedModule} from './shared';
+import {appReducer} from './store';
+
 import {AppComponent} from './app.component';
-import {RandomNumberService} from './random-number.service';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  providers: [
-    RandomNumberService
-  ],
   imports: [
     BrowserModule,
-    StoreModule.provideStore({counter: counterReducer})
+    StoreModule.provideStore(appReducer),
+    SharedModule,
+    CounterModule
   ],
   bootstrap: [AppComponent]
 })
