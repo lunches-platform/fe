@@ -52,7 +52,12 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: conf.path.src('index.html')
-    })
+    }),
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      conf.path.src()
+    )
   ],
   postcss: () => [autoprefixer],
   debug: true,
