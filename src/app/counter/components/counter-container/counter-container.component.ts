@@ -6,6 +6,7 @@ import {increment, incrementIfOdd, decrement, reset, set} from '../../store';
 import {IAppState} from '../../../store';
 
 import {RandomNumberService} from '../../../shared';
+import {CounterService} from '../../counter.service';
 
 @Component({
   selector: 'l-counter-container',
@@ -24,19 +25,23 @@ import {RandomNumberService} from '../../../shared';
 export class CounterContainerComponent {
   counter$: Observable<number>;
 
-  constructor(private store: Store<IAppState>, private randomNumberService: RandomNumberService) {
-    this.counter$ = store.select<number>('counter');
+  constructor(
+    private store: Store<IAppState>,
+    private counterService: CounterService,
+    private randomNumberService: RandomNumberService
+  ) {
+    this.counter$ = counterService.get();
   }
 
-  increment() {
+  increment(): void {
     this.store.dispatch(increment());
   }
 
-  decrement() {
+  decrement(): void {
     this.store.dispatch(decrement());
   }
 
-  reset() {
+  reset(): void {
     this.store.dispatch(reset());
   }
 
