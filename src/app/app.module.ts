@@ -15,7 +15,7 @@ import {AppComponent} from './app.component';
   imports: [
     BrowserModule,
     StoreModule.provideStore(appReducer),
-    SharedModule,
+    SharedModule.forRoot(),
     CounterModule
   ],
   bootstrap: [AppComponent]
