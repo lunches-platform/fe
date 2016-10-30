@@ -1,65 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import {createAction} from 'redux-actions';
 
-import {IAppState} from '../../store';
-import {RandomNumberService} from '../../shared';
-import {CounterService} from '../counter.service';
+export const INCREMENT = 'INCREMENT';
+export const increment = createAction<void>(INCREMENT, () => null);
 
-@Injectable()
-export class Actions {
-  static INCREMENT = 'INCREMENT';
-  static DECREMENT = 'DECREMENT';
-  static RESET = 'RESET';
-  static INCREMENT_IF_ODD = 'INCREMENT_IF_ODD';
-  static SET = 'SET';
-  static RANDOM = 'RANDOM';
+export const DECREMENT = 'DECREMENT';
+export const decrement = createAction<void>(DECREMENT, () => null);
 
-  private counter$: Observable<number>;
+export const RESET = 'RESET';
+export const reset = createAction<void>(RESET, () => null);
 
-  constructor(
-    private store: Store<IAppState>,
-    private randomNumberService: RandomNumberService,
-    private counterService: CounterService
-  ) {
-    this.counter$ = counterService.get();
-  }
+export const INCREMENT_IF_ODD = 'INCREMENT_IF_ODD';
+export const incrementIfOdd = createAction<number>(INCREMENT_IF_ODD, (currentCounter: number) => currentCounter);
 
-  increment(): void {
-    this.store.dispatch({type: Actions.INCREMENT});
-  };
-
-  decrement(): void {
-    this.store.dispatch({type: Actions.DECREMENT});
-  };
-
-  reset(): void {
-    this.store.dispatch({type: Actions.RESET});
-  }
-
-  incrementIfOdd(): void {
-    this.store.dispatch({type: Actions.INCREMENT_IF_ODD, payload: this.getCurrentCounter()});
-  }
-
-  set(value: number): void {
-    this.store.dispatch({type: Actions.SET, payload: value});
-  }
-
-  random(): void {
-    this.store.dispatch({type: Actions.SET, payload: this.randomNumberService.pick()});
-  }
-
-  incrementAsync(delay: number = 1000): void {
-    setTimeout(() => this.increment(), delay);
-  }
-
-  private getCurrentCounter(): number {
-    let currentCounter: number;
-
-    // sync way!
-    this.counter$.subscribe(s => currentCounter = s);
-
-    return currentCounter;
-  }
-}
-
+export const SET = 'SET';
+export const set = createAction<number>(SET, (value: number) => value);

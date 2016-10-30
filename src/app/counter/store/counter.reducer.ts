@@ -1,25 +1,14 @@
-import {ActionReducer, Action} from '@ngrx/store';
+import {ActionReducer} from '@ngrx/store';
+import {handleActions} from 'redux-actions';
+import {INCREMENT, INCREMENT_IF_ODD, DECREMENT, RESET, SET} from './counter.actions';
 
-import {Actions} from './counter.actions';
+export type IState = number;
+export const initialState: IState = 0;
 
-export const counterReducer: ActionReducer<number> = (state: number = 0, action: Action) => {
-  switch (action.type) {
-    case Actions.INCREMENT:
-      return state + 1;
-
-    case Actions.INCREMENT_IF_ODD:
-      return action.payload % 2 !== 0 ? state + 1 : state;
-
-    case Actions.DECREMENT:
-      return state - 1;
-
-    case Actions.RESET:
-      return 0;
-
-    case Actions.SET:
-      return action.payload;
-
-    default:
-      return state;
-  }
-};
+export const reducer: ActionReducer<number> = handleActions<IState>({
+  [INCREMENT]: (state, action) => state + 1,
+  [INCREMENT_IF_ODD]: (state, action) => action.payload % 2 !== 0 ? state + 1 : state,
+  [DECREMENT]: (state, action) => state - 1,
+  [RESET]: (state, action) => 0,
+  [SET]: (state, action) => action.payload,
+}, initialState);

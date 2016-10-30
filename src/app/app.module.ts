@@ -4,7 +4,7 @@ import {StoreModule} from '@ngrx/store';
 
 import {CounterModule} from './counter';
 import {SharedModule} from './shared';
-import {appReducer} from './store';
+import {reducer} from './store';
 
 import {AppComponent} from './app.component';
 
@@ -14,7 +14,7 @@ import {AppComponent} from './app.component';
   ],
   imports: [
     BrowserModule,
-    StoreModule.provideStore(appReducer),
+    StoreModule.provideStore(reducer),
     SharedModule.forRoot(),
     CounterModule
   ],
