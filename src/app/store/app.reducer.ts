@@ -1,8 +1,9 @@
-import {ActionReducer} from '@ngrx/store';
+import {ActionReducer, combineReducers} from '@ngrx/store';
 import {compose} from '@ngrx/core/compose';
 import '@ngrx/core/add/operator/select';
+
 import {storeFreeze} from 'ngrx-store-freeze';
-import {combineReducers} from '@ngrx/store';
+import {storeLogger} from 'ngrx-store-logger';
 
 import {IState as ICounterState, reducer as counterReducer} from '../counter';
 
@@ -17,4 +18,8 @@ export const reducers = {
 };
 
 // root reducer
-export const reducer: ActionReducer<IState> = compose(storeFreeze, combineReducers)(reducers);
+export const reducer: ActionReducer<IState> = compose(
+  storeLogger({diff: true}),
+  storeFreeze,
+  combineReducers
+)(reducers);
