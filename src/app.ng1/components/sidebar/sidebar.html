@@ -1,30 +1,38 @@
-<md-sidenav class="l-sidebar md-sidenav-left md-whiteframe-4dp" md-component-id="left">
-  <md-toolbar class="md-theme-light md-tall">
-    <h1 class="md-toolbar-tools" ng-if="vm.isUserRegistered()">{{ vm.user.fullname }}</h1>
-    <h1 class="md-toolbar-tools" ng-if="vm.isGuest()">Гость</h1>
+<div layout="row" class="l-sidebar">
+  <md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="vm.lockedOpen">
 
-    <div layout-padding>
-      <p class="md-body-1" layout-padding>Баланс: <span>{{ vm.user.balance || 0 }} грн</span></p>
-    </div>
-  </md-toolbar>
-  <md-content layout-padding>
-    <md-list>
-      <md-list-item ng-click="vm.goToWeekMenu()">
-        <md-icon aria-label="go to week menu">restaurant_menu</md-icon>
-        <p>Меню на неделю</p>
-      </md-list-item>
-      <md-list-item ng-click="vm.goToMyOrders()" ng-if="vm.isUserRegistered()">
-        <md-icon aria-label="go to my orders">receipt</md-icon>
-        <p>Мои заказы</p>
-      </md-list-item>
-      <md-list-item ng-click="vm.goToBasket()">
-        <md-icon aria-label="go to basket">shopping_cart</md-icon>
-        <p>Корзина</p>
-      </md-list-item>
-      <md-list-item ng-click="vm.goToPaymentPage()" ng-if="vm.isUserRegistered()">
-        <md-icon aria-label="payment">payment</md-icon>
-        <p>Оплата</p>
-      </md-list-item>
-    </md-list>
-  </md-content>
-</md-sidenav>
+    <md-toolbar class="md-tall">
+      <h1 class="md-toolbar-tools" ng-if="vm.userRegistered">{{ vm.user.fullname }}</h1>
+      <h1 class="md-toolbar-tools" ng-if="!vm.userRegistered">Гость</h1>
+
+      <div layout-padding>
+        <p class="md-body-1" layout-padding><span>Баланс:</span> <span>{{ vm.user.balance || 0 }} грн</span></p>
+      </div>
+    </md-toolbar>
+
+    <md-content layout-padding>
+      <md-list>
+        <md-list-item ng-click="vm.goToWeekMenu()">
+          <md-icon aria-label="go to week menu">restaurant_menu</md-icon>
+          <p>Меню на неделю</p>
+        </md-list-item>
+
+        <md-list-item ng-click="vm.goToMyOrders()" ng-if="vm.isUserRegistered()">
+          <md-icon aria-label="go to my orders">receipt</md-icon>
+          <p>Мои заказы</p>
+        </md-list-item>
+
+        <md-list-item ng-click="vm.goToBasket()">
+          <md-icon aria-label="go to basket">shopping_cart</md-icon>
+          <p>Корзина</p>
+        </md-list-item>
+
+        <md-list-item ng-click="vm.goToPaymentPage()" ng-if="vm.isUserRegistered()">
+          <md-icon aria-label="payment">payment</md-icon>
+          <p>Оплата</p>
+        </md-list-item>
+      </md-list>
+    </md-content>
+
+  </md-sidenav>
+</div>
