@@ -7,6 +7,10 @@ interface ITriggerSizeSelectEvent {
   (arg: { size: string }): void;
 }
 
+interface ISizeToTitleMap {
+  [key: string]: string;
+}
+
 export class SizeSelectorController {
   // bindings ------------------------------------------------------------------
   // input
@@ -19,7 +23,7 @@ export class SizeSelectorController {
   selectedSize: ISelectorItem;
   sizes: ISelectorItem[];
 
-  private sizeToTitleMap;
+  private sizeToTitleMap: ISizeToTitleMap;
 
   constructor() {
     this.initSizeToTitleMap();

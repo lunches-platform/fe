@@ -1,8 +1,11 @@
+// third-party deps
 import {IHttpBackendService} from 'angular';
-import {twoWeekMenuResponse} from './two-week-menu';
 
-// todo: add type for lConfig
-export function fakeApiConfig($httpBackend: IHttpBackendService, lConfig) {
+// internal deps
+import {twoWeekMenuResponse} from './two-week-menu';
+import {IAppConfig} from '../config';
+
+export function fakeApiConfig($httpBackend: IHttpBackendService, lConfig: IAppConfig) {
   'ngInject';
 
   $httpBackend.whenGET(lConfig.apiUrl + '/menus/week/current').respond((method, url, data) => {

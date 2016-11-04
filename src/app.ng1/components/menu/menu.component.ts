@@ -40,8 +40,6 @@ export class MenuController {
     private lPriceService: PriceService
   ) {
     'ngInject';
-
-    this.init();
   }
 
   // dom event handlers --------------------------------------------------------
