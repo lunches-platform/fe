@@ -71,10 +71,8 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
   color: red;
 }
 
-.l-week-menu {
-  .l-speed-dial {
-    position: fixed;
-  }
+.l-speed-dial {
+  position: fixed;
 }
 
 .l-my-orders-item {
@@ -82,6 +80,15 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
     padding: 0px 6px;
     margin: 6px 8px;
   }
+}
+
+.l-menu-image {
+  width: 100%;
+  height: auto;
+}
+
+.l-week-menu {
+  height: 100%;
 }
 
 .l-sidebar {
