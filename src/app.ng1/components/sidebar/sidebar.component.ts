@@ -4,22 +4,26 @@ import {IBaseState} from '../../../routes';
 import {IUser, UserService} from '../../models/user';
 
 type ISidenavService = angular.material.ISidenavService;
+type IMedia = angular.material.IMedia;
 
 export class SidebarController {
-  // bindings ------------------------------------------------------------------
-  // input
   user: IUser;
 
-  constructor(private $state: IBaseState, private $mdSidenav: ISidenavService, private lUserService: UserService) {
+  constructor(
+    private $state: IBaseState,
+    private $mdSidenav: ISidenavService,
+    private $mdMedia: IMedia,
+    private lUserService: UserService
+  ) {
     'ngInject';
   }
 
-  isUserRegistered(): boolean {
+  get userRegistered(): boolean {
     return this.lUserService.isRegistered(this.user);
   }
 
-  isGuest(): boolean {
-    return !this.isUserRegistered();
+  get lockedOpen(): boolean {
+    return this.$mdMedia('gt-sm');
   }
 
   goToWeekMenu(): void {
@@ -55,7 +59,6 @@ export class SidebarController {
   }
 }
 
-// component definition --------------------------------------------------------
 export const SidebarComponent: IComponentOptions = {
   template: require('./sidebar.html'),
   controller: SidebarController,
