@@ -48,6 +48,7 @@ import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-
 import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.component';
 import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
 import {FlashMessageComponent} from './app.ng1/components/flash-message/flash-message.component';
+import {PastDaysSwitcherComponent} from './app.ng1/components/past-days-switcher/past-days-switcher.component';
 
 import {MenuService} from './app.ng1/models/menu';
 import {OrderService} from './app.ng1/models/order';
@@ -118,6 +119,7 @@ angular
   .component('lPrices', PricesComponent)
   .component('lPricesToolbar', PricesToolbarComponent)
   .component('lFlashMessage', FlashMessageComponent)
+  .component('lPastDaysSwitcher', PastDaysSwitcherComponent)
   // if no any specified we have such error:
   // "Argument of type 'Function' is not assignable to parameter of type 'any[]'"
   // it looks like angular typings issue

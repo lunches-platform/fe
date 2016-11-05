@@ -90,7 +90,7 @@ export class WeekMenuController {
     this.selectedWeek = Week.Next;
   }
 
-  togglePastDaysMenu(): void {
+  switchPastDaysMenu(): void {
     this.pastDaysMenuHidden = !this.pastDaysMenuHidden;
   }
 

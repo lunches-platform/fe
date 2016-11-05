@@ -16,13 +16,12 @@
     <md-content ng-if="!vm.isLoading()">
       <md-tabs md-dynamic-height md-border-bottom md-swipe-content md-selected="vm.selectedWeek">
 
-        <!-- CURRENT WEEK TAB -->
         <md-tab label="Текущая">
-          <div flex layout="column" layout-align="center center">
-            <md-button ng-show="vm.needToShowPastDaysSwitcher()" class="md-raise" ng-click="vm.togglePastDaysMenu()">
-              {{ vm.isPastDaysMenuHidden() ? 'Показать прошедшие дни' : 'Спрятать прошедшие дни' }}
-            </md-button>
-          </div>
+          <l-past-days-switcher
+            ng-if="vm.needToShowPastDaysSwitcher()"
+            switched="vm.isPastDaysMenuHidden()"
+            on-switched="vm.switchPastDaysMenu()">
+          </l-past-days-switcher>
 
           <l-flash-message ng-show="vm.needToShowCurrentWeekOrderImpossible()">
             Заказ на текущую неделю уже не возможен.
