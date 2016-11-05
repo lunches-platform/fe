@@ -24,25 +24,13 @@
             </md-button>
           </div>
 
-          <div
-            ng-show="vm.needToShowCurrentWeekOrderImpossible()"
-            class="md-mody-2"
-            layout="row"
-            layout-padding
-            layout-align="center center"
-            md-colors="{color: 'red'}">
+          <l-flash-message ng-show="vm.needToShowCurrentWeekOrderImpossible()">
             Заказ на текущую неделю уже не возможен.
-          </div>
+          </l-flash-message>
 
-          <div
-            ng-show="vm.needToShowNoData()"
-            class="md-mody-2"
-            layout="row"
-            layout-padding
-            layout-align="center center"
-            md-colors="{color: 'red'}">
+          <l-flash-message ng-show="vm.needToShowNoData()">
             На выбранную неделю меню еще не сформировано.
-          </div>
+          </l-flash-message>
 
           <!-- CURRENT WEEK VIEW -->
           <l-view-menu
@@ -62,9 +50,8 @@
 
         </md-tab>
 
-        <!-- NEXT WEEK TAB -->
         <md-tab label="Следующая">
-          <!-- NEXT WEEK ORDER -->
+
           <l-menu
             flex
             ng-repeat="menu in vm.nextWeekMenu[vm.selectedMenuType]"
