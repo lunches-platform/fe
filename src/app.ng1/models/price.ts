@@ -1,11 +1,12 @@
 // third-party deps
-import {reduce, sortBy, isNil, isEmpty} from 'lodash';
-import {IHttpService, ILogService, ITimeoutService} from 'angular';
+import {reduce, sortBy, isNil, isEmpty, mapValues, each, Dictionary} from 'lodash';
+import {IHttpService, ILogService, ITimeoutService, IPromise} from 'angular';
+import * as moment from 'moment';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 // internal deps
 import {ILineItem} from './line-item';
-import {IAppConfig} from '../../config';
+import {IAppConfig, SHORT_DATE_FORMAT} from '../../config';
 
 export interface IPriceGroupItem {
   productId: number;
@@ -18,12 +19,27 @@ export interface IPriceGroup {
   items: IPriceGroupItem[];
 }
 
-export type PriceGroupsByDate = Map<string, IPriceGroup[]>;
-// {'2016-07-12': PricesPerDay, ...}
-export type PricesByDate = Map<string, PricesPerDay>;
-// {'24-medium|3-big|': 75, ...}
-export type PricesPerDay = Map<string, number>;
-export type PriceList = Map<string, number>;
+// response format from API
+// {
+//   '2016-07-12': [{
+//     date: 'xxx',
+//     price: 'xxx',
+//     items: 'xxx'
+//   }]
+// }
+export type PriceGroupsByDate = Dictionary<IPriceGroup[]>;
+// {'2016-07-12': GroupKeyToPriceMap, ...}
+export type PricesByDate = Dictionary<GroupKeyToPriceMap>;
+
+// consumer price format
+// {
+//   '24-big|3-big|': 75,
+//   '34-big|76-big|': 80,
+//   '5-medium|82-medium|': 55,
+//    ...
+// }
+export type GroupKeyToPriceMap = Dictionary<number>;
+export type PriceList = Dictionary<number>;
 
 /* tslint:disable */
 // export const priceList: PriceList = {
@@ -91,24 +107,26 @@ export class PriceService {
     'ngInject';
   }
 
-  // fetchPriceGroupsForActualDays(): IPromise<PriceGroupsByDate> {
-  //   const startDate = moment().format(SHORT_DATE_FORMAT);
-  //   const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
+  fetchPriceGroupsForActualDays(): IPromise<PricesByDate> {
+    console.log('fetchPriceGroupsForActualDays');
+    const startDate = moment().format(SHORT_DATE_FORMAT);
+    const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
 
-  //   const url = this.lConfig.apiUrl + '/prices?startDate=' + startDate + '&endDate=' + endDate;
-  //   return this.$http.get<IPriceGroup[]>(url, {cache: true}).then(res => {
-  //     // const pricesByDate = this.priceGroupsByDateToPricesByDate(res.data);
-  //     // this.storeToLocalStorage(pricesByDate);
-  //     // return pricesByDate;
-  //     return [];
-  //   });
-  // }
+    const url = this.lConfig.apiUrl + '/prices?startDate=' + startDate + '&endDate=' + endDate;
+    return this.$http.get<PriceGroupsByDate>(url, {cache: true})
+      .then(res => res.data)
+      .then(priceGroupsByData => {
+        const pricesByDate = this.priceGroupsByDateToPricesByDate(priceGroupsByData);
+        this.storeToLocalStorage(pricesByDate);
+        return pricesByDate;
+      });
+  }
 
-  // priceGroupsByDateToPricesByDate(priceGroupsByDate: PriceGroupsByDate): PricesByDate {
-  //   return mapValues(priceGroupsByDate, priceGroups => {
-  //     return this.convertPriceGroupsToKeyPrice(priceGroups);
-  //   });
-  // }
+  priceGroupsByDateToPricesByDate(priceGroupsByDate: PriceGroupsByDate): PricesByDate {
+    return mapValues(priceGroupsByDate, priceGroups => {
+      return this.convertPriceGroupsToKeyPrice(priceGroups);
+    });
+  }
 
   calcPriceForAll(orderLineItems: ILineItem[], date: string): number {
     if (orderLineItems.length === 0) {
@@ -250,43 +268,43 @@ export class PriceService {
     return lineItem.product.id + '-' + lineItem.size + '|';
   }
 
-  // private groupKeyForPriceGroup(priceGroup: IPriceGroup): string {
-  //   const sortedPriceGroupItems = sortBy(priceGroup.items, 'productId');
+  private groupKeyForPriceGroup(priceGroup: IPriceGroup): string {
+    const sortedPriceGroupItems = sortBy(priceGroup.items, 'productId');
 
-  //   return reduce(sortedPriceGroupItems, (key, priceItem) => {
-  //     return key + priceItem.productId + '-' + priceItem.size + '|';
-  //   }, '');
-  // }
+    return reduce(sortedPriceGroupItems, (key, priceItem) => {
+      return key + priceItem.productId + '-' + priceItem.size + '|';
+    }, '');
+  }
 
-  // private convertPriceGroupsToKeyPrice(priceGroups: IPriceGroup[]): Map<string, number> {
-  //   const keyPriceHash = new Map();
+  private convertPriceGroupsToKeyPrice(priceGroups: IPriceGroup[]): GroupKeyToPriceMap {
+    const keyPriceHash = {};
 
-  //   each(priceGroups, priceGroup => {
-  //     const groupKey = this.groupKeyForPriceGroup(priceGroup);
-  //     keyPriceHash[groupKey] = priceGroup.price;
-  //   });
+    each(priceGroups, priceGroup => {
+      const groupKey = this.groupKeyForPriceGroup(priceGroup);
+      keyPriceHash[groupKey] = priceGroup.price;
+    });
 
-  //   return keyPriceHash;
-  // }
+    return keyPriceHash;
+  }
 
-  private calcFallbackPriceFor(lineItems: ILineItem[], prices: PricesPerDay): number {
+  private calcFallbackPriceFor(lineItems: ILineItem[], prices: GroupKeyToPriceMap): number {
     return reduce(lineItems, (sum, lineItem) => {
       return prices[this.groupKeyForLineItem(lineItem)];
     }, 0);
   }
 
-  // private storeToLocalStorage(prices: PricesByDate): boolean {
-  //   if (!prices) {
-  //     return false;
-  //   }
+  private storeToLocalStorage(prices: PricesByDate): boolean {
+    if (!prices) {
+      return false;
+    }
 
-  //   return this.localStorageService.set('pricesByDate', prices);
-  // }
+    return this.localStorageService.set('pricesByDate', prices);
+  }
 
-  private getPricesFromLocalStorage(date: string): PricesPerDay {
+  private getPricesFromLocalStorage(date: string): GroupKeyToPriceMap {
     const prices = this.localStorageService.get('pricesByDate');
     if (!prices) {
-      return new Map();
+      return {};
     }
 
     return prices[date] || {};
