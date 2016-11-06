@@ -47,7 +47,6 @@ import {SwitchComponent} from './app.ng1/components/switch/switch.component';
 import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-selector.component';
 import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.component';
 import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
-import {FlashMessageComponent} from './app.ng1/components/flash-message/flash-message.component';
 import {PastDaysSwitcherComponent} from './app.ng1/components/past-days-switcher/past-days-switcher.component';
 
 import {MenuService} from './app.ng1/models/menu';
@@ -66,6 +65,7 @@ import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorC
 // angular 2
 import {upgradeAdapter} from './app/upgrade-adapter';
 import {AppComponent} from './app/app.component';
+import {FlashMessageComponent} from './app/shared/components';
 
 import './index.scss';
 
@@ -124,6 +124,7 @@ angular
   // "Argument of type 'Function' is not assignable to parameter of type 'any[]'"
   // it looks like angular typings issue
   .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
+  .directive('lFlashMessage', <any> upgradeAdapter.downgradeNg2Component(FlashMessageComponent))
   // .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
 
   .service('lMenuService', MenuService)
