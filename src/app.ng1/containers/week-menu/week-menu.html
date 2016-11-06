@@ -31,7 +31,6 @@
             На выбранную неделю меню еще не сформировано.
           </l-flash-message>
 
-          <!-- CURRENT WEEK VIEW -->
           <l-view-menu
             ng-show="vm.needToShowCurrentWeekViewMenu()"
             ng-repeat="menu in vm.pastDaysMenu[vm.selectedMenuType]"
@@ -39,7 +38,6 @@
             flex>
           </l-view-menu>
 
-          <!-- CURRENT WEEK ORDER -->
           <l-menu
             ng-repeat="menu in vm.actualMenu[vm.selectedMenuType]"
             menu="menu"

@@ -1,29 +1,33 @@
-<div layout="row" class="l-view-menu" layout-align="center center">
-  <md-card flex-gt-sm="50">
-    <l-menu-cover menu="vm.menu"></l-menu-cover>
+<md-card class="l-view-menu">
+  <div layout="column" layout-gt-xs="row">
+    <l-menu-cover menu="vm.menu" flex-gt-xs="50" flex-order-gt-xs="2"></l-menu-cover>
 
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{ vm.menu.date | lDate }}</span>
-      </md-card-title-text>
-    </md-card-title>
-    <md-card-content>
-      <span ng-repeat="product in vm.menu.products track by product.id">
-        {{ product.name }}.
-      </span>
-    </md-card-content>
+    <div flex-order-gt-xs="1" flex-gt-xs="50">
 
-    <md-divider></md-divider>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{ vm.menu.date | lDate }}</span>
+        </md-card-title-text>
+      </md-card-title>
 
-    <div
-      layout="row"
-      layout-padding
-      layout-align="center center"
-      class="md-mody-2"
-      md-colors="{color: 'red'}">
-      <div class="md-body1">Обед заказать уже нельзя.</div>
+      <md-card-content>
+        <md-list>
+          <md-list-item ng-repeat="product in vm.menu.products track by product.id">
+            <img
+              ng-src="{{ ::vm.productTypeToIconUrl(product.type) }}"
+              alt="meat"
+              class="material-icons l-png-icon"
+            />
+            <p>{{ product.name }}</p>
+          </md-list-item>
+        </md-list>
+
+        <l-flash-message>
+          Обед заказать уже нельзя
+        </l-flash-message>
+
+      </md-card-content>
     </div>
-
-  </md-card>
-</div>
+  </div>
+</md-card>
 
