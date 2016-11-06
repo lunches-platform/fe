@@ -1,30 +1,34 @@
-<div class="l-basket-order" layout="column">
-  <md-card-content>
-    <h2 flex class="md-title title">{{ vm.order.shipmentDate | lDate }}</h2>
+<md-card>
+  <div class="l-basket-order" layout="column">
+    <md-card-content>
+      <h2 flex class="md-title title">{{ vm.order.shipmentDate | lDate }}</h2>
 
-    <md-list ng-if="vm.isExist()">
-      <md-list-item ng-repeat="item in vm.order.items" class="l-no-list-item-padding">
-        <p>{{ item.product.name }}</p>
-      </md-list-item>
-    </md-list>
+      <md-list ng-if="vm.isExist()">
+        <md-list-item ng-repeat="item in vm.order.items" class="l-no-list-item-padding">
+          <p>{{ item.product.name }}</p>
+        </md-list-item>
+      </md-list>
 
-    <div ng-if="vm.isRemoved()" layout="row" class="md-body-1">
-      Обед удален из корзины.
+      <div ng-if="vm.isRemoved()" layout="row" class="md-body-1">
+        Обед удален из корзины.
+      </div>
+    </md-card-content>
+
+    <md-divider></md-divider>
+
+    <div layout="row" ng-if="vm.isExist()" layout-align="start center">
+      <md-button ng-click="vm.remove()">Отменить</md-button>
+      <l-size-label size="vm.order.items[0].size"></l-size-label>
+
+      <span flex></span>
+      <span class="md-title l-basket-order-price-label">{{ vm.order.price }} грн</span>
     </div>
-  </md-card-content>
 
-  <div layout="row" ng-if="vm.isExist()" layout-align="start center">
-    <md-button ng-click="vm.remove()">Отменить</md-button>
-    <l-size-label size="vm.order.items[0].size"></l-size-label>
+    <div layout="row" ng-if="vm.isRemoved()">
+      <md-button ng-click="vm.addAnother()">Другой заказ</md-button>
+      <md-button class="md-primary" ng-click="vm.restore()">Вернуть</md-button>
+      <span flex></span>
+    </div>
 
-    <span flex></span>
-    <span class="md-title l-basket-order-price-label">{{ vm.order.price }} грн</span>
   </div>
-
-  <div layout="row" ng-if="vm.isRemoved()">
-    <md-button ng-click="vm.addAnother()">Другой заказ</md-button>
-    <md-button class="md-primary" ng-click="vm.restore()">Вернуть</md-button>
-    <span flex></span>
-  </div>
-
-</div>
+</md-card>
