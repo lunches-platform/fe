@@ -1,16 +1,30 @@
 import {CommonModule} from '@angular/common';
 import {NgModule, ModuleWithProviders} from '@angular/core';
 
-import {FlashMessageComponent} from './components';
+import {upgradeAdapter} from '../upgrade-adapter';
+
+import {
+  FlashMessageComponent,
+  PastDaysSwitcherComponent
+} from './components';
+
+// angular material 1.x wrapper components
+const LMdButtonComponent = upgradeAdapter.upgradeNg1Component('lMdButton');
 
 import {RandomNumberService} from './random-number.service';
 
 @NgModule({
   declarations: [
-    FlashMessageComponent
+    LMdButtonComponent,
+    FlashMessageComponent,
+    PastDaysSwitcherComponent
   ],
   imports: [CommonModule],
-  exports: [FlashMessageComponent]
+  exports: [
+    LMdButtonComponent,
+    FlashMessageComponent,
+    PastDaysSwitcherComponent
+  ]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

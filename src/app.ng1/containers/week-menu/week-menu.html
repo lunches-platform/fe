@@ -19,8 +19,9 @@
         <md-tab label="Текущая">
           <l-past-days-switcher
             ng-if="vm.needToShowPastDaysSwitcher()"
-            switched="vm.isPastDaysMenuHidden()"
-            on-switched="vm.switchPastDaysMenu()">
+            [switched]="vm.isPastDaysMenuHidden()"
+            (switch)="vm.switchPastDaysMenu($event)">
+
           </l-past-days-switcher>
 
           <l-flash-message ng-show="vm.needToShowCurrentWeekOrderImpossible()">

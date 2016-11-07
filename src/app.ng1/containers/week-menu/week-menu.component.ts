@@ -90,8 +90,8 @@ export class WeekMenuController {
     this.selectedWeek = Week.Next;
   }
 
-  switchPastDaysMenu(): void {
-    this.pastDaysMenuHidden = !this.pastDaysMenuHidden;
+  switchPastDaysMenu(switched: boolean): void {
+    this.pastDaysMenuHidden = switched;
   }
 
   goToBasket(): void {
