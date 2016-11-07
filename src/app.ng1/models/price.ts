@@ -108,7 +108,6 @@ export class PriceService {
   }
 
   fetchPriceGroupsForActualDays(): IPromise<PricesByDate> {
-    console.log('fetchPriceGroupsForActualDays');
     const startDate = moment().format(SHORT_DATE_FORMAT);
     const endDate = moment().add(1, 'weeks').endOf('week').format(SHORT_DATE_FORMAT);
 

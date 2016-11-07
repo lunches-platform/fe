@@ -4,8 +4,10 @@ import {NgModule, ModuleWithProviders} from '@angular/core';
 import {upgradeAdapter} from '../upgrade-adapter';
 
 import {
+  ExampleComponent,
   FlashMessageComponent,
-  PastDaysSwitcherComponent
+  PastDaysSwitcherComponent,
+  MenuCoverComponent
 } from './components';
 
 // angular material 1.x wrapper components
@@ -16,14 +18,20 @@ import {RandomNumberService} from './random-number.service';
 @NgModule({
   declarations: [
     LMdButtonComponent,
+
+    ExampleComponent,
     FlashMessageComponent,
-    PastDaysSwitcherComponent
+    PastDaysSwitcherComponent,
+    MenuCoverComponent
   ],
   imports: [CommonModule],
   exports: [
     LMdButtonComponent,
+
+    ExampleComponent,
     FlashMessageComponent,
-    PastDaysSwitcherComponent
+    PastDaysSwitcherComponent,
+    MenuCoverComponent
   ]
 })
 export class SharedModule {

@@ -1,5 +1,5 @@
 // third-party deps
-import {each, filter} from 'lodash';
+import {each, filter, get} from 'lodash';
 import * as moment from 'moment';
 import {IHttpService, IPromise} from 'angular';
 
@@ -84,8 +84,7 @@ export class MenuService {
 
   // todo: get correct cover
   getCoverOf(menu: IMenu): string {
-    const firstImage = menu.products[0].images[0];
-    return firstImage ? firstImage.url : '';
+    return get<string>(menu, 'products[0].images[0].url');
   }
 
   private isInsideCurrentWeek(date: string): boolean {
