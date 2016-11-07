@@ -69,6 +69,7 @@ import {upgradeAdapter} from './app/upgrade-adapter';
 import {AppComponent} from './app/app.component';
 import {AppModule} from './app/app.module';
 import {
+  ExampleComponent,
   FlashMessageComponent,
   PastDaysSwitcherComponent
 } from './app/shared/components';
@@ -135,6 +136,7 @@ angular
   // "Argument of type 'Function' is not assignable to parameter of type 'any[]'"
   // it looks like angular typings issue
   .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
+  .directive('lExample', <any> upgradeAdapter.downgradeNg2Component(ExampleComponent))
   .directive('lFlashMessage', <any> upgradeAdapter.downgradeNg2Component(FlashMessageComponent))
   .directive('lPastDaysSwitcher', <any> upgradeAdapter.downgradeNg2Component(PastDaysSwitcherComponent))
   // -------------------------------------------------------------------------- //

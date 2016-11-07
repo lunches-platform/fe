@@ -4,6 +4,7 @@ import {NgModule, ModuleWithProviders} from '@angular/core';
 import {upgradeAdapter} from '../upgrade-adapter';
 
 import {
+  ExampleComponent,
   FlashMessageComponent,
   PastDaysSwitcherComponent
 } from './components';
@@ -16,12 +17,16 @@ import {RandomNumberService} from './random-number.service';
 @NgModule({
   declarations: [
     LMdButtonComponent,
+
+    ExampleComponent,
     FlashMessageComponent,
     PastDaysSwitcherComponent
   ],
   imports: [CommonModule],
   exports: [
     LMdButtonComponent,
+
+    ExampleComponent,
     FlashMessageComponent,
     PastDaysSwitcherComponent
   ]
