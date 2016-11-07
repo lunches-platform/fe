@@ -5,12 +5,15 @@
     "angular-material": "registry:dt/angular-material#1.1.0-rc5.0+20160923175937",
     "angular-mocks": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
     "angular-ui-router": "registry:dt/angular-ui-router#1.1.5+20160707113237",
+    "core-js": "registry:dt/core-js#0.0.0+20160725163759",
+    "es6-collections": "registry:dt/es6-collections#0.5.1+20160316155526",
+    "es6-promise": "registry:dt/es6-promise#0.0.0+20160614011821",
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
     "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#dc9dabe74a5be62613b17a3605309783a12ff28a",
     "lodash": "registry:dt/lodash#4.14.0+20161004174455",
-    "require": "registry:dt/require#2.1.20+20160316155526",
-    "core-js": "registry:dt/core-js#0.0.0+20160725163759",
-    "node": "registry:dt/node#6.0.0+20160909174046"
+    "node": "registry:dt/node#6.0.0+20160909174046",
+    "redux-actions": "registry:dt/redux-actions#0.8.0+20161006171701",
+    "require": "registry:dt/require#2.1.20+20160316155526"
   }
 }
