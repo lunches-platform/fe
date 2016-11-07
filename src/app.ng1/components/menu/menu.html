@@ -8,7 +8,7 @@
   </md-card-header>
 
   <div layout="column" layout-gt-xs="row">
-    <l-menu-cover menu="vm.menu" flex-gt-xs="50" flex-order-gt-xs="2"></l-menu-cover>
+    <l-menu-cover [url]="vm.getCoverOf(vm.menu)" flex-gt-xs="50" flex-order-gt-xs="2"></l-menu-cover>
 
     <md-card-content flex-order-gt-xs="1" flex-gt-xs="50">
       <md-list ng-if="!vm.isOrdered()">

@@ -41,7 +41,6 @@ import {BasketOrderComponent} from './app.ng1/components/basket-order/basket-ord
 import {MyOrdersItemComponent} from './app.ng1/components/my-orders-item/my-orders-item.component';
 import {PaymentStatusComponent} from './app.ng1/components/payment-status/payment-status.component';
 import {DateRangeSelectorComponent} from './app.ng1/components/date-range-selector/date-range-selector.component';
-import {MenuCoverComponent} from './app.ng1/components/menu-cover/menu-cover.component';
 import {UserCardComponent} from './app.ng1/components/user-card/user-card.component';
 import {SwitchComponent} from './app.ng1/components/switch/switch.component';
 import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-selector.component';
@@ -71,7 +70,8 @@ import {AppModule} from './app/app.module';
 import {
   ExampleComponent,
   FlashMessageComponent,
-  PastDaysSwitcherComponent
+  PastDaysSwitcherComponent,
+  MenuCoverComponent
 } from './app/shared/components';
 // -------------------------------------------------------------------------- //
 // angular 2 imports: END
@@ -115,7 +115,6 @@ angular
   .component('lMyOrdersItem', MyOrdersItemComponent)
   .component('lPaymentStatus', PaymentStatusComponent)
   .component('lDateRangeSelector', DateRangeSelectorComponent)
-  .component('lMenuCover', MenuCoverComponent)
   .component('lUserCard', UserCardComponent)
   .component('lSwitch', SwitchComponent)
   .component('lWeekMenuToolbar', WeekMenuToolbarComponent)
@@ -139,6 +138,7 @@ angular
   .directive('lExample', <any> upgradeAdapter.downgradeNg2Component(ExampleComponent))
   .directive('lFlashMessage', <any> upgradeAdapter.downgradeNg2Component(FlashMessageComponent))
   .directive('lPastDaysSwitcher', <any> upgradeAdapter.downgradeNg2Component(PastDaysSwitcherComponent))
+  .directive('lMenuCover', <any> upgradeAdapter.downgradeNg2Component(MenuCoverComponent))
   // -------------------------------------------------------------------------- //
   // angular 2 components: END
   // -------------------------------------------------------------------------- //

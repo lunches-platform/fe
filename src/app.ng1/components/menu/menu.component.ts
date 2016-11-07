@@ -4,7 +4,7 @@ import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
 
 import {IWeekMenuState} from '../../../routes';
 
-import {IMenu} from '../../models/menu';
+import {IMenu, MenuService} from '../../models/menu';
 import {IOrder, OrderService} from '../../models/order';
 import {ILineItem, LineItemService} from '../../models/line-item';
 import {ProductTypeUrls} from '../../models/product';
@@ -37,7 +37,8 @@ export class MenuController {
     private $state: IWeekMenuState,
     private lOrderService: OrderService,
     private lLineItemService: LineItemService,
-    private lPriceService: PriceService
+    private lPriceService: PriceService,
+    private lMenuService: MenuService
   ) {
     'ngInject';
   }
@@ -105,6 +106,10 @@ export class MenuController {
 
   calcPrice(): number {
     return this.lPriceService.calcPriceForAll(this.selectedLineItems, this.menu.date);
+  }
+
+  getCoverOf(menu: IMenu): string {
+    return this.lMenuService.getCoverOf(menu);
   }
 
   // private init --------------------------------------------------------------
