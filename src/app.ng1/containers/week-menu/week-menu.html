@@ -1,17 +1,66 @@
-<div class="l-week-menu" layout="column" layout-fill>
-  <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
+<div class="l-week-menu" layout="row">
+  <l-sidebar user="vm.user" ng-if="!vm.isLoading()"></l-sidebar>
 
-  <l-week-menu-toolbar
-    ng-if="!vm.isLoading()"
-    selected-menu-type="vm.selectedMenuType"
-    on-menu-type-switched="vm.onMenuTypeSwitched(menuType)"
-    user="vm.user"
-    on-toggle-sidebar="vm.onToggleSidebar()"
-    on-whole-week-order="vm.onWholeWeekOrder()"
-    >
-  </l-week-menu-toolbar>
+  <div layout="column" flex>
+    <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-  <l-sidebar user="vm.user"></l-sidebar>
+    <l-week-menu-toolbar
+      ng-if="!vm.isLoading()"
+      selected-menu-type="vm.selectedMenuType"
+      on-menu-type-switched="vm.onMenuTypeSwitched(menuType)"
+      user="vm.user"
+      on-toggle-sidebar="vm.onToggleSidebar()"
+      on-whole-week-order="vm.onWholeWeekOrder()">
+    </l-week-menu-toolbar>
+
+    <md-content ng-if="!vm.isLoading()">
+      <md-tabs md-dynamic-height md-border-bottom md-swipe-content md-selected="vm.selectedWeek">
+
+        <md-tab label="Текущая">
+          <l-past-days-switcher
+            ng-if="vm.needToShowPastDaysSwitcher()"
+            [switched]="vm.isPastDaysMenuHidden()"
+            (switch)="vm.switchPastDaysMenu($event)">
+
+          </l-past-days-switcher>
+
+          <l-flash-message ng-show="vm.needToShowCurrentWeekOrderImpossible()">
+            Заказ на текущую неделю уже не возможен.
+          </l-flash-message>
+
+          <l-flash-message ng-show="vm.needToShowNoData()">
+            На выбранную неделю меню еще не сформировано.
+          </l-flash-message>
+
+          <l-view-menu
+            ng-show="vm.needToShowCurrentWeekViewMenu()"
+            ng-repeat="menu in vm.pastDaysMenu[vm.selectedMenuType]"
+            menu="menu"
+            flex>
+          </l-view-menu>
+
+          <l-menu
+            ng-repeat="menu in vm.actualMenu[vm.selectedMenuType]"
+            menu="menu"
+            on-order-placed="vm.onOrderPlaced(order)"
+            flex>
+          </l-menu>
+
+        </md-tab>
+
+        <md-tab label="Следующая">
+
+          <l-menu
+            flex
+            ng-repeat="menu in vm.nextWeekMenu[vm.selectedMenuType]"
+            menu="menu"
+            on-order-placed="vm.onOrderPlaced(order)">
+          </l-menu>
+
+        </md-tab>
+      </md-tabs>
+    </md-content>
+  </div>
 
   <md-fab-speed-dial
     ng-if="!vm.isLoading()"
@@ -24,67 +73,4 @@
       </md-button>
     </md-fab-trigger>
   </md-fab-speed-dial>
-
-  <md-content ng-if="!vm.isLoading()">
-    <md-tabs md-dynamic-height md-border-bottom md-swipe-content md-selected="vm.selectedWeek">
-
-      <!-- CURRENT WEEK TAB -->
-      <md-tab label="Текущая">
-        <div flex layout="column" layout-align="center center">
-          <md-button ng-show="vm.needToShowPastDaysSwitcher()" class="md-raise" ng-click="vm.togglePastDaysMenu()">
-            {{ vm.isPastDaysMenuHidden() ? 'Показать прошедшие дни' : 'Спрятать прошедшие дни' }}
-          </md-button>
-        </div>
-
-        <div
-          ng-show="vm.needToShowCurrentWeekOrderImpossible()"
-          class="md-mody-2"
-          layout="row"
-          layout-padding
-          layout-align="center center"
-          md-colors="{color: 'red'}">
-          Заказ на текущую неделю уже не возможен.
-        </div>
-
-        <div
-          ng-show="vm.needToShowNoData()"
-          class="md-mody-2"
-          layout="row"
-          layout-padding
-          layout-align="center center"
-          md-colors="{color: 'red'}">
-          На выбранную неделю меню еще не сформировано.
-        </div>
-
-        <!-- CURRENT WEEK VIEW -->
-        <l-view-menu
-          ng-show="vm.needToShowCurrentWeekViewMenu()"
-          ng-repeat="menu in vm.pastDaysMenu[vm.selectedMenuType]"
-          menu="menu"
-          flex>
-        </l-view-menu>
-
-        <!-- CURRENT WEEK ORDER -->
-        <l-menu
-          ng-repeat="menu in vm.actualMenu[vm.selectedMenuType]"
-          menu="menu"
-          on-order-placed="vm.onOrderPlaced(order)"
-          flex>
-        </l-menu>
-
-      </md-tab>
-
-      <!-- NEXT WEEK TAB -->
-      <md-tab label="Следующая">
-        <!-- NEXT WEEK ORDER -->
-        <l-menu
-          flex
-          ng-repeat="menu in vm.nextWeekMenu[vm.selectedMenuType]"
-          menu="menu"
-          on-order-placed="vm.onOrderPlaced(order)">
-        </l-menu>
-
-      </md-tab>
-    </md-tabs>
-  </md-content>
 </div>

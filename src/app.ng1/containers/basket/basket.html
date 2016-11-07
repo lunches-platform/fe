@@ -1,65 +1,66 @@
-<div class="l-basket" layout="column" layout-fill>
-  <l-basket-toolbar
-    ng-if="!vm.isLoading()"
-    on-toggle-sidebar="vm.onToggleSidebar()"
-    user="vm.user">
-  </l-basket-toolbar>
+<div class="l-basket" layout="row">
+  <l-sidebar user="vm.user" ng-if="!vm.isLoading()"></l-sidebar>
 
-  <l-sidebar user="vm.user"></l-sidebar>
+  <div layout="column" flex>
+    <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-  <md-content ng-if="vm.hasData()">
-    <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>
+    <l-basket-toolbar
+      ng-if="!vm.isLoading()"
+      on-toggle-sidebar="vm.onToggleSidebar()"
+      user="vm.user">
+    </l-basket-toolbar>
 
-    <div
-      ng-if="vm.ordersForReview.length > 1"
-      class="md-headline"
-      layout="row"
-      layout-padding
-      layout-align="end center">
-      Всего к оплате: {{ vm.totalToPay() }} грн
-    </div>
+    <md-content ng-if="!vm.isLoading()" layout="row" layout-align="center center" class="l-height-100">
+      <div layout="column" flex flex-gt-xs="50" class="l-height-100" ng-if="!vm.hasData()">
+        <l-flash-message>Корзина пуста</l-flash-message>
+      </div>
 
-    <div layout="column">
-      <md-button
-        ng-if="vm.ordersForReview.length > 1"
-        class="md-raised md-primary"
-        ng-click="vm.makeOrder()"
-        ng-disabled="!vm.isOrdersValid()">
-        Оформить заказ
-      </md-button>
-    </div>
+      <div layout="column" flex flex-gt-xs="50" class="l-height-100" ng-if="vm.hasData()">
 
-    <div class="md-headline" layout-padding>
-      <span ng-if="vm.ordersForReview.length > 1">Ваши заказы</span>
-      <span ng-if="vm.ordersForReview.length == 1">Ваш заказ</span>
-    </div>
+        <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>
 
-    <md-card>
-      <div ng-repeat="order in vm.ordersForReview">
+        <div
+          ng-if="vm.ordersForReview.length > 1"
+          class="md-headline"
+          layout-padding>
+          Всего к оплате: {{ vm.totalToPay() }} грн
+        </div>
+
+        <md-button
+          ng-if="vm.ordersForReview.length > 1"
+          class="md-raised md-primary"
+          ng-click="vm.makeOrder()"
+          ng-disabled="!vm.isOrdersValid()">
+          Оформить заказ
+        </md-button>
+
+        <div class="md-headline" layout-padding>
+          <span ng-if="vm.ordersForReview.length > 1">Ваши заказы</span>
+          <span ng-if="vm.ordersForReview.length == 1">Ваш заказ</span>
+        </div>
+
         <l-basket-order
+          ng-repeat="order in vm.ordersForReview"
           order="order"
           on-remove="vm.removeFromBasket(order)"
           on-restore="vm.restoreToBasket(order)">
         </l-basket-order>
 
-        <md-divider></md-divider>
+        <div
+          ng-if="vm.ordersForReview.length > 1"
+          class="md-headline"
+          layout-padding>
+          Всего к оплате: {{ vm.totalToPay() }} грн
+        </div>
+
+        <md-button
+          ng-if="vm.ordersForReview.length > 1"
+          class="md-raised md-primary"
+          ng-click="vm.makeOrder()"
+          ng-disabled="!vm.isOrdersValid()">
+          Оформить заказ
+        </md-button>
       </div>
-    </md-card>
-
-    <div class="md-headline" layout="row" layout-padding layout-align="end center">Всего к оплате: {{ vm.totalToPay() }} грн</div>
-
-    <div layout="column">
-      <md-button
-        class="md-raised md-primary"
-        ng-click="vm.makeOrder()"
-        ng-disabled="!vm.isOrdersValid()">
-        Оформить заказ
-      </md-button>
-    </div>
-  </md-content>
-
-  <div ng-if="vm.isEmpty()" layout="column" layout-padding>
-    В корзине пусто
-  <div>
+    </md-content>
+  </div>
 </div>
-

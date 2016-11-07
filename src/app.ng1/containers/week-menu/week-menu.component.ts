@@ -90,8 +90,8 @@ export class WeekMenuController {
     this.selectedWeek = Week.Next;
   }
 
-  togglePastDaysMenu(): void {
-    this.pastDaysMenuHidden = !this.pastDaysMenuHidden;
+  switchPastDaysMenu(switched: boolean): void {
+    this.pastDaysMenuHidden = switched;
   }
 
   goToBasket(): void {
@@ -189,6 +189,7 @@ export class WeekMenuController {
 
     this.lMenuService.fetchTwoWeeksMenu()
       .then(twoWeeks => {
+        console.log('twoWeeks', twoWeeks);
         [this.currentWeekMenu, this.nextWeekMenu] = twoWeeks;
         [this.pastDaysMenu, this.actualMenu] = this.lMenuService.splitToPastAndActualDaysMenu(this.currentWeekMenu);
 
@@ -199,7 +200,7 @@ export class WeekMenuController {
 
         this.initSelectedWeek();
 
-        // return this.lPriceService.fetchPriceGroupsForActualDays();
+        return this.lPriceService.fetchPriceGroupsForActualDays();
       })
       .catch(err => this.$log.error(err))
       .finally(() => this.loading = false);

@@ -13,10 +13,6 @@
   .price-label {
     margin: 6px 8px;
   }
-
-  .l-menu-size {
-    padding: 16px;
-  }
 }
 
 /* todo: move styles to <l-selector>: DEZ-768 */
@@ -45,6 +41,8 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
   padding: 16px;
 }
 
+
+/*
 .l-basket-order-footer {
   padding: 16px;
 }
@@ -58,6 +56,7 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
 .l-basket-order md-card-content {
   padding-bottom: 0px;
 }
+*/
 
 .l-user-card md-card-content {
   padding-bottom: 0px;
@@ -71,10 +70,8 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
   color: red;
 }
 
-.l-week-menu {
-  .l-speed-dial {
-    position: fixed;
-  }
+.l-speed-dial {
+  position: fixed;
 }
 
 .l-my-orders-item {
@@ -84,6 +81,23 @@ md-list-item._md-no-proxy.l-no-list-item-padding {
   }
 }
 
+.l-menu-image {
+  width: 100%;
+  height: auto;
+}
+
+.l-week-menu {
+  height: 100%;
+}
+
 .l-sidebar {
+  height: 100%;
+}
+
+.l-basket {
+  height: 100%;
+}
+
+.l-height-100 {
   height: 100%;
 }

@@ -47,6 +47,7 @@ import {SwitchComponent} from './app.ng1/components/switch/switch.component';
 import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-selector.component';
 import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.component';
 import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
+import {MdButtonComponent} from './app.ng1/components/md-button/md-button.component';
 
 import {MenuService} from './app.ng1/models/menu';
 import {OrderService} from './app.ng1/models/order';
@@ -61,16 +62,25 @@ import {DateFilter} from './app.ng1/filters/date.filter';
 import {routesConfig} from './routes';
 import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorConfig, IAppConfig} from './config';
 
-// angular 2
+// -------------------------------------------------------------------------- //
+// angular 2 imports: BEGIN
+// -------------------------------------------------------------------------- //
 import {upgradeAdapter} from './app/upgrade-adapter';
 import {AppComponent} from './app/app.component';
+import {AppModule} from './app/app.module';
+import {
+  FlashMessageComponent,
+  PastDaysSwitcherComponent
+} from './app/shared/components';
+// -------------------------------------------------------------------------- //
+// angular 2 imports: END
+// -------------------------------------------------------------------------- //
 
 import './index.scss';
 
 // fake-api: comment out when API implemented
 // import 'angular-mocks';
 // import {fakeApiConfig} from './fake-api/config';
-
 
 angular
   .module('app', [
@@ -116,11 +126,20 @@ angular
   .component('lSidebar', SidebarComponent)
   .component('lPrices', PricesComponent)
   .component('lPricesToolbar', PricesToolbarComponent)
+  .component('lFlashMessage', FlashMessageComponent)
+  .component('lMdButton', MdButtonComponent)
+  // -------------------------------------------------------------------------- //
+  // angular 2 components: BEGIN
+  // -------------------------------------------------------------------------- //
   // if no any specified we have such error:
   // "Argument of type 'Function' is not assignable to parameter of type 'any[]'"
   // it looks like angular typings issue
   .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
-  // .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
+  .directive('lFlashMessage', <any> upgradeAdapter.downgradeNg2Component(FlashMessageComponent))
+  .directive('lPastDaysSwitcher', <any> upgradeAdapter.downgradeNg2Component(PastDaysSwitcherComponent))
+  // -------------------------------------------------------------------------- //
+  // angular 2 components: END
+  // -------------------------------------------------------------------------- //
 
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
@@ -146,5 +165,8 @@ function fetchConfig() {
 }
 
 function bootstrap() {
-  angular.element(document).ready(() => upgradeAdapter.bootstrap(document.body, ['app']));
+  angular.element(document).ready(() => {
+    upgradeAdapter['ng2AppModule'] = AppModule;
+    upgradeAdapter.bootstrap(document.body, ['app']);
+  });
 }
