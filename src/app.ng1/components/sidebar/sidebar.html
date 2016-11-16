@@ -17,7 +17,7 @@
           <p>Меню на неделю</p>
         </md-list-item>
 
-        <md-list-item ng-click="vm.goToMyOrders()" ng-if="vm.isUserRegistered()">
+        <md-list-item ng-click="vm.goToMyOrders()" ng-if="vm.userRegistered">
           <md-icon aria-label="go to my orders">receipt</md-icon>
           <p>Мои заказы</p>
         </md-list-item>
@@ -27,7 +27,7 @@
           <p>Корзина</p>
         </md-list-item>
 
-        <md-list-item ng-click="vm.goToPaymentPage()" ng-if="vm.isUserRegistered()">
+        <md-list-item ng-click="vm.goToPaymentPage()" ng-if="vm.userRegistered">
           <md-icon aria-label="payment">payment</md-icon>
           <p>Оплата</p>
         </md-list-item>
