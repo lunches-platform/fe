@@ -1,61 +1,61 @@
-<div class="l-payment" layout="column" layout-fill>
-  <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
-
-  <l-payment-toolbar
-    ng-if="!vm.isLoading()"
-    user="vm.user"
-    on-toggle-sidebar="vm.onToggleSidebar()"
-  >
-  </l-payment-toolbar>
-
+<div class="l-payment l-height-100" layout="row">
   <l-sidebar user="vm.user"></l-sidebar>
 
-  <md-content ng-if="!vm.isLoading()">
-    <md-card ng-if="vm.hasData()">
+  <div layout="column" flex>
+    <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-      <md-card-content>
-        <md-radio-group ng-model="vm.paymentType" layout="row">
-          <md-radio-button value="card" class="md-primary">Карта</md-radio-button>
-          <md-radio-button value="cash">Наличка</md-radio-button>
-        </md-radio-group>
+    <l-payment-toolbar
+      ng-if="!vm.isLoading()"
+      user="vm.user"
+      on-toggle-sidebar="vm.onToggleSidebar()">
+    </l-payment-toolbar>
 
-        <div ng-if="vm.paymentType == 'card'">
-          <p>Переведите деньги на карту ПриватБанка</p>
-          <p class="md-title">{{ vm.paymentCard.number }}</p>
-          <p class="md-title">{{ vm.paymentCard.holder }}</p>
-          <p>Укажите ваш ID клиента в комментарии к платежу</p>
-          <span class="md-title">ID: {{ vm.user.clientId }}</span></p>
-          <p>После поступления денег на счет, ваши заказы будут оплачены</p>
+    <md-content ng-if="!vm.isLoading()" class="l-height-100">
+      <md-card ng-if="vm.hasData()">
+
+        <md-card-content>
+          <md-radio-group ng-model="vm.paymentType" layout="row">
+            <md-radio-button value="card">Карта</md-radio-button>
+            <md-radio-button value="cash">Наличка</md-radio-button>
+          </md-radio-group>
+
+          <div ng-if="vm.paymentType == 'card'">
+            <p>Переведите деньги на карту ПриватБанка</p>
+            <p class="md-title">{{ vm.paymentCard.number }}</p>
+            <p class="md-title">{{ vm.paymentCard.holder }}</p>
+            <p>Укажите ваш ID клиента в комментарии к платежу</p>
+            <span class="md-title">ID: {{ vm.user.clientId }}</span></p>
+            <p>После поступления денег на счет, ваши заказы будут оплачены</p>
+          </div>
+
+          <div ng-if="vm.paymentType == 'cash'">
+            <p>Занесите деньги на ресепшн</p>
+            <p>Укажите ваш ID клиента в комментарии к платежу и сумму, которую вы внесли</p>
+            <span class="md-title">ID: {{ vm.user.clientId }}</span></p>
+            <p>После поступления денег на счет, ваши заказы будут оплачены</p>
+          </div>
+        </md-card-content>
+
+        <md-divider></md-divider>
+
+        <div flex class="md-title l-total-to-pay" layout="row" layout-align="end center">
+          <div>Всего к оплате: {{ vm.totalToPay() }} грн</div>
         </div>
+      </md-card>
 
-        <div ng-if="vm.paymentType == 'cash'">
-          <p>Занесите деньги на ресепшн</p>
-          <p>Укажите ваш ID клиента в комментарии к платежу и сумму, которую вы внесли</p>
-          <span class="md-title">ID: {{ vm.user.clientId }}</span></p>
-          <p>После поступления денег на счет, ваши заказы будут оплачены</p>
-        </div>
-      </md-card-content>
+      <div ng-if="vm.hasData()" layout="row">
+        <md-button aria-label="my orders" class="md-primary" flex="40" ng-click="vm.goToMyOrders()">
+          <md-icon>receipt</md-icon>
+          Мои заказы
+        </md-button>
 
-      <md-divider></md-divider>
-
-      <div flex class="md-title l-total-to-pay" layout="row" layout-align="end center">
-        <div>Всего к оплате: {{ vm.totalToPay() }} грн</div>
+        <md-button aria-label="week menu" flex="60" ng-click="vm.goToWeekMenu()">
+          <md-icon>restaurant_menu</md-icon>
+          Меню на неделю
+        </md-button>
       </div>
-    </md-card>
 
-    <div ng-if="vm.hasData()" layout="row">
-      <md-button aria-label="my orders" class="md-primary" flex="40" ng-click="vm.goToMyOrders()">
-        <md-icon>receipt</md-icon>
-        Мои заказы
-      </md-button>
-
-      <md-button aria-label="week menu" flex="60" ng-click="vm.goToWeekMenu()">
-        <md-icon>restaurant_menu</md-icon>
-        Меню на неделю
-      </md-button>
-    </div>
-
-    <div ng-if="vm.isEmpty()" layout-padding>Все оплачено<div>
-  </md-content>
+      <div ng-if="vm.isEmpty()" layout-padding>Все оплачено<div>
+    </md-content>
+  </div>
 </div>
-
