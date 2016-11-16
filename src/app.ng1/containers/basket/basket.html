@@ -20,14 +20,14 @@
         <l-user-card user="vm.user" on-changed="vm.onUserChanged(user)"></l-user-card>
 
         <div
-          ng-if="vm.ordersForReview.length > 1"
+          ng-if="vm.ordersForReview.length"
           class="md-headline"
           layout-padding>
           Всего к оплате: {{ vm.totalToPay() }} грн
         </div>
 
         <md-button
-          ng-if="vm.ordersForReview.length > 1"
+          ng-if="vm.ordersForReview.length"
           class="md-raised md-primary"
           ng-click="vm.makeOrder()"
           ng-disabled="!vm.isOrdersValid()">
@@ -47,14 +47,14 @@
         </l-basket-order>
 
         <div
-          ng-if="vm.ordersForReview.length > 1"
+          ng-if="vm.ordersForReview.length"
           class="md-headline"
           layout-padding>
           Всего к оплате: {{ vm.totalToPay() }} грн
         </div>
 
         <md-button
-          ng-if="vm.ordersForReview.length > 1"
+          ng-if="vm.ordersForReview.length"
           class="md-raised md-primary"
           ng-click="vm.makeOrder()"
           ng-disabled="!vm.isOrdersValid()">
