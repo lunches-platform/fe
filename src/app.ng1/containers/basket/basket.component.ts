@@ -45,12 +45,10 @@ export class BasketController {
       .then(() => {
         this.lToastService.show('Спасибо! Заказ размещен!');
         this.clearBasket();
+        this.$state.go('payment');
       })
       .catch(err => {
         this.lToastService.show('Ошибка! Не удалось разместить заказ');
-      })
-      .finally(() => {
-        this.$state.go('payment');
       });
   }
 
