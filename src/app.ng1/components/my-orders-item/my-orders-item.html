@@ -1,17 +1,15 @@
-<div layout="row" class="l-my-orders-item" layout-align="center center">
-  <md-card flex-gt-sm="50">
+<md-card class="l-my-orders-item">
 
-    <md-card-header>
-      <md-card-header-text>
-        <span class="md-title">{{ vm.order.shipmentDate | lDate }}</span>
-      </md-card-header-text>
-    </md-card-header>
+  <md-card-header>
+    <md-card-header-text class="md-title">
+      {{ vm.order.shipmentDate | lDate }}
+    </md-card-header-text>
+  </md-card-header>
 
-    <div>
-      <img ng-src="{{ vm.coverUrl() }}" class="md-card-image" />
-    </div>
+  <div layout="column" layout-gt-xs="row">
+    <l-menu-cover [url]="vm.coverUrl()" flex-gt-xs="50" flex-order-gt-xs="2"></l-menu-cover>
 
-    <md-card-content>
+    <md-card-content flex-order-gt-xs="1" flex-gt-xs="50">
       <md-list>
         <md-list-item ng-repeat="lineItem in vm.order.items track by lineItem.product.id" class="l-no-left-padding">
           <img ng-src="{{ ::vm.productTypeToIconUrl(lineItem.product.type) }}" alt="meat" class="material-icons l-png-icon" />
@@ -19,28 +17,28 @@
         </md-list-item>
       </md-list>
     </md-card-content>
+  </div>
 
-    <md-divider></md-divider>
+  <md-divider></md-divider>
 
-    <div layout="row">
-      <l-size-label size="vm.order.items[0].size"></l-size-label>
-      <l-payment-status paid="vm.order.paid" ng-click="vm.onPay()"></l-payment-status>
-      <span flex></span>
-      <span class="md-subhead l-price-label" layout="row" layout-align="center center">{{ vm.order.price }} грн</span>
-    </div>
+  <div layout="row">
+    <l-size-label size="vm.order.items[0].size"></l-size-label>
+    <l-payment-status paid="vm.order.paid" ng-click="vm.onPay()"></l-payment-status>
+    <span flex></span>
+    <span class="md-subhead l-price-label" layout="row" layout-align="center center">{{ vm.order.price }} грн</span>
+  </div>
 
-    <md-divider></md-divider>
+  <md-divider></md-divider>
 
-    <md-card-actions layout="row" layout-align="start center" ng-if="vm.isExist()">
-      <md-button ng-click="vm.onCancel()" ng-disabled="!vm.isCancelAllowed()">Отменить</md-button>
-      <span class="md-body-1" ng-if="!vm.isCancelAllowed()">Заказ отменить уже нельзя</span>
-    </md-card-actions>
+  <md-card-actions layout="row" layout-align="start center" ng-if="vm.isExist()">
+    <md-button ng-click="vm.onCancel()" ng-disabled="!vm.isCancelAllowed()">Отменить</md-button>
+    <span class="md-body-1" ng-if="!vm.isCancelAllowed()">Заказ отменить уже нельзя</span>
+  </md-card-actions>
 
-    <md-card-actions layout="row" layout-align="start center" ng-if="vm.isCanceled()">
-      <span class="md-body-1 l-green">Заказ отменен</span>
-      <span flex></span>
-      <md-button class="md-primary" ng-click="vm.onNewOrder()">Новый</md-button>
-    </md-card-actions>
+  <md-card-actions layout="row" layout-align="start center" ng-if="vm.isCanceled()">
+    <span class="md-body-1 l-green">Заказ отменен</span>
+    <span flex></span>
+    <md-button class="md-primary" ng-click="vm.onNewOrder()">Новый</md-button>
+  </md-card-actions>
 
-  </md-card>
-</div>
+</md-card>
