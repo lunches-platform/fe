@@ -1,35 +1,36 @@
-<div class="l-my-orders" layout="column" layout-fill>
-  <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
-
-  <l-my-orders-toolbar
-    ng-if="!vm.isLoading()"
-    user="vm.user"
-    on-toggle-sidebar="vm.onToggleSidebar()"
-  >
-  </l-my-orders-toolbar>
-
+<div class="l-my-orders l-height-100" layout="row">
   <l-sidebar user="vm.user"></l-sidebar>
 
-  <md-content ng-if="!vm.isLoading()">
-    <div ng-if="vm.hasData()">
+  <div layout="column" flex>
+    <md-progress-linear ng-if="vm.isLoading()" md-mode="indeterminate"></md-progress-linear>
 
-      <l-date-range-selector
-        range="vm.selectedDateRange"
-        on-changed="vm.onDateRangeChanged(dateRange)">
-      </l-date-range-selector>
+    <l-my-orders-toolbar
+      ng-if="!vm.isLoading()"
+      user="vm.user"
+      on-toggle-sidebar="vm.onToggleSidebar()">
+    </l-my-orders-toolbar>
 
-      <l-my-orders-item
-        ng-repeat="order in vm.orders"
-        order="order"
-        on-cancel="vm.onCancel(order, oldOrder)"
-        on-new-order="vm.onNewOrder()"
-        on-pay="vm.onPay(order)"
-        >
-      </l-my-orders-item>
-    </div>
+    <md-content ng-if="!vm.isLoading()" layout="row" layout-align="center center" class="l-height-100">
+      <div ng-if="vm.isEmpty()" layout="column" flex flex-gt-xs="70" class="l-height-100">
+        <l-flash-message>Нет заказов за выбранный период времени</l-flash-message>
+      </div>
 
-    <div ng-if="vm.isEmpty()" layout-padding>
-      Нет заказов за выбранный период времени
-    <div>
-  </md-content>
+      <div ng-if="vm.hasData()" layout="column" flex flex-gt-xs="70" class="l-height-100">
+
+        <l-date-range-selector
+          range="vm.selectedDateRange"
+          on-changed="vm.onDateRangeChanged(dateRange)">
+        </l-date-range-selector>
+
+        <l-my-orders-item
+          ng-repeat="order in vm.orders"
+          order="order"
+          on-cancel="vm.onCancel(order, oldOrder)"
+          on-new-order="vm.onNewOrder()"
+          on-pay="vm.onPay(order)">
+        </l-my-orders-item>
+      </div>
+
+    </md-content>
+  </div>
 </div>
