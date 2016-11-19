@@ -81,11 +81,21 @@ export class UserService {
   }
 
   update(user: IUser): IPromise<IUser> {
-    return this.updateInDb(user).then(this.storeToLocalStorage.bind(this));
+    return this.updateInDb(user)
+      .then(user => {
+        this.storeToLocalStorage(user);
+
+        return user;
+      });
   }
 
   create(user: IUser): IPromise<IUser> {
-    return this.createInDb(user).then(this.storeToLocalStorage.bind(this));
+    return this.createInDb(user)
+      .then(user => {
+        this.storeToLocalStorage(user);
+
+        return user;
+      });
   }
 
   sync(user: IUser): IPromise<IUser> {
@@ -101,16 +111,20 @@ export class UserService {
     const url = this.lConfig.apiUrl + '/users';
     const body = this.toApiBody(user);
 
-    return this.$http.post<IUserApiResponseBody>(url, body)
-      .then<IUser>(res => this.fromApiBody(res.data));
+    return this.$http.post<IUser>(url, body)
+      .then(res => res.data);
+    // return this.$http.post<IUserApiResponseBody>(url, body)
+    //   .then<IUser>(res => this.fromApiBody(res.data));
   }
 
   updateInDb(user: IUser): IPromise<IUser> {
     const url = this.lConfig.apiUrl + '/users/' + user.fullname;
     const body = this.toApiBody(user);
 
-    return this.$http.put<IUserApiResponseBody>(url, body)
-      .then<IUser>(res => this.fromApiBody(res.data));
+    return this.$http.put<IUser>(url, body)
+      .then(res => res.data);
+    // return this.$http.put<IUserApiResponseBody>(url, body)
+    //   .then<IUser>(res => this.fromApiBody(res.data));
   }
 
   isEqual(user1: IUser, user2: IUser): boolean {
