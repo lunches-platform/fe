@@ -12,7 +12,7 @@ export interface ILineItem {
 }
 
 export interface ILineItemRequestBody {
-  productId: number;
+  dishId: number;
   size: string;
   quantity: number;
 }

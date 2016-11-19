@@ -33,8 +33,9 @@ export type PaymentType = 'cash' | 'card';
 
 export interface IPlaceOrderRequestBody {
   items: ILineItemRequestBody[];
-  userId: string;
   shipmentDate: string;
+  userId: string;
+  address: string;
 }
 
 // todo: add types: https://github.com/lunches-platform/fe/issues/17
@@ -219,13 +220,14 @@ export class OrderService {
       items: this.prepareLineItemsForApi(order.items),
       userId: order.user.id,
       shipmentDate: order.shipmentDate,
+      address: order.user.address
     };
   }
 
   private prepareLineItemsForApi(items: ILineItem[]): ILineItemRequestBody[] {
     return items.map(item => {
       return {
-        productId: item.product.id,
+        dishId: item.product.id,
         size: item.size,
         quantity: item.quantity
       };

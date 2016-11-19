@@ -1,5 +1,5 @@
 // third-party deps
-import {cloneDeep, isEqual, get} from 'lodash';
+import {cloneDeep, isEqual, get, assign, omit} from 'lodash';
 import {ILogService, IHttpService, IPromise, IQService} from 'angular';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
@@ -9,8 +9,26 @@ import {IAppConfig} from '../../config';
 export interface IUser {
   id: string;
   fullname: string;
+  balance: number;
+  credit: number;
+  clientId: number;
   address: string;
-  clientId: string;
+  created: string;
+}
+
+export interface IUserApiResponseBody {
+  id: string;
+  username: string;
+  balance: number;
+  credit: number;
+  clientId: number;
+  address: string;
+  created: string;
+}
+
+export interface IUserApiRequestBody {
+  username: string;
+  address: string;
 }
 
 enum Address {
@@ -63,19 +81,21 @@ export class UserService {
   }
 
   update(user: IUser): IPromise<IUser> {
-    return this.updateInDb(user).then(user => {
-      this.storeToLocalStorage(user);
+    return this.updateInDb(user)
+      .then(user => {
+        this.storeToLocalStorage(user);
 
-      return user;
-    });
+        return user;
+      });
   }
 
   create(user: IUser): IPromise<IUser> {
-    return this.createInDb(user).then(user => {
-      this.storeToLocalStorage(user);
+    return this.createInDb(user)
+      .then(user => {
+        this.storeToLocalStorage(user);
 
-      return user;
-    });
+        return user;
+      });
   }
 
   sync(user: IUser): IPromise<IUser> {
@@ -89,12 +109,22 @@ export class UserService {
 
   createInDb(user: IUser): IPromise<IUser> {
     const url = this.lConfig.apiUrl + '/users';
-    return this.$http.post<IUser>(url, {username: user.fullname, address: user.address}).then(res => res.data);
+    const body = this.toApiBody(user);
+
+    return this.$http.post<IUser>(url, body)
+      .then(res => res.data);
+    // return this.$http.post<IUserApiResponseBody>(url, body)
+    //   .then<IUser>(res => this.fromApiBody(res.data));
   }
 
   updateInDb(user: IUser): IPromise<IUser> {
-    const baseUrl = this.lConfig.apiUrl;
-    return this.$http.put<IUser>(baseUrl + '/users/' + user.fullname, {address: user.address}).then(res => res.data);
+    const url = this.lConfig.apiUrl + '/users/' + user.fullname;
+    const body = this.toApiBody(user);
+
+    return this.$http.put<IUser>(url, body)
+      .then(res => res.data);
+    // return this.$http.put<IUserApiResponseBody>(url, body)
+    //   .then<IUser>(res => this.fromApiBody(res.data));
   }
 
   isEqual(user1: IUser, user2: IUser): boolean {
@@ -106,7 +136,10 @@ export class UserService {
       id: null,
       fullname: fullname || '',
       address: address || '',
-      clientId: ''
+      clientId: 0,
+      balance: 0,
+      credit: 0,
+      created: null
     };
   }
 
@@ -148,6 +181,18 @@ export class UserService {
     let user = cloneDeep(inputUser);
     user.address = this.setFloorFor(user.address, floor);
     return user;
+  }
+
+  fromApiBody(userApi: IUserApiResponseBody): IUser {
+    return <IUser> assign(
+      {},
+      omit(userApi, 'username'),
+      {fullname: userApi.username}
+    );
+  }
+
+  toApiBody(user: IUser): IUserApiRequestBody {
+    return {username: user.fullname, address: user.address};
   }
 
   private fetchAddressPartFrom(address: string, partIndex: number): string {
