@@ -46,7 +46,10 @@ import {SwitchComponent} from './app.ng1/components/switch/switch.component';
 import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-selector.component';
 import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.component';
 import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
+
+// angular material wrapper imports
 import {MdButtonComponent} from './app.ng1/components/md-button/md-button.component';
+import {MdContentComponent} from './app.ng1/components/md-content/md-content.component';
 
 import {MenuService} from './app.ng1/models/menu';
 import {OrderService} from './app.ng1/models/order';
@@ -127,7 +130,10 @@ angular
   .component('lPrices', PricesComponent)
   .component('lPricesToolbar', PricesToolbarComponent)
   .component('lFlashMessage', FlashMessageComponent)
+
+  // angular material wrapper definitions
   .component('lMdButton', MdButtonComponent)
+  .component('lMdContent', MdContentComponent)
   // -------------------------------------------------------------------------- //
   // angular 2 components: BEGIN
   // -------------------------------------------------------------------------- //
