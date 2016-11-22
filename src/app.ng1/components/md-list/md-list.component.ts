@@ -1,10 +1,10 @@
 import {IComponentOptions} from 'angular';
 
-export const MdButtonComponent: IComponentOptions = {
+export const MdListComponent: IComponentOptions = {
   template: `
-    <md-button class="{{ vm.klass }}">
+    <md-list class="{{ vm.klass }}">
       <ng-transclude></ng-transclude>
-    </md-button>
+    </md-list>
   `,
   controllerAs: 'vm',
   bindings: {
