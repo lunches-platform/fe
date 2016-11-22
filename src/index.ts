@@ -51,6 +51,7 @@ import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
 import {MdButtonComponent} from './app.ng1/components/md-button/md-button.component';
 import {MdContentComponent} from './app.ng1/components/md-content/md-content.component';
 import {MdToolbarComponent} from './app.ng1/components/md-toolbar/md-toolbar.component';
+import {MdSidenavComponent} from './app.ng1/components/md-sidenav/md-sidenav.component';
 
 import {MenuService} from './app.ng1/models/menu';
 import {OrderService} from './app.ng1/models/order';
@@ -136,6 +137,7 @@ angular
   .component('lMdButton', MdButtonComponent)
   .component('lMdContent', MdContentComponent)
   .component('lMdToolbar', MdToolbarComponent)
+  .component('lMdSidenav', MdSidenavComponent)
   // -------------------------------------------------------------------------- //
   // angular 2 components: BEGIN
   // -------------------------------------------------------------------------- //
