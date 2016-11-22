@@ -4,7 +4,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
   selector: 'l-past-days-switcher',
   template: `
     <div class="layout-column layout-align-center-center">
-      <l-md-button class="md-raise" (click)="switch.emit(!switched)">
+      <l-md-button klass="md-raise" (click)="switch.emit(!switched)">
         {{ switched ? 'Показать прошедшие дни' : 'Спрятать прошедшие дни' }}
       </l-md-button>
     </div>
