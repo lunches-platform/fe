@@ -50,6 +50,7 @@ import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
 // angular material wrapper imports
 import {MdButtonComponent} from './app.ng1/components/md-button/md-button.component';
 import {MdContentComponent} from './app.ng1/components/md-content/md-content.component';
+import {MdToolbarComponent} from './app.ng1/components/md-toolbar/md-toolbar.component';
 
 import {MenuService} from './app.ng1/models/menu';
 import {OrderService} from './app.ng1/models/order';
@@ -134,6 +135,7 @@ angular
   // angular material wrapper definitions
   .component('lMdButton', MdButtonComponent)
   .component('lMdContent', MdContentComponent)
+  .component('lMdToolbar', MdToolbarComponent)
   // -------------------------------------------------------------------------- //
   // angular 2 components: BEGIN
   // -------------------------------------------------------------------------- //

@@ -13,6 +13,7 @@ import {
 // angular material 1.x wrapper components
 const LMdButtonComponent = upgradeAdapter.upgradeNg1Component('lMdButton');
 const LMdContentComponent = upgradeAdapter.upgradeNg1Component('lMdContent');
+const LMdToolbarComponent = upgradeAdapter.upgradeNg1Component('lMdToolbar');
 
 import {RandomNumberService} from './random-number.service';
 
@@ -20,6 +21,7 @@ import {RandomNumberService} from './random-number.service';
   declarations: [
     LMdButtonComponent,
     LMdContentComponent,
+    LMdToolbarComponent,
 
     ExampleComponent,
     FlashMessageComponent,
@@ -30,6 +32,7 @@ import {RandomNumberService} from './random-number.service';
   exports: [
     LMdButtonComponent,
     LMdContentComponent,
+    LMdToolbarComponent,
 
     ExampleComponent,
     FlashMessageComponent,
