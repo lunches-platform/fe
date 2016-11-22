@@ -1,10 +1,11 @@
 import {IComponentOptions} from 'angular';
 
-export const MdContentComponent: IComponentOptions = {
+export const MdToolbarComponent: IComponentOptions = {
   template: `
-    <md-content class="{{ vm.class }}">
+    <md-toolbar
+      class="{{ vm.class }}">
       <ng-transclude></ng-transclude>
-    </md-content>
+    </md-toolbar>
   `,
   controllerAs: 'vm',
   bindings: {
