@@ -54,6 +54,7 @@ import {MdToolbarComponent} from './app.ng1/components/md-toolbar/md-toolbar.com
 import {MdSidenavComponent} from './app.ng1/components/md-sidenav/md-sidenav.component';
 import {MdListComponent} from './app.ng1/components/md-list/md-list.component';
 import {MdListItemComponent} from './app.ng1/components/md-list-item/md-list-item.component';
+import {MdIconComponent} from './app.ng1/components/md-icon/md-icon.component';
 
 import {MenuService} from './app.ng1/models/menu';
 import {OrderService} from './app.ng1/models/order';
@@ -142,6 +143,7 @@ angular
   .component('lMdSidenav', MdSidenavComponent)
   .component('lMdList', MdListComponent)
   .component('lMdListItem', MdListItemComponent)
+  .component('lMdIcon', MdIconComponent)
   // -------------------------------------------------------------------------- //
   // angular 2 components: BEGIN
   // -------------------------------------------------------------------------- //
