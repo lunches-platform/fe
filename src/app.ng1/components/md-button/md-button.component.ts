@@ -2,7 +2,7 @@ import {IComponentOptions} from 'angular';
 
 export const MdButtonComponent: IComponentOptions = {
   template: `
-    <md-button class="{{ vm.klass }}">
+    <md-button ng-class="{{ vm.klass.split(' ') }}">
       <ng-transclude></ng-transclude>
     </md-button>
   `,

@@ -3,7 +3,7 @@ import {IComponentOptions} from 'angular';
 export const MdSidenavComponent: IComponentOptions = {
   template: `
     <md-sidenav
-      class="{{ vm.class }}"
+      ng-class="{{ vm.klass.split(' ') }}"
       md-is-locked-open="vm.mdIsLockedOpen"
       md-component-id="{{ vm.mdComponentId }}">
       <ng-transclude></ng-transclude>
@@ -11,7 +11,7 @@ export const MdSidenavComponent: IComponentOptions = {
   `,
   controllerAs: 'vm',
   bindings: {
-    class: '@',
+    klass: '@',
     mdIsLockedOpen: '<',
     mdComponentId: '@'
   }

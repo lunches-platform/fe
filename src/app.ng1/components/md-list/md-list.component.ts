@@ -2,7 +2,7 @@ import {IComponentOptions} from 'angular';
 
 export const MdListComponent: IComponentOptions = {
   template: `
-    <md-list class="{{ vm.klass }}">
+    <md-list ng-class="{{ vm.klass.split(' ') }}">
       <ng-transclude></ng-transclude>
     </md-list>
   `,
