@@ -15,8 +15,6 @@ const LMdButtonComponent = upgradeAdapter.upgradeNg1Component('lMdButton');
 const LMdContentComponent = upgradeAdapter.upgradeNg1Component('lMdContent');
 const LMdToolbarComponent = upgradeAdapter.upgradeNg1Component('lMdToolbar');
 const LMdSidenavComponent = upgradeAdapter.upgradeNg1Component('lMdSidenav');
-const LMdListComponent = upgradeAdapter.upgradeNg1Component('lMdList');
-const LMdListItemComponent = upgradeAdapter.upgradeNg1Component('lMdListItem');
 const LMdIconComponent = upgradeAdapter.upgradeNg1Component('lMdIcon');
 
 const ListComponent = upgradeAdapter.upgradeNg1Component('lList');
@@ -30,8 +28,6 @@ import {RandomNumberService} from './random-number.service';
     LMdContentComponent,
     LMdToolbarComponent,
     LMdSidenavComponent,
-    LMdListComponent,
-    LMdListItemComponent,
     LMdIconComponent,
 
     // ng1 components
@@ -50,8 +46,6 @@ import {RandomNumberService} from './random-number.service';
     LMdContentComponent,
     LMdToolbarComponent,
     LMdSidenavComponent,
-    LMdListComponent,
-    LMdListItemComponent,
     LMdIconComponent,
 
     // ng1 components
