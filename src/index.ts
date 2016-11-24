@@ -46,14 +46,13 @@ import {SwitchComponent} from './app.ng1/components/switch/switch.component';
 import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-selector.component';
 import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.component';
 import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
+import {ListComponent} from './app.ng1/components/list/list.component';
 
 // angular material wrapper imports
 import {MdButtonComponent} from './app.ng1/components/md-button/md-button.component';
 import {MdContentComponent} from './app.ng1/components/md-content/md-content.component';
 import {MdToolbarComponent} from './app.ng1/components/md-toolbar/md-toolbar.component';
 import {MdSidenavComponent} from './app.ng1/components/md-sidenav/md-sidenav.component';
-import {MdListComponent} from './app.ng1/components/md-list/md-list.component';
-import {MdListItemComponent} from './app.ng1/components/md-list-item/md-list-item.component';
 import {MdIconComponent} from './app.ng1/components/md-icon/md-icon.component';
 
 import {MenuService} from './app.ng1/models/menu';
@@ -134,15 +133,13 @@ angular
   .component('lSidebar', SidebarComponent)
   .component('lPrices', PricesComponent)
   .component('lPricesToolbar', PricesToolbarComponent)
-  .component('lFlashMessage', FlashMessageComponent)
+  .component('lList', ListComponent)
 
   // angular material wrapper definitions
   .component('lMdButton', MdButtonComponent)
   .component('lMdContent', MdContentComponent)
   .component('lMdToolbar', MdToolbarComponent)
   .component('lMdSidenav', MdSidenavComponent)
-  .component('lMdList', MdListComponent)
-  .component('lMdListItem', MdListItemComponent)
   .component('lMdIcon', MdIconComponent)
   // -------------------------------------------------------------------------- //
   // angular 2 components: BEGIN
