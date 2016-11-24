@@ -46,6 +46,7 @@ import {SwitchComponent} from './app.ng1/components/switch/switch.component';
 import {FloorSelectorComponent} from './app.ng1/components/floor-selector/floor-selector.component';
 import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.component';
 import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
+import {ListComponent} from './app.ng1/components/list/list.component';
 
 // angular material wrapper imports
 import {MdButtonComponent} from './app.ng1/components/md-button/md-button.component';
@@ -134,7 +135,7 @@ angular
   .component('lSidebar', SidebarComponent)
   .component('lPrices', PricesComponent)
   .component('lPricesToolbar', PricesToolbarComponent)
-  .component('lFlashMessage', FlashMessageComponent)
+  .component('lList', ListComponent)
 
   // angular material wrapper definitions
   .component('lMdButton', MdButtonComponent)
