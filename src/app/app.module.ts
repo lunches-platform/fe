@@ -3,8 +3,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
-import {CounterModule} from './counter';
 import {SharedModule} from './shared';
+import {UserModule} from './user';
+import {CounterModule} from './counter';
+
 import {reducer} from './store';
 
 import {AppComponent} from './app.component';
@@ -18,6 +20,7 @@ import {AppComponent} from './app.component';
     StoreModule.provideStore(reducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     SharedModule.forRoot(),
+    UserModule,
     CounterModule
   ],
   bootstrap: [AppComponent]
