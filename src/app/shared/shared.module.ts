@@ -1,25 +1,27 @@
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-
-import {upgradeAdapter} from '../upgrade-adapter';
+import {CommonModule} from '@angular/common';
 
 import {
+  // angular material 1.x wrapper components
+  LMdButtonComponent,
+  LMdContentComponent,
+  LMdToolbarComponent,
+  LMdSidenavComponent,
+  LMdIconComponent,
+
+  ListComponent,
+
   ExampleComponent,
   FlashMessageComponent,
   PastDaysSwitcherComponent,
   MenuCoverComponent
 } from './components';
 
-// angular material 1.x wrapper components
-const LMdButtonComponent = upgradeAdapter.upgradeNg1Component('lMdButton');
-const LMdContentComponent = upgradeAdapter.upgradeNg1Component('lMdContent');
-const LMdToolbarComponent = upgradeAdapter.upgradeNg1Component('lMdToolbar');
-const LMdSidenavComponent = upgradeAdapter.upgradeNg1Component('lMdSidenav');
-const LMdIconComponent = upgradeAdapter.upgradeNg1Component('lMdIcon');
-
-const ListComponent = upgradeAdapter.upgradeNg1Component('lList');
 
 @NgModule({
+  imports: [
+    CommonModule
+  ],
   declarations: [
     // ng1 md-* wrappers
     LMdButtonComponent,
@@ -37,7 +39,6 @@ const ListComponent = upgradeAdapter.upgradeNg1Component('lList');
     PastDaysSwitcherComponent,
     MenuCoverComponent
   ],
-  imports: [CommonModule],
   exports: [
     CommonModule,
     // ng1 md-* wrappers
