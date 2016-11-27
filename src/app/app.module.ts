@@ -1,6 +1,7 @@
 // angular 2 platform
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {UpgradeModule} from '@angular/upgrade/static';
 
 // app modules
 import {CoreModule} from './core';
@@ -17,12 +18,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppStoreModule} from './app-store.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     // support modules
     BrowserModule,
+    UpgradeModule,
     AppStoreModule,
     AppRoutingModule,
     CoreModule,
@@ -35,6 +34,15 @@ import {AppStoreModule} from './app-store.module';
     MyOrdersModule,
     CounterModule
   ],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  entryComponents: [
+    AppComponent
+  ]
+  // todo: uncomment when fully migrated to ng2
+  // bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  ngDoBootstrap() {}
+}

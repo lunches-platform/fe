@@ -1,6 +1,8 @@
-// todo: use it when fully migrated from angular 1
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule} from './app.module';
+import {UpgradeModule} from '@angular/upgrade/static';
 
-const platform = platformBrowserDynamic();
-platform.bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule).then(platformRef => {
+  const upgrade = platformRef.injector.get(UpgradeModule) as UpgradeModule;
+  upgrade.bootstrap(document.body, ['app']);
+});

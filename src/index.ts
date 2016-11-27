@@ -1,4 +1,4 @@
-/// <reference path="../typings/index.d.ts" />
+/// <reference path='../typings/index.d.ts' />
 import * as angular from 'angular';
 
 // angular 1 vendors
@@ -74,11 +74,10 @@ import '@angular/core';
 import '@angular/common';
 import '@angular/http';
 import '@angular/router';
+import {downgradeComponent, downgradeInjectable} from '@angular/upgrade/static';
 
 // angular 2 app bootstrap
-import {upgradeAdapter} from './app/upgrade-adapter';
 import {AppComponent} from './app/app.component';
-import {AppModule} from './app/app.module';
 import {RouterWrapper} from './app/ng1';
 
 // angular 2 app components
@@ -92,23 +91,6 @@ import {
 // fake-api
 // import 'angular-mocks';
 // import {fakeApiConfig} from './fake-api/config';
-// -------------------------------------------------------------------------- //
-const fetchConfig = () => {
-  const $http = angular.injector(['ng']).get('$http');
-
-  return $http.get<IAppConfig>('/config.json').then(response => {
-    angular.module('app').constant('lConfig', response.data);
-  }, () => {
-    // todo: handle error case
-  });
-};
-
-const bootstrap = () => {
-  angular.element(document).ready(() => {
-    upgradeAdapter['ng2AppModule'] = AppModule;
-    upgradeAdapter.bootstrap(document.body, ['app']);
-  });
-};
 
 // -------------------------------------------------------------------------- //
 angular
@@ -117,6 +99,20 @@ angular
     'LocalStorageModule',
     // 'ngMockE2E'
   ])
+  .constant('lConfig', {
+    address: {
+      details: [
+        'Company Name',
+        'Street Name',
+        'Building Number',
+        'Floor number'
+      ],
+      options: {
+        'floorSelector': true
+      }
+    },
+    apiUrl: 'http://api.example.com'
+  })
   .config(localeConfig)
   .config(localStorageConfig)
   .config(dateRangeSelectorConfig)
@@ -169,17 +165,24 @@ angular
   .service('lUserService', UserService)
   .service('lToastService', ToastService)
   .service('lPriceService', PriceService)
-  .factory('router', upgradeAdapter.downgradeNg2Provider(RouterWrapper))
+  .factory('router', downgradeInjectable(RouterWrapper))
 
   // angular 1 app filters
   .filter('lDate', DateFilter)
 
   // angular 2 app components to be used in angular 1 app
-  .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
-  .directive('lExample', <any> upgradeAdapter.downgradeNg2Component(ExampleComponent))
-  .directive('lFlashMessage', <any> upgradeAdapter.downgradeNg2Component(FlashMessageComponent))
-  .directive('lPastDaysSwitcher', <any> upgradeAdapter.downgradeNg2Component(PastDaysSwitcherComponent))
-  .directive('lMenuCover', <any> upgradeAdapter.downgradeNg2Component(MenuCoverComponent))
+  .directive('lApp', downgradeComponent({component: AppComponent}) as angular.IDirectiveFactory)
+  .directive('lExample', downgradeComponent({component: ExampleComponent}) as angular.IDirectiveFactory)
+  .directive('lFlashMessage', downgradeComponent({component: FlashMessageComponent}) as angular.IDirectiveFactory)
+  .directive('lPastDaysSwitcher', downgradeComponent({
+    component: PastDaysSwitcherComponent,
+    inputs: ['switched'],
+    outputs: ['switch']
+  }) as angular.IDirectiveFactory)
+  .directive('lMenuCover', downgradeComponent({
+    component: MenuCoverComponent,
+    inputs: ['url']
+  }) as angular.IDirectiveFactory)
   ;
 
-fetchConfig().then(bootstrap);
+import './app/main';

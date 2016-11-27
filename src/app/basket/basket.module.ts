@@ -1,15 +1,12 @@
 import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../shared';
-import {upgradeAdapter} from '../upgrade-adapter';
-
 import {BasketRoutingModule} from './basket-routing.module';
 
 import {
+  BasketComponent,
   BasketContainerComponent
 } from './components';
-
-const BasketComponent = upgradeAdapter.upgradeNg1Component('lBasket');
 
 @NgModule({
   imports: [
