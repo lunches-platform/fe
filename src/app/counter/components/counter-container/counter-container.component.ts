@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {IState as IAppState} from '../../../app.reducer';
 
 import {increment, decrement, reset, incrementIfOdd, set, getCounterState} from '../../store';
-import {RandomNumberService} from '../../../shared';
+import {RandomNumberService} from '../../../core';
 
 @Component({
   selector: 'l-counter-container',

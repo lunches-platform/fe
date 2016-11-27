@@ -1,9 +1,9 @@
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 
-import {MyOrdersRoutingModule} from './my-orders-routing.module';
-
+import {SharedModule} from '../shared';
 import {upgradeAdapter} from '../upgrade-adapter';
+
+import {MyOrdersRoutingModule} from './my-orders-routing.module';
 
 import {
   MyOrdersContainerComponent
@@ -12,11 +12,14 @@ import {
 const MyOrdersComponent = upgradeAdapter.upgradeNg1Component('lMyOrders');
 
 @NgModule({
+  imports: [
+    SharedModule,
+    MyOrdersRoutingModule
+  ],
   declarations: [
     MyOrdersComponent,
     MyOrdersContainerComponent
   ],
-  imports: [CommonModule, MyOrdersRoutingModule],
   exports: [
     MyOrdersContainerComponent
   ]

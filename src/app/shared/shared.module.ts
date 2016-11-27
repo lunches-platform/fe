@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {NgModule, ModuleWithProviders} from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import {upgradeAdapter} from '../upgrade-adapter';
 
@@ -18,8 +18,6 @@ const LMdSidenavComponent = upgradeAdapter.upgradeNg1Component('lMdSidenav');
 const LMdIconComponent = upgradeAdapter.upgradeNg1Component('lMdIcon');
 
 const ListComponent = upgradeAdapter.upgradeNg1Component('lList');
-
-import {RandomNumberService} from './random-number.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +39,7 @@ import {RandomNumberService} from './random-number.service';
   ],
   imports: [CommonModule],
   exports: [
+    CommonModule,
     // ng1 md-* wrappers
     LMdButtonComponent,
     LMdContentComponent,
@@ -58,11 +57,4 @@ import {RandomNumberService} from './random-number.service';
     MenuCoverComponent
   ]
 })
-export class SharedModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: SharedModule,
-      providers: [RandomNumberService]
-    };
-  }
-}
+export class SharedModule {}
