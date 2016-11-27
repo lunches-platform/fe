@@ -3,7 +3,7 @@ import * as moment from 'moment';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import {IMyOrdersState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 import {SHORT_DATE_FORMAT} from '../../../config';
 
 import {IOrder, OrderService} from '../../models/order';
@@ -22,7 +22,7 @@ export class MyOrdersController {
   private loading: boolean;
 
   constructor(
-    private $state: IMyOrdersState,
+    private router: RouterWrapper,
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
     private lOrderService: OrderService,
@@ -58,15 +58,15 @@ export class MyOrdersController {
   }
 
   goToWeekMenu(): void {
-    this.$state.go('week-menu');
+    this.router.navigate(['/week-menu']);
   }
 
   goToBasket(): void {
-    this.$state.go('basket');
+    this.router.navigate(['/basket']);
   }
 
   onPay(order: IOrder): void {
-    this.$state.go('payment');
+    this.router.navigate(['/payment']);
   }
 
   onToggleSidebar(): void {

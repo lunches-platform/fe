@@ -1,6 +1,6 @@
 import {IComponentOptions} from 'angular';
 
-import {IBaseState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {IUser, UserService} from '../../models/user';
 
@@ -17,7 +17,7 @@ export class ToolbarController {
   // output
   triggerToggleSidebarEvent: ITriggerToggleSidebarEvent;
 
-  constructor(private $state: IBaseState, private lUserService: UserService) {
+  constructor(private router: RouterWrapper, private lUserService: UserService) {
     'ngInject';
   }
 
@@ -30,15 +30,15 @@ export class ToolbarController {
   }
 
   goToWeekMenu(): void {
-    this.$state.go('week-menu');
+    this.router.navigate(['/week-menu']);
   }
 
   goToBasket(): void {
-    this.$state.go('basket');
+    this.router.navigate(['/basket']);
   }
 
   goToPaymentPage(): void {
-    this.$state.go('payment');
+    this.router.navigate(['/payment']);
   }
 }
 

@@ -1,6 +1,6 @@
 import {ILogService, IScope} from 'angular';
 
-import {IWeekMenuState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {IOrder, OrderService} from '../../models/order';
 import {IMenu, IWeekMenu, MenuType, MenuService} from '../../models/menu';
@@ -33,7 +33,7 @@ export class WeekMenuController {
   private loading: boolean;
 
   constructor(
-    private $state: IWeekMenuState,
+    private router: RouterWrapper,
     private $scope: IScope,
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
@@ -95,11 +95,11 @@ export class WeekMenuController {
   }
 
   goToBasket(): void {
-    this.$state.go('basket');
+    this.router.navigate(['/basket']);
   }
 
   goToMyOrders(): void {
-    this.$state.go('my-orders');
+    this.router.navigate(['/my-orders']);
   }
 
   showPastDaysMenu(): void {
@@ -173,9 +173,9 @@ export class WeekMenuController {
   }
 
   private initPageTitle(): void {
-    this.$scope.$watch(() => this.selectedWeek, () => {
-      this.$state.current.data.title = this.selectedWeek === Week.Current ? 'Меню на текущую неделю' : 'Меню на следующую неделю';
-    });
+    // this.$scope.$watch(() => this.selectedWeek, () => {
+    //   this.$state.current.data.title = this.selectedWeek === Week.Current ? 'Меню на текущую неделю' : 'Меню на следующую неделю';
+    // });
   }
 
   private initUser(): void {

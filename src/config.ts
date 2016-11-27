@@ -2,8 +2,6 @@
 
 import 'moment/locale/ru';
 import * as moment from 'moment';
-import {IRootScopeService} from 'angular';
-import {IStateService} from 'angular-ui-router';
 type ILocalStorageServiceProvider = angular.local.storage.ILocalStorageServiceProvider;
 type IDateLocaleProvider = angular.material.IDateLocaleProvider;
 
@@ -19,11 +17,6 @@ export interface IAddress {
 export interface IAppConfig {
   apiUrl: string;
   address: IAddress;
-}
-
-// todo: is it correct place?
-export interface ILRootScope extends IRootScopeService {
-  $state: IStateService;
 }
 
 export const SHORT_DATE_FORMAT = 'YYYY-MM-DD';
@@ -47,12 +40,6 @@ export function localStorageConfig(localStorageServiceProvider: ILocalStorageSer
   'ngInject';
 
   localStorageServiceProvider.setPrefix('l.');
-}
-
-export function currentStateConfig($rootScope: ILRootScope, $state: IStateService) {
-  'ngInject';
-
-  $rootScope.$state = $state;
 }
 
 export function dateRangeSelectorConfig($mdDateLocaleProvider: IDateLocaleProvider) {

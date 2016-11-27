@@ -2,7 +2,7 @@ import {ILogService} from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import {IBaseState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {IMenu, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
@@ -17,7 +17,7 @@ export class PricesController {
   private loading: boolean;
 
   constructor(
-    private $state: IBaseState,
+    private router: RouterWrapper,
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
     private lMenuService: MenuService,
@@ -56,11 +56,11 @@ export class PricesController {
   }
 
   goToWeekMenu(): void {
-    this.$state.go('week-menu');
+    this.router.navigate(['/week-menu']);
   }
 
   goToMyOrders(): void {
-    this.$state.go('my-orders');
+    this.router.navigate(['/my-orders']);
   }
 
   // private init --------------------------------------------------------------

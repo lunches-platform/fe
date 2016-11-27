@@ -3,7 +3,7 @@ import {IScope, ILogService} from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import {IBasketState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {IOrder, OrderService} from '../../models/order';
 import {IUser, UserService} from '../../models/user';
@@ -20,7 +20,7 @@ export class BasketController {
   user: IUser;
 
   constructor(
-    private $state: IBasketState,
+    private router: RouterWrapper,
     private $scope: IScope,
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
@@ -45,7 +45,7 @@ export class BasketController {
       .then(() => {
         this.lToastService.show('Спасибо! Заказ размещен!');
         this.clearBasket();
-        this.$state.go('payment');
+        this.router.navigate(['/payment']);
       })
       .catch(err => {
         this.lToastService.show('Ошибка! Не удалось разместить заказ');
@@ -57,11 +57,11 @@ export class BasketController {
   }
 
   goToWeekMenu(): void {
-    this.$state.go('week-menu');
+    this.router.navigate(['/week-menu']);
   }
 
   goToMyOrders(): void {
-    this.$state.go('my-orders');
+    this.router.navigate(['/my-orders']);
   }
 
   removeFromBasket(order: IOrder) {

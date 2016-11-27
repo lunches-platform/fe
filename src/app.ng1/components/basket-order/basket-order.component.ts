@@ -1,7 +1,7 @@
 import {cloneDeep} from 'lodash';
 import {IComponentOptions, IOnChangesObject} from 'angular';
 
-import {IBasketState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {IOrder, OrderService} from '../../models/order';
 import {LineItemService} from '../../models/line-item';
@@ -29,7 +29,7 @@ export class BasketOrderController {
   removed: boolean;
 
   constructor(
-    private $state: IBasketState,
+    private router: RouterWrapper,
     private lLineItemService: LineItemService,
     private lOrderService: OrderService
   ) {
@@ -48,7 +48,7 @@ export class BasketOrderController {
   }
 
   addAnother(): void {
-    this.$state.go('week-menu');
+    this.router.navigate(['/week-menu']);
   }
 
   // view helpers --------------------------------------------------------------

@@ -1,25 +1,12 @@
 /// <reference path="../typings/index.d.ts" />
 import * as angular from 'angular';
 
-// angular 2 support libs
-import 'core-js/client/shim.min';
-import 'zone.js/dist/zone';
-import 'reflect-metadata/Reflect';
-import 'rxjs/Rx';
-
-// angular 2
-import '@angular/platform-browser';
-import '@angular/platform-browser-dynamic';
-import '@angular/core';
-import '@angular/common';
-import '@angular/http';
-import '@angular/router';
-
-import 'angular-ui-router';
+// angular 1 vendors
 import 'angular-material';
 import 'angular-local-storage';
 import 'angular-material/angular-material.css';
 
+// angular 1 app container components
 import {BasketComponent} from './app.ng1/containers/basket/basket.component';
 import {ToolbarComponent as BasketToolbarComponent} from './app.ng1/containers/basket/toolbar.component';
 import {WeekMenuComponent} from './app.ng1/containers/week-menu/week-menu.component';
@@ -31,6 +18,7 @@ import {ToolbarComponent as PaymentToolbarComponent} from './app.ng1/containers/
 import {PricesComponent} from './app.ng1/containers/prices/prices.component';
 import {ToolbarComponent as PricesToolbarComponent} from './app.ng1/containers/prices/toolbar.component';
 
+// angular 1 app presentational components
 import {MenuComponent} from './app.ng1/components/menu/menu.component';
 import {ViewMenuComponent} from './app.ng1/components/view-menu/view-menu.component';
 import {LineItemComponent} from './app.ng1/components/line-item/line-item.component';
@@ -48,13 +36,14 @@ import {SizeLabelComponent} from './app.ng1/components/size-label/size-label.com
 import {SidebarComponent} from './app.ng1/components/sidebar/sidebar.component';
 import {ListComponent} from './app.ng1/components/list/list.component';
 
-// angular material wrapper imports
+// angular 1 app material wrapper components to be used in angular 2
 import {MdButtonComponent} from './app.ng1/components/md-button/md-button.component';
 import {MdContentComponent} from './app.ng1/components/md-content/md-content.component';
 import {MdToolbarComponent} from './app.ng1/components/md-toolbar/md-toolbar.component';
 import {MdSidenavComponent} from './app.ng1/components/md-sidenav/md-sidenav.component';
 import {MdIconComponent} from './app.ng1/components/md-icon/md-icon.component';
 
+// angular 1 app services
 import {MenuService} from './app.ng1/models/menu';
 import {OrderService} from './app.ng1/models/order';
 import {UserService} from './app.ng1/models/user';
@@ -63,55 +52,85 @@ import {BasketService} from './app.ng1/models/basket';
 import {LineItemService} from './app.ng1/models/line-item';
 import {PriceService} from './app.ng1/models/price';
 
+// angular 1 app filters
 import {DateFilter} from './app.ng1/filters/date.filter';
 
-import {routesConfig} from './routes';
-import {localeConfig, localStorageConfig, currentStateConfig, dateRangeSelectorConfig, IAppConfig} from './config';
+// angular 1 app configs
+import {localeConfig, localStorageConfig, dateRangeSelectorConfig, IAppConfig} from './config';
 
-// -------------------------------------------------------------------------- //
-// angular 2 imports: BEGIN
-// -------------------------------------------------------------------------- //
+// angular 1 app styles
+import './index.scss';
+
+// angular 2 support libs
+import 'core-js/client/shim.min';
+import 'zone.js/dist/zone';
+import 'reflect-metadata/Reflect';
+import 'rxjs/Rx';
+
+// angular 2 platform
+import '@angular/platform-browser';
+import '@angular/platform-browser-dynamic';
+import '@angular/core';
+import '@angular/common';
+import '@angular/http';
+import '@angular/router';
+
+// angular 2 app bootstrap
 import {upgradeAdapter} from './app/upgrade-adapter';
 import {AppComponent} from './app/app.component';
 import {AppModule} from './app/app.module';
+import {RouterWrapper} from './app/ng1';
+
+// angular 2 app components
 import {
   ExampleComponent,
   FlashMessageComponent,
   PastDaysSwitcherComponent,
   MenuCoverComponent
 } from './app/shared/components';
-// -------------------------------------------------------------------------- //
-// angular 2 imports: END
-// -------------------------------------------------------------------------- //
 
-import './index.scss';
-
-// fake-api: comment out when API implemented
+// fake-api
 // import 'angular-mocks';
 // import {fakeApiConfig} from './fake-api/config';
+// -------------------------------------------------------------------------- //
+const fetchConfig = () => {
+  const $http = angular.injector(['ng']).get('$http');
 
+  return $http.get<IAppConfig>('/config.json').then(response => {
+    angular.module('app').constant('lConfig', response.data);
+  }, () => {
+    // todo: handle error case
+  });
+};
+
+const bootstrap = () => {
+  angular.element(document).ready(() => {
+    upgradeAdapter['ng2AppModule'] = AppModule;
+    upgradeAdapter.bootstrap(document.body, ['app']);
+  });
+};
+
+// -------------------------------------------------------------------------- //
 angular
   .module('app', [
-    'ui.router',
     'ngMaterial',
     'LocalStorageModule',
-    // fake-api: comment out when API implemented
     // 'ngMockE2E'
   ])
-  .config(routesConfig)
   .config(localeConfig)
   .config(localStorageConfig)
   .config(dateRangeSelectorConfig)
-  .run(currentStateConfig)
 
   // fake-api: comment out when API implemented
   // .run(fakeApiConfig)
 
+  // angular 1 app container components
   .component('lWeekMenu', WeekMenuComponent)
   .component('lBasket', BasketComponent)
   .component('lMyOrders', MyOrdersComponent)
   .component('lPayment', PaymentComponent)
 
+  // angular 1 app presentational
   .component('lMenu', MenuComponent)
   .component('lViewMenu', ViewMenuComponent)
   .component('lLineItem', LineItemComponent)
@@ -135,27 +154,14 @@ angular
   .component('lPricesToolbar', PricesToolbarComponent)
   .component('lList', ListComponent)
 
-  // angular material wrapper definitions
+  // angular 1 app material wrapper components to be used in angular 2
   .component('lMdButton', MdButtonComponent)
   .component('lMdContent', MdContentComponent)
   .component('lMdToolbar', MdToolbarComponent)
   .component('lMdSidenav', MdSidenavComponent)
   .component('lMdIcon', MdIconComponent)
-  // -------------------------------------------------------------------------- //
-  // angular 2 components: BEGIN
-  // -------------------------------------------------------------------------- //
-  // if no any specified we have such error:
-  // "Argument of type 'Function' is not assignable to parameter of type 'any[]'"
-  // it looks like angular typings issue
-  .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
-  .directive('lExample', <any> upgradeAdapter.downgradeNg2Component(ExampleComponent))
-  .directive('lFlashMessage', <any> upgradeAdapter.downgradeNg2Component(FlashMessageComponent))
-  .directive('lPastDaysSwitcher', <any> upgradeAdapter.downgradeNg2Component(PastDaysSwitcherComponent))
-  .directive('lMenuCover', <any> upgradeAdapter.downgradeNg2Component(MenuCoverComponent))
-  // -------------------------------------------------------------------------- //
-  // angular 2 components: END
-  // -------------------------------------------------------------------------- //
 
+  // angular 1 app services
   .service('lMenuService', MenuService)
   .service('lLineItemService', LineItemService)
   .service('lOrderService', OrderService)
@@ -163,25 +169,17 @@ angular
   .service('lUserService', UserService)
   .service('lToastService', ToastService)
   .service('lPriceService', PriceService)
+  .factory('router', upgradeAdapter.downgradeNg2Provider(RouterWrapper))
 
+  // angular 1 app filters
   .filter('lDate', DateFilter)
+
+  // angular 2 app components to be used in angular 1 app
+  .directive('lApp', <any> upgradeAdapter.downgradeNg2Component(AppComponent))
+  .directive('lExample', <any> upgradeAdapter.downgradeNg2Component(ExampleComponent))
+  .directive('lFlashMessage', <any> upgradeAdapter.downgradeNg2Component(FlashMessageComponent))
+  .directive('lPastDaysSwitcher', <any> upgradeAdapter.downgradeNg2Component(PastDaysSwitcherComponent))
+  .directive('lMenuCover', <any> upgradeAdapter.downgradeNg2Component(MenuCoverComponent))
   ;
 
 fetchConfig().then(bootstrap);
-
-function fetchConfig() {
-  const $http = angular.injector(['ng']).get('$http');
-
-  return $http.get<IAppConfig>('/config.json').then(response => {
-    angular.module('app').constant('lConfig', response.data);
-  }, () => {
-    // todo: handle error case
-  });
-}
-
-function bootstrap() {
-  angular.element(document).ready(() => {
-    upgradeAdapter['ng2AppModule'] = AppModule;
-    upgradeAdapter.bootstrap(document.body, ['app']);
-  });
-}
