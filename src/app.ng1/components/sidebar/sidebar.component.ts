@@ -1,5 +1,5 @@
 import {IComponentOptions} from 'angular';
-import {IBaseState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {IUser, UserService} from '../../models/user';
 
@@ -10,7 +10,7 @@ export class SidebarController {
   user: IUser;
 
   constructor(
-    private $state: IBaseState,
+    private router: RouterWrapper,
     private $mdSidenav: ISidenavService,
     private $mdMedia: IMedia,
     private lUserService: UserService
@@ -27,35 +27,23 @@ export class SidebarController {
   }
 
   goToWeekMenu(): void {
-    if (this.$state.current.name === 'week-menu') {
-      this.$mdSidenav('left').close();
-    } else {
-      this.$state.go('week-menu');
-    }
+    this.$mdSidenav('left').toggle();
+    this.router.navigate(['/week-menu']);
   }
 
   goToMyOrders(): void {
-    if (this.$state.current.name === 'my-orders') {
-      this.$mdSidenav('left').close();
-    } else {
-      this.$state.go('my-orders');
-    }
+    this.$mdSidenav('left').toggle();
+    this.router.navigate(['/my-orders']);
   }
 
   goToBasket(): void {
-    if (this.$state.current.name === 'basket') {
-      this.$mdSidenav('left').close();
-    } else {
-      this.$state.go('basket');
-    }
+    this.$mdSidenav('left').toggle();
+    this.router.navigate(['/basket']);
   }
 
   goToPaymentPage(): void {
-    if (this.$state.current.name === 'payment') {
-      this.$mdSidenav('left').close();
-    } else {
-      this.$state.go('payment');
-    }
+    this.$mdSidenav('left').toggle();
+    this.router.navigate(['/payment']);
   }
 }
 

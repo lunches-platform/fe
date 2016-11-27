@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import {cloneDeep} from 'lodash';
 import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
 
-import {IWeekMenuState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {IMenu, MenuService} from '../../models/menu';
 import {IOrder, OrderService} from '../../models/order';
@@ -34,7 +34,7 @@ export class MenuController {
 
   constructor(
     private $scope: IScope,
-    private $state: IWeekMenuState,
+    private router: RouterWrapper,
     private lOrderService: OrderService,
     private lLineItemService: LineItemService,
     private lPriceService: PriceService,
@@ -59,7 +59,7 @@ export class MenuController {
   }
 
   goToBasket(): void {
-    this.$state.go('basket');
+    this.router.navigate(['/basket']);
   }
 
   onCustomizeLunch(): void {

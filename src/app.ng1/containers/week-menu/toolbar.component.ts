@@ -1,7 +1,7 @@
 import {isNil} from 'lodash';
 import {IComponentOptions} from 'angular';
 
-import {IBaseState} from '../../../routes';
+import {RouterWrapper} from '../../../app/ng1';
 
 import {MenuType} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
@@ -33,7 +33,7 @@ export class ToolbarController {
   // internal
   title: string;
 
-  constructor(private $state: IBaseState, private lUserService: UserService) {
+  constructor(private router: RouterWrapper, private lUserService: UserService) {
     'ngInject';
 
     this.initTitle();
@@ -45,11 +45,11 @@ export class ToolbarController {
   }
 
   goToBasket(): void {
-    this.$state.go('basket');
+    this.router.navigate(['/basket']);
   }
 
   goToMyOrders(): void {
-    this.$state.go('my-orders');
+    this.router.navigate(['/my-orders']);
   }
 
   toggleSidebar(): void {
