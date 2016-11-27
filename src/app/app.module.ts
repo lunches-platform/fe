@@ -2,10 +2,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
-// ngrx platform
-import {StoreModule} from '@ngrx/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-
 // app modules
 import {SharedModule} from './shared';
 import {UserModule} from './user';
@@ -19,7 +15,7 @@ import {Ng1Module} from './ng1';
 // app wide config stuff
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {reducer} from './store';
+import {AppStoreModule} from './app-store.module';
 
 @NgModule({
   declarations: [
@@ -28,8 +24,7 @@ import {reducer} from './store';
   imports: [
     // support modules
     BrowserModule,
-    StoreModule.provideStore(reducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension(),
+    AppStoreModule,
     AppRoutingModule,
     SharedModule.forRoot(),
     Ng1Module,

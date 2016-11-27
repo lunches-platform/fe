@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 
-import {IState as IAppState} from '../../../store';
+import {IState as IAppState} from '../../../app.reducer';
 
 import {increment, decrement, reset, incrementIfOdd, set, getCounterState} from '../../store';
 import {RandomNumberService} from '../../../shared';
