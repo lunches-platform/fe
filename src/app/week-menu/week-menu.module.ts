@@ -1,6 +1,8 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 
+import {WeekMenuRoutingModule} from './week-menu-routing.module';
+
 import {upgradeAdapter} from '../upgrade-adapter';
 
 import {
@@ -14,7 +16,7 @@ const WeekMenuComponent = upgradeAdapter.upgradeNg1Component('lWeekMenu');
     WeekMenuComponent,
     WeekMenuContainerComponent
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, WeekMenuRoutingModule],
   exports: [
     WeekMenuContainerComponent
   ]
