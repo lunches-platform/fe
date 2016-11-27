@@ -1,9 +1,9 @@
-import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 
-import {BasketRoutingModule} from './basket-routing.module';
-
+import {SharedModule} from '../shared';
 import {upgradeAdapter} from '../upgrade-adapter';
+
+import {BasketRoutingModule} from './basket-routing.module';
 
 import {
   BasketContainerComponent
@@ -12,11 +12,14 @@ import {
 const BasketComponent = upgradeAdapter.upgradeNg1Component('lBasket');
 
 @NgModule({
+  imports: [
+    SharedModule,
+    BasketRoutingModule
+  ],
   declarations: [
     BasketComponent,
     BasketContainerComponent
   ],
-  imports: [CommonModule, BasketRoutingModule],
   exports: [
     BasketContainerComponent
   ]
