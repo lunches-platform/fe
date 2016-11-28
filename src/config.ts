@@ -5,20 +5,6 @@ import * as moment from 'moment';
 type ILocalStorageServiceProvider = angular.local.storage.ILocalStorageServiceProvider;
 type IDateLocaleProvider = angular.material.IDateLocaleProvider;
 
-// todo: move to somewhere
-export interface IAddress {
-  details: string[];
-  options: {
-    floorSelector: boolean;
-  };
-}
-
-// todo: move to somewhere
-export interface IAppConfig {
-  apiUrl: string;
-  address: IAddress;
-}
-
 export const SHORT_DATE_FORMAT = 'YYYY-MM-DD';
 
 function makeCounter() {

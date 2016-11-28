@@ -56,6 +56,11 @@ import {
     FlashMessageComponent,
     PastDaysSwitcherComponent,
     MenuCoverComponent
+  ],
+  entryComponents: [
+    FlashMessageComponent,
+    PastDaysSwitcherComponent,
+    MenuCoverComponent
   ]
 })
 export class SharedModule {}

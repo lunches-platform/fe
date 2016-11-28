@@ -44,5 +44,6 @@ import {AppStoreModule} from './app-store.module';
   // bootstrap: [AppComponent]
 })
 export class AppModule {
+  // tslint:disable-next-line
   ngDoBootstrap() {}
 }

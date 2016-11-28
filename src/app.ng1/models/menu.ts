@@ -4,8 +4,9 @@ import * as moment from 'moment';
 import {IHttpService, IPromise} from 'angular';
 
 // internal deps
-import {SHORT_DATE_FORMAT, IAppConfig} from '../../config';
+import {SHORT_DATE_FORMAT} from '../../config';
 import {IProduct} from './product';
+import {IState as IAppConfig, ConfigService} from '../../app/config';
 
 export interface IMenu {
   id: number;
@@ -21,10 +22,16 @@ export interface IWeekMenu<Type, ItemType> {
 export type MenuType = 'regular' | 'diet';
 
 export class MenuService {
+  private lConfig: IAppConfig;
 
   // todo: add type for lConfig
-  constructor(private $http: IHttpService, private lConfig: IAppConfig) {
+  constructor(
+    private $http: IHttpService,
+    private configService: ConfigService
+  ) {
     'ngInject';
+
+    configService.get().first().subscribe(config => this.lConfig = config);
   }
 
   fetchTwoWeeksMenu(): IPromise<IWeekMenu<MenuType, IMenu>[]> {

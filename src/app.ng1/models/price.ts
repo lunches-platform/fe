@@ -6,7 +6,8 @@ type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 // internal deps
 import {ILineItem} from './line-item';
-import {IAppConfig, SHORT_DATE_FORMAT} from '../../config';
+import {SHORT_DATE_FORMAT} from '../../config';
+import {IState as IAppConfig, ConfigService} from '../../app/config';
 
 export interface IPriceGroupItem {
   productId: number;
@@ -97,14 +98,18 @@ export type PriceList = Dictionary<number>;
 
 // todo: a lot of performance issues
 export class PriceService {
+  private lConfig: IAppConfig;
+
   constructor(
     private $http: IHttpService,
     private $log: ILogService,
     private $timeout: ITimeoutService,
     private localStorageService: ILocalStorageService,
-    private lConfig: IAppConfig
+    private configService: ConfigService
   ) {
     'ngInject';
+
+    configService.get().first().subscribe(config => this.lConfig = config);
   }
 
   fetchPriceGroupsForActualDays(): IPromise<PricesByDate> {

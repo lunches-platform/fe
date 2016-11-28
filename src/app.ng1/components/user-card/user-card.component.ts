@@ -4,7 +4,7 @@ import {IComponentOptions, IOnChangesObject} from 'angular';
 
 // internal deps
 import {IUser, UserService} from '../../models/user';
-import {IAppConfig} from '../../../config';
+import {IState as IAppConfig, ConfigService} from '../../../app/config';
 
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {
@@ -25,10 +25,15 @@ export class UserCardController {
   floor: string;
   user: IUser;
 
-  // todo: add type for lConfig
-  constructor(private lUserService: UserService, private lConfig: IAppConfig) {
+  private lConfig: IAppConfig;
+
+  constructor(
+    private lUserService: UserService,
+    private configService: ConfigService
+  ) {
     'ngInject';
 
+    configService.get().first().subscribe(config => this.lConfig = config);
     this.initUser();
   }
 
