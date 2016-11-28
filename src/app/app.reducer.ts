@@ -2,6 +2,7 @@ import {keys} from 'lodash';
 import '@ngrx/core/add/operator/select';
 
 import {ActionReducer, combineReducers} from '@ngrx/store';
+import {routerReducer, RouterState} from '@ngrx/router-store';
 import {compose} from '@ngrx/core/compose';
 
 import {storeFreeze} from 'ngrx-store-freeze';
@@ -14,16 +15,18 @@ import {IState as IConfigState, reducer as configReducer} from './config';
 
 // application state interface
 export interface IState {
+  router: RouterState;
+  config: IConfigState;
   counter: ICounterState;
   user: IUserState;
-  config: IConfigState;
 }
 
 // app level reducers
 export const reducers = {
+  router: routerReducer,
+  config: configReducer,
   counter: counterReducer,
-  user: userReducer,
-  config: configReducer
+  user: userReducer
 };
 
 // root reducer

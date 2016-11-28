@@ -1,6 +1,8 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {HttpModule} from '@angular/http';
 
+import {RouterStoreModule} from '@ngrx/router-store';
+
 import {Ng1Module} from '../ng1';
 import {ConfigModule} from '../config';
 
@@ -12,6 +14,7 @@ import {RandomNumberService} from './random-number.service';
   imports: [
     HttpModule,
     ConfigModule,
+    RouterStoreModule.connectRouter(),
     Ng1Module
   ],
   providers: [
