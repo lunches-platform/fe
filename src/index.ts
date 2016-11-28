@@ -56,7 +56,7 @@ import {PriceService} from './app.ng1/models/price';
 import {DateFilter} from './app.ng1/filters/date.filter';
 
 // angular 1 app configs
-import {localeConfig, localStorageConfig, dateRangeSelectorConfig, IAppConfig} from './config';
+import {localeConfig, localStorageConfig, dateRangeSelectorConfig} from './config';
 
 // angular 1 app styles
 import './index.scss';
@@ -76,11 +76,11 @@ import '@angular/http';
 import '@angular/router';
 import {downgradeComponent, downgradeInjectable} from '@angular/upgrade/static';
 
-// angular 2 app bootstrap
+// angular 2 app
 import {AppComponent} from './app/app.component';
 import {RouterWrapper} from './app/ng1';
+import {ConfigService} from './app/config';
 
-// angular 2 app components
 import {
   ExampleComponent,
   FlashMessageComponent,
@@ -166,6 +166,7 @@ angular
   .service('lToastService', ToastService)
   .service('lPriceService', PriceService)
   .factory('router', downgradeInjectable(RouterWrapper))
+  .factory('configService', downgradeInjectable(ConfigService))
 
   // angular 1 app filters
   .filter('lDate', DateFilter)

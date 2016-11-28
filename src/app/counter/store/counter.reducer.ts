@@ -5,7 +5,7 @@ import {INCREMENT, INCREMENT_IF_ODD, DECREMENT, RESET, SET} from './counter.acti
 export type IState = number;
 export const initialState: IState = 0;
 
-export const reducer: ActionReducer<number> = handleActions<IState>({
+export const reducer: ActionReducer<IState> = handleActions<IState>({
   [INCREMENT]: (state, action) => state + 1,
   [INCREMENT_IF_ODD]: (state, action) => action.payload % 2 !== 0 ? state + 1 : state,
   [DECREMENT]: (state, action) => state - 1,

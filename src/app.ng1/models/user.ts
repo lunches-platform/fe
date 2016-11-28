@@ -4,7 +4,7 @@ import {ILogService, IHttpService, IPromise, IQService} from 'angular';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 // internal deps
-import {IAppConfig} from '../../config';
+import {IState as IAppConfig, ConfigService} from '../../app/config';
 
 export interface IUser {
   id: string;
@@ -39,14 +39,18 @@ enum Address {
 }
 
 export class UserService {
+  private lConfig: IAppConfig;
+
   constructor(
     private $http: IHttpService,
     private $log: ILogService,
     private $q: IQService,
     private localStorageService: ILocalStorageService,
-    private lConfig: IAppConfig
+    private configService: ConfigService
   ) {
     'ngInject';
+
+    configService.get().first().subscribe(config => this.lConfig = config);
   }
 
   me(): IUser {

@@ -10,7 +10,7 @@ import {ILineItem, ILineItemRequestBody, LineItemService} from './line-item';
 import {IProduct} from './product';
 import {IMenu} from './menu';
 import {PriceService} from './price';
-import {IAppConfig} from '../../config';
+import {IState as IAppConfig, ConfigService} from '../../app/config';
 
 export interface IOrder {
   id: number;
@@ -40,6 +40,7 @@ export interface IPlaceOrderRequestBody {
 
 // todo: add types: https://github.com/lunches-platform/fe/issues/17
 export class OrderService {
+  private lConfig: IAppConfig;
 
   constructor(
     private $http: IHttpService,
@@ -47,9 +48,11 @@ export class OrderService {
     private lLineItemService: LineItemService,
     private lUserService: UserService,
     private lPriceService: PriceService,
-    private lConfig: IAppConfig
+    private configService: ConfigService
   ) {
     'ngInject';
+
+    configService.get().first().subscribe(config => this.lConfig = config);
   }
 
   createOrderByDate(date: string): IOrder {

@@ -1,18 +1,25 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
+import {HttpModule} from '@angular/http';
 
 import {Ng1Module} from '../ng1';
+import {ConfigModule} from '../config';
+
+import {throwIfAlreadyLoaded} from './module-import-guard';
 
 import {RandomNumberService} from './random-number.service';
-import {throwIfAlreadyLoaded} from './module-import-guard';
 
 @NgModule({
   imports: [
+    HttpModule,
+    ConfigModule,
     Ng1Module
   ],
   providers: [
     RandomNumberService
   ],
   exports: [
+    HttpModule,
+    ConfigModule,
     Ng1Module
   ]
 })
