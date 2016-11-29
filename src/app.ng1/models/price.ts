@@ -1,6 +1,6 @@
 // third-party deps
 import {reduce, sortBy, isNil, isEmpty, mapValues, each, Dictionary} from 'lodash';
-import {IHttpService, ILogService, ITimeoutService, IPromise} from 'angular';
+import {IHttpService, ILogService, IPromise} from 'angular';
 import * as moment from 'moment';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
@@ -103,13 +103,13 @@ export class PriceService {
   constructor(
     private $http: IHttpService,
     private $log: ILogService,
-    private $timeout: ITimeoutService,
+    // private $timeout: ITimeoutService,
     private localStorageService: ILocalStorageService,
     private configService: ConfigService
   ) {
     'ngInject';
 
-    configService.get().first().subscribe(config => this.lConfig = config);
+    this.configService.get().first().subscribe(config => this.lConfig = config);
   }
 
   fetchPriceGroupsForActualDays(): IPromise<PricesByDate> {
@@ -292,7 +292,7 @@ export class PriceService {
   }
 
   private calcFallbackPriceFor(lineItems: ILineItem[], prices: GroupKeyToPriceMap): number {
-    return reduce(lineItems, (sum, lineItem) => {
+    return reduce(lineItems, (_, lineItem) => {
       return prices[this.groupKeyForLineItem(lineItem)];
     }, 0);
   }

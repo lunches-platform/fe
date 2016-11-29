@@ -25,5 +25,5 @@ export const initialState: IState = {
 };
 
 export const reducer: ActionReducer<IState> = handleActions<IState>({
-  [LOAD_CONFIG_SUCCESS]: (state: IState, action: Action) => action.payload
+  [LOAD_CONFIG_SUCCESS]: (_: IState, action: Action) => action.payload
 }, initialState);

@@ -1,9 +1,9 @@
-import {ILogService, IScope} from 'angular';
+import {ILogService} from 'angular';
 
 import {RouterWrapper} from '../../../app/ng1';
 
 import {IOrder, OrderService} from '../../models/order';
-import {IMenu, IWeekMenu, MenuType, MenuService} from '../../models/menu';
+import {MenuType, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
 import {IBasket, BasketService} from '../../models/basket';
 import {PriceService} from '../../models/price';
@@ -21,20 +21,20 @@ export class WeekMenuController {
   basket: IBasket;
   selectedWeek: number;
   selectedMenuType: MenuType;
-  nextWeekMenu: IWeekMenu<MenuType, IMenu>;
-  currentWeekMenu: IWeekMenu<MenuType, IMenu>;
+  nextWeekMenu: any;
+  currentWeekMenu: any;
   user: IUser;
 
   // these two are just shortcut for currentWeekMenu
-  actualMenu: IWeekMenu<MenuType, IMenu>;
-  pastDaysMenu: IWeekMenu<MenuType, IMenu>;
+  actualMenu: any;
+  pastDaysMenu: any;
 
   private pastDaysMenuHidden: boolean;
   private loading: boolean;
 
   constructor(
     private router: RouterWrapper,
-    private $scope: IScope,
+    // private $scope: IScope,
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
     private lMenuService: MenuService,
@@ -143,7 +143,7 @@ export class WeekMenuController {
   private initBasket(): void {
     this.lBasketService.fetchBasket()
       .then(basket => this.basket = basket)
-      .catch(err => {
+      .catch(() => {
         this.$log.info('WeekMenuController: Unable to fetch basket. Create new empty one');
 
         this.basket = this.lBasketService.createEmptyBasket();

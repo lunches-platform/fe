@@ -64,7 +64,7 @@ import './index.scss';
 // angular 2 support libs
 import 'core-js/client/shim.min';
 import 'zone.js/dist/zone';
-import 'reflect-metadata/Reflect';
+import 'reflect-metadata';
 import 'rxjs/Rx';
 
 // angular 2 platform

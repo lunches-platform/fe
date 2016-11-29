@@ -1,5 +1,5 @@
 import {cloneDeep, sumBy} from 'lodash';
-import {IScope, ILogService} from 'angular';
+import {ILogService} from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
@@ -21,7 +21,6 @@ export class BasketController {
 
   constructor(
     private router: RouterWrapper,
-    private $scope: IScope,
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
     private lBasketService: BasketService,
@@ -47,7 +46,7 @@ export class BasketController {
         this.clearBasket();
         this.router.navigate(['/payment']);
       })
-      .catch(err => {
+      .catch(() => {
         this.lToastService.show('Ошибка! Не удалось разместить заказ');
       });
   }
@@ -103,7 +102,7 @@ export class BasketController {
       .then(basket => {
         this.basket = this.lBasketService.setUserToEachOrderIn(basket, this.user);
       })
-      .catch(err => {
+      .catch(() => {
         this.$log.info('BasketController: Unable to fetch basket. Create new empty one');
 
         this.basket = this.lBasketService.createEmptyBasket();
@@ -125,7 +124,7 @@ export class BasketController {
 
   // private helpers -----------------------------------------------------------
   private clearBasket(): void {
-    this.basket = this.lBasketService.clearBasket(this.basket);
+    this.basket = this.lBasketService.createEmptyBasket();
     this.lBasketService.sync(this.basket);
   }
 

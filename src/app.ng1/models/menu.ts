@@ -15,10 +15,6 @@ export interface IMenu {
   type: MenuType;
 }
 
-export interface IWeekMenu<Type, ItemType> {
-  Type: ItemType[];
-}
-
 export type MenuType = 'regular' | 'diet';
 
 export class MenuService {
@@ -31,10 +27,10 @@ export class MenuService {
   ) {
     'ngInject';
 
-    configService.get().first().subscribe(config => this.lConfig = config);
+    this.configService.get().first().subscribe(config => this.lConfig = config);
   }
 
-  fetchTwoWeeksMenu(): IPromise<IWeekMenu<MenuType, IMenu>[]> {
+  fetchTwoWeeksMenu(): IPromise<any[]> {
     return this.fetchPlainTwoWeeksMenu().then(twoWeeksMenu => this.splitToCurrentAndNextWeekMenu(twoWeeksMenu));
   }
 
@@ -48,7 +44,7 @@ export class MenuService {
   }
 
   // todo: simplify
-  splitToCurrentAndNextWeekMenu(menus: IMenu[]): IWeekMenu<MenuType, IMenu>[] {
+  splitToCurrentAndNextWeekMenu(menus: IMenu[]): any[] {
     // todo: avoid any
     const currentWeekMenu: any = {diet: [], regular: []};
     const nextWeekMenu: any = {diet: [], regular: []};
@@ -65,7 +61,7 @@ export class MenuService {
   }
 
   // todo: simplify
-  splitToPastAndActualDaysMenu(weekMenuByType: IWeekMenu<MenuType, IMenu>): IWeekMenu<MenuType, IMenu>[] {
+  splitToPastAndActualDaysMenu(weekMenuByType: any): any[] {
     // todo: avoid any
     const pastDaysMenu: any = {diet: [], regular: []};
     const actualDaysMenu: any = {diet: [], regular: []};

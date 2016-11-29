@@ -42,7 +42,7 @@ export class MyOrdersController {
     this.updateInCachedList(order);
 
     this.lOrderService.cancelInDb(order)
-      .catch(err => {
+      .catch(() => {
         this.lToastService.show('Не удалось отменить заказ');
         this.updateInCachedList(oldOrder);
       });
@@ -65,7 +65,7 @@ export class MyOrdersController {
     this.router.navigate(['/basket']);
   }
 
-  onPay(order: IOrder): void {
+  onPay(): void {
     this.router.navigate(['/payment']);
   }
 
