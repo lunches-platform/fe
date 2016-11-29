@@ -3,8 +3,7 @@ import {IComponentOptions, IOnChangesObject} from 'angular';
 
 import {RouterWrapper} from '../../../app/ng1';
 
-import {IOrder, OrderService} from '../../models/order';
-import {LineItemService} from '../../models/line-item';
+import {IOrder} from '../../models/order';
 
 // internal types --------------------------------------------------------------
 interface ITriggerRemoveEvent {
@@ -29,9 +28,7 @@ export class BasketOrderController {
   removed: boolean;
 
   constructor(
-    private router: RouterWrapper,
-    private lLineItemService: LineItemService,
-    private lOrderService: OrderService
+    private router: RouterWrapper
   ) {
     'ngInject';
   }

@@ -50,7 +50,7 @@ export class UserService {
   ) {
     'ngInject';
 
-    configService.get().first().subscribe(config => this.lConfig = config);
+    this.configService.get().first().subscribe(config => this.lConfig = config);
   }
 
   me(): IUser {

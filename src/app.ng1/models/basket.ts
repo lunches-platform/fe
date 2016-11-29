@@ -83,10 +83,6 @@ export class BasketService {
     return basket;
   }
 
-  clearBasket(basket: IBasket): IBasket {
-    return this.createEmptyBasket();
-  }
-
   removeOrderFrom(_basket: IBasket, order: IOrder): IBasket {
     let basket = cloneDeep(_basket);
     basket.orders = filter<IOrder>(basket.orders, o => o.id !== order.id);

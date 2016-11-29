@@ -6,7 +6,6 @@ import {RouterWrapper} from '../../../app/ng1';
 
 import {IMenu, MenuService} from '../../models/menu';
 import {IUser, UserService} from '../../models/user';
-import {PriceService} from '../../models/price';
 
 export class PricesController {
   // bindings ------------------------------------------------------------------
@@ -21,7 +20,7 @@ export class PricesController {
     private $log: ILogService,
     private $mdSidenav: ISidenavService,
     private lMenuService: MenuService,
-    private lPriceService: PriceService,
+    // private lPriceService: PriceService,
     private lUserService: UserService
   ) {
     'ngInject';
