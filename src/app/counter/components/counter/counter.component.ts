@@ -1,5 +1,5 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'l-counter',
@@ -16,7 +16,7 @@ import {Observable} from 'rxjs/Observable';
   `
 })
 export class CounterComponent {
-  @Input('value$') value: Observable<number>;
+  @Input() value: Observable<number>;
   @Output() increment = new EventEmitter<void>();
   @Output() incrementIfOdd = new EventEmitter<void>();
   @Output() incrementAsync = new EventEmitter<number>();

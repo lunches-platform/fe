@@ -1,5 +1,5 @@
-import {Directive, Input, ElementRef, Injector} from '@angular/core';
-import {UpgradeComponent} from '@angular/upgrade/static';
+import { Directive, Input, ElementRef, Injector } from '@angular/core';
+import { UpgradeComponent } from '@angular/upgrade/static';
 
 export interface IListItem {
   title: string;
@@ -9,9 +9,10 @@ export interface IListItem {
 }
 
 @Directive({
+  // tslint:disable-next-line
   selector: 'l-list'
 })
-export class ListComponent extends UpgradeComponent {
+export class ListDirective extends UpgradeComponent {
   @Input() containerClass: string;
   @Input() itemClass: string;
   @Input() items: IListItem[];

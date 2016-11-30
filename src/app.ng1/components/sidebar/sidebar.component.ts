@@ -1,7 +1,7 @@
-import {IComponentOptions} from 'angular';
-import {RouterWrapper} from '../../../app/ng1';
+import { IComponentOptions } from 'angular';
+import { RouterWrapper } from '../../../app/ng1';
 
-import {IUser, UserService} from '../../models/user';
+import { IUser, UserService } from '../../models/user';
 
 type ISidenavService = angular.material.ISidenavService;
 type IMedia = angular.material.IMedia;

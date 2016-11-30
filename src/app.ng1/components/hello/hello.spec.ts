@@ -2,7 +2,7 @@
 
 import * as angular from 'angular';
 import 'angular-mocks';
-import {hello} from './hello';
+import { hello } from './hello';
 
 describe('hello component', () => {
   beforeEach(() => {

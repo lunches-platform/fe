@@ -1,14 +1,14 @@
-import {NgModule, Optional, SkipSelf} from '@angular/core';
-import {HttpModule} from '@angular/http';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
-import {RouterStoreModule} from '@ngrx/router-store';
+import { RouterStoreModule } from '@ngrx/router-store';
 
-import {Ng1Module} from '../ng1';
-import {ConfigModule} from '../config';
+import { Ng1Module } from '../ng1';
+import { ConfigModule } from '../config';
 
-import {throwIfAlreadyLoaded} from './module-import-guard';
+import { throwIfAlreadyLoaded } from './module-import-guard';
 
-import {RandomNumberService} from './random-number.service';
+import { RandomNumberService } from './random-number.service';
 
 @NgModule({
   imports: [

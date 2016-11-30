@@ -1,9 +1,9 @@
-import {NgModule, Optional, SkipSelf, APP_INITIALIZER} from '@angular/core';
-import {HttpModule} from '@angular/http';
+import { NgModule, Optional, SkipSelf, APP_INITIALIZER } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
-import {throwIfAlreadyLoaded} from '../core/module-import-guard';
+import { throwIfAlreadyLoaded } from '../core/module-import-guard';
 
-import {ConfigService} from './config.service';
+import { ConfigService } from './config.service';
 
 @NgModule({
   imports: [

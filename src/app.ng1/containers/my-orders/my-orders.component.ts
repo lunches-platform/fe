@@ -1,16 +1,16 @@
-import {ILogService, IComponentOptions} from 'angular';
+import { ILogService, IComponentOptions } from 'angular';
 import * as moment from 'moment';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import {RouterWrapper} from '../../../app/ng1';
-import {SHORT_DATE_FORMAT} from '../../../config';
+import { RouterWrapper } from '../../../app/ng1';
+import { SHORT_DATE_FORMAT } from '../../../config';
 
-import {IOrder, OrderService} from '../../models/order';
-import {IUser, UserService} from '../../models/user';
-import {ToastService} from '../../models/toast';
+import { IOrder, OrderService } from '../../models/order';
+import { IUser, UserService } from '../../models/user';
+import { ToastService } from '../../models/toast';
 
-import {IDateRange} from '../../components/date-range-selector/date-range-selector.component';
+import { IDateRange } from '../../components/date-range-selector/date-range-selector.component';
 
 export class MyOrdersController {
   // bindings ------------------------------------------------------------------

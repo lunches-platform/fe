@@ -1,8 +1,8 @@
 import * as moment from 'moment';
-import {cloneDeep} from 'lodash';
-import {IComponentOptions, IScope, IOnChangesObject} from 'angular';
+import { cloneDeep } from 'lodash';
+import { IComponentOptions, IScope, IOnChangesObject } from 'angular';
 
-import {SHORT_DATE_FORMAT} from '../../../config';
+import { SHORT_DATE_FORMAT } from '../../../config';
 
 // exported types --------------------------------------------------------------
 export interface IDateRange {

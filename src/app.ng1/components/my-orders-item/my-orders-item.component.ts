@@ -1,9 +1,9 @@
 import * as moment from 'moment';
-import {cloneDeep} from 'lodash';
-import {IComponentOptions, IOnChangesObject} from 'angular';
+import { cloneDeep } from 'lodash';
+import { IComponentOptions, IOnChangesObject } from 'angular';
 
-import {IOrder, OrderService} from '../../models/order';
-import {ProductTypeUrls} from '../../models/product';
+import { IOrder, OrderService } from '../../models/order';
+import { ProductTypeUrls } from '../../models/product';
 
 // internal types --------------------------------------------------------------
 interface ITriggerCancelEvent {

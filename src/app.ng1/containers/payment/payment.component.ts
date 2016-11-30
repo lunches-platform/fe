@@ -1,12 +1,12 @@
-import {sumBy} from 'lodash';
-import {ILogService} from 'angular';
+import { sumBy } from 'lodash';
+import { ILogService } from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import {RouterWrapper} from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/ng1';
 
-import {IOrder, IPaymentCard, PaymentType, OrderService} from '../../models/order';
-import {IUser, UserService} from '../../models/user';
+import { IOrder, IPaymentCard, PaymentType, OrderService } from '../../models/order';
+import { IUser, UserService } from '../../models/user';
 
 export class PaymentController {
   // bindings ------------------------------------------------------------------

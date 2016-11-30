@@ -1,5 +1,5 @@
-import {createAction} from 'redux-actions';
-import {IState as IAppConfig} from './config.reducer';
+import { createAction } from 'redux-actions';
+import { IState as IAppConfig } from './config.reducer';
 
 export const LOAD_CONFIG_SUCCESS = 'LOAD_CONFIG_SUCCESS';
 export const loadConfigSuccess = createAction<IAppConfig>(LOAD_CONFIG_SUCCESS, (config: IAppConfig) => config);

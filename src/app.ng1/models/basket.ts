@@ -1,9 +1,9 @@
-import {cloneDeep, filter, merge} from 'lodash';
+import { cloneDeep, filter, merge } from 'lodash';
 import * as angular from 'angular';
-import {IQService, IPromise, ILogService} from 'angular';
+import { IQService, IPromise, ILogService } from 'angular';
 
-import {IOrder, OrderService} from './order';
-import {IUser} from './user';
+import { IOrder, OrderService } from './order';
+import { IUser } from './user';
 
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 

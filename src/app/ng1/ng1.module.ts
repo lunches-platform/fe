@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {RouterWrapper} from './router-wrapper';
+import { RouterWrapper } from './router-wrapper';
 
 @NgModule({
   providers: [RouterWrapper]

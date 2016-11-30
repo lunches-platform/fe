@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import {BasketContainerComponent} from './components';
+import { BasketContainerComponent } from './components';
 
 const routes: Routes = [
   {path: 'basket', component: BasketContainerComponent}

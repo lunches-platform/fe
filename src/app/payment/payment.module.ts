@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {SharedModule} from '../shared';
-import {PaymentRoutingModule} from './payment-routing.module';
+import { SharedModule } from '../shared';
+import { PaymentRoutingModule } from './payment-routing.module';
 
 import {
-  PaymentComponent,
+  PaymentDirective,
   PaymentContainerComponent
 } from './components';
 
@@ -14,7 +14,7 @@ import {
     PaymentRoutingModule
   ],
   declarations: [
-    PaymentComponent,
+    PaymentDirective,
     PaymentContainerComponent
   ],
   exports: [

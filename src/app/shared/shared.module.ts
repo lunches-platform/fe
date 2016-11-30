@@ -1,15 +1,15 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import {
   // angular material 1.x wrapper components
-  LMdButtonComponent,
-  LMdContentComponent,
-  LMdToolbarComponent,
-  LMdSidenavComponent,
-  LMdIconComponent,
+  LMdButtonDirective,
+  LMdContentDirective,
+  LMdToolbarDirective,
+  LMdSidenavDirective,
+  LMdIconDirective,
 
-  ListComponent,
+  ListDirective,
 
   ExampleComponent,
   FlashMessageComponent,
@@ -24,14 +24,14 @@ import {
   ],
   declarations: [
     // ng1 md-* wrappers
-    LMdButtonComponent,
-    LMdContentComponent,
-    LMdToolbarComponent,
-    LMdSidenavComponent,
-    LMdIconComponent,
+    LMdButtonDirective,
+    LMdContentDirective,
+    LMdToolbarDirective,
+    LMdSidenavDirective,
+    LMdIconDirective,
 
     // ng1 components
-    ListComponent,
+    ListDirective,
 
     // ng2 components
     ExampleComponent,
@@ -42,14 +42,14 @@ import {
   exports: [
     CommonModule,
     // ng1 md-* wrappers
-    LMdButtonComponent,
-    LMdContentComponent,
-    LMdToolbarComponent,
-    LMdSidenavComponent,
-    LMdIconComponent,
+    LMdButtonDirective,
+    LMdContentDirective,
+    LMdToolbarDirective,
+    LMdSidenavDirective,
+    LMdIconDirective,
 
     // ng1 components
-    ListComponent,
+    ListDirective,
 
     // ng2 components
     ExampleComponent,

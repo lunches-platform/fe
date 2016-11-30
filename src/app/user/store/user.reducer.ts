@@ -1,5 +1,5 @@
-import {ActionReducer} from '@ngrx/store';
-import {handleActions} from 'redux-actions';
+import { ActionReducer } from '@ngrx/store';
+import { handleActions } from 'redux-actions';
 
 export interface IUser {
   id: string;

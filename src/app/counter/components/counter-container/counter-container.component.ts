@@ -1,17 +1,17 @@
-import {Component} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
-import {IState as IAppState} from '../../../app.reducer';
+import { IState as IAppState } from '../../../app.reducer';
 
-import {increment, decrement, reset, incrementIfOdd, set, getCounterState} from '../../store';
-import {RandomNumberService} from '../../../core';
+import { increment, decrement, reset, incrementIfOdd, set, getCounterState } from '../../store';
+import { RandomNumberService } from '../../../core';
 
 @Component({
   selector: 'l-counter-container',
   template: `
     <l-counter
-      [value$]="counter$"
+      [value]="counter$"
       (increment)="increment()"
       (incrementIfOdd)="incrementIfOdd()"
       (incrementAsync)="incrementAsync($event)"

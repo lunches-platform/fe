@@ -1,5 +1,5 @@
-import {cloneDeep, isEqual} from 'lodash';
-import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
+import { cloneDeep, isEqual } from 'lodash';
+import { IScope, IComponentOptions, IOnChangesObject } from 'angular';
 
 // exported types --------------------------------------------------------------
 export interface ISelectorItem {
