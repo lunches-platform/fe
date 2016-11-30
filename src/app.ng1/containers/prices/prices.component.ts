@@ -1,11 +1,11 @@
-import {ILogService} from 'angular';
+import { ILogService } from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import {RouterWrapper} from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/ng1';
 
-import {IMenu, MenuService} from '../../models/menu';
-import {IUser, UserService} from '../../models/user';
+import { IMenu, MenuService } from '../../models/menu';
+import { IUser, UserService } from '../../models/user';
 
 export class PricesController {
   // bindings ------------------------------------------------------------------

@@ -1,7 +1,7 @@
-import {cloneDeep} from 'lodash';
-import {IScope, IComponentOptions} from 'angular';
+import { cloneDeep } from 'lodash';
+import { IScope, IComponentOptions } from 'angular';
 
-import {ILineItem, LineItemService} from '../../models/line-item';
+import { ILineItem, LineItemService } from '../../models/line-item';
 
 interface ITriggerChangeEvent {
   (arg: { item: ILineItem }): void;

@@ -1,6 +1,6 @@
-import {ActionReducer, Action} from '@ngrx/store';
-import {handleActions} from 'redux-actions';
-import {LOAD_CONFIG_SUCCESS} from './config.actions';
+import { ActionReducer, Action } from '@ngrx/store';
+import { handleActions } from 'redux-actions';
+import { LOAD_CONFIG_SUCCESS } from './config.actions';
 
 export interface IState {
   apiUrl: string;

@@ -1,6 +1,6 @@
-import {ActionReducer} from '@ngrx/store';
-import {handleActions} from 'redux-actions';
-import {INCREMENT, INCREMENT_IF_ODD, DECREMENT, RESET, SET} from './counter.actions';
+import { ActionReducer } from '@ngrx/store';
+import { handleActions } from 'redux-actions';
+import { INCREMENT, INCREMENT_IF_ODD, DECREMENT, RESET, SET } from './counter.actions';
 
 export type IState = number;
 export const initialState: IState = 0;

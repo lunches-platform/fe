@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import {capitalize} from 'lodash';
+import { capitalize } from 'lodash';
 
 export function DateFilter() {
   return (date: string) => {

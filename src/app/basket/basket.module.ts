@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {SharedModule} from '../shared';
-import {BasketRoutingModule} from './basket-routing.module';
+import { SharedModule } from '../shared';
+import { BasketRoutingModule } from './basket-routing.module';
 
 import {
-  BasketComponent,
+  BasketDirective,
   BasketContainerComponent
 } from './components';
 
@@ -14,7 +14,7 @@ import {
     BasketRoutingModule
   ],
   declarations: [
-    BasketComponent,
+    BasketDirective,
     BasketContainerComponent
   ],
   exports: [

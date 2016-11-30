@@ -1,12 +1,12 @@
 // third-party deps
-import {each, filter, get} from 'lodash';
+import { each, filter, get } from 'lodash';
 import * as moment from 'moment';
-import {IHttpService, IPromise} from 'angular';
+import { IHttpService, IPromise } from 'angular';
 
 // internal deps
-import {SHORT_DATE_FORMAT} from '../../config';
-import {IProduct} from './product';
-import {IState as IAppConfig, ConfigService} from '../../app/config';
+import { SHORT_DATE_FORMAT } from '../../config';
+import { IProduct } from './product';
+import { IState as IAppConfig, ConfigService } from '../../app/config';
 
 export interface IMenu {
   id: number;

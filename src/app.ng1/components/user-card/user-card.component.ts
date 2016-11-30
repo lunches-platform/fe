@@ -1,10 +1,10 @@
 // third-party deps
-import {cloneDeep} from 'lodash';
-import {IComponentOptions, IOnChangesObject} from 'angular';
+import { cloneDeep } from 'lodash';
+import { IComponentOptions, IOnChangesObject } from 'angular';
 
 // internal deps
-import {IUser, UserService} from '../../models/user';
-import {IState as IAppConfig, ConfigService} from '../../../app/config';
+import { IUser, UserService } from '../../models/user';
+import { IState as IAppConfig, ConfigService } from '../../../app/config';
 
 // internal types --------------------------------------------------------------
 interface ITriggerChangeEvent {

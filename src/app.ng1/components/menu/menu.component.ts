@@ -1,14 +1,14 @@
 import * as moment from 'moment';
-import {cloneDeep} from 'lodash';
-import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
+import { cloneDeep } from 'lodash';
+import { IScope, IComponentOptions, IOnChangesObject } from 'angular';
 
-import {RouterWrapper} from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/ng1';
 
-import {IMenu, MenuService} from '../../models/menu';
-import {IOrder, OrderService} from '../../models/order';
-import {ILineItem, LineItemService} from '../../models/line-item';
-import {ProductTypeUrls} from '../../models/product';
-import {PriceService} from '../../models/price';
+import { IMenu, MenuService } from '../../models/menu';
+import { IOrder, OrderService } from '../../models/order';
+import { ILineItem, LineItemService } from '../../models/line-item';
+import { ProductTypeUrls } from '../../models/product';
+import { PriceService } from '../../models/price';
 
 // internal types --------------------------------------------------------------
 interface ITriggerOrderPlaceEvent {

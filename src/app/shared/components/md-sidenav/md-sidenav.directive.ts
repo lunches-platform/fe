@@ -1,10 +1,11 @@
-import {Directive, Input, ElementRef, Injector} from '@angular/core';
-import {UpgradeComponent} from '@angular/upgrade/static';
+import { Directive, Input, ElementRef, Injector } from '@angular/core';
+import { UpgradeComponent } from '@angular/upgrade/static';
 
 @Directive({
+  // tslint:disable-next-line
   selector: 'l-md-sidenav'
 })
-export class LMdSidenavComponent extends UpgradeComponent {
+export class LMdSidenavDirective extends UpgradeComponent {
   @Input() klass: string;
   @Input() mdComponentId: string;
   @Input() mdIsLockedOpen: boolean;

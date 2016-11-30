@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import {PaymentContainerComponent} from './components';
+import { PaymentContainerComponent } from './components';
 
 const routes: Routes = [
   {path: 'payment', component: PaymentContainerComponent}

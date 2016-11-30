@@ -1,16 +1,16 @@
 // third-party deps
-import {cloneDeep, find, sumBy, every, map, filter} from 'lodash';
-import {IHttpService, IQService, IPromise} from 'angular';
+import { cloneDeep, find, sumBy, every, map, filter } from 'lodash';
+import { IHttpService, IQService, IPromise } from 'angular';
 import * as moment from 'moment';
 
 // internal deps
-import {IUser, UserService} from './user';
-import {uniqId} from '../../config';
-import {ILineItem, ILineItemRequestBody, LineItemService} from './line-item';
-import {IProduct} from './product';
-import {IMenu} from './menu';
-import {PriceService} from './price';
-import {IState as IAppConfig, ConfigService} from '../../app/config';
+import { IUser, UserService } from './user';
+import { uniqId } from '../../config';
+import { ILineItem, ILineItemRequestBody, LineItemService } from './line-item';
+import { IProduct } from './product';
+import { IMenu } from './menu';
+import { PriceService } from './price';
+import { IState as IAppConfig, ConfigService } from '../../app/config';
 
 export interface IOrder {
   id: number;

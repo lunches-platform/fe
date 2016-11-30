@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {SharedModule} from '../shared';
-import {MyOrdersRoutingModule} from './my-orders-routing.module';
+import { SharedModule } from '../shared';
+import { MyOrdersRoutingModule } from './my-orders-routing.module';
 
 import {
-  MyOrdersComponent,
+  MyOrdersDirective,
   MyOrdersContainerComponent
 } from './components';
 
@@ -14,7 +14,7 @@ import {
     MyOrdersRoutingModule
   ],
   declarations: [
-    MyOrdersComponent,
+    MyOrdersDirective,
     MyOrdersContainerComponent
   ],
   exports: [

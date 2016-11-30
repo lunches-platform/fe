@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
-import {IState as IAppState} from '../app.reducer';
-import {IState as IAppConfig} from './config.reducer';
+import { IState as IAppState } from '../app.reducer';
+import { IState as IAppConfig } from './config.reducer';
 
-import {loadConfigSuccess, loadConfigError} from './config.actions';
+import { loadConfigSuccess, loadConfigError } from './config.actions';
 
 @Injectable()
 export class ConfigService {

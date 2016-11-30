@@ -1,13 +1,13 @@
 // third-party deps
-import {reduce, sortBy, isNil, isEmpty, mapValues, each, Dictionary} from 'lodash';
-import {IHttpService, ILogService, IPromise} from 'angular';
+import { reduce, sortBy, isNil, isEmpty, mapValues, each, Dictionary } from 'lodash';
+import { IHttpService, ILogService, IPromise } from 'angular';
 import * as moment from 'moment';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 // internal deps
-import {ILineItem} from './line-item';
-import {SHORT_DATE_FORMAT} from '../../config';
-import {IState as IAppConfig, ConfigService} from '../../app/config';
+import { ILineItem } from './line-item';
+import { SHORT_DATE_FORMAT } from '../../config';
+import { IState as IAppConfig, ConfigService } from '../../app/config';
 
 export interface IPriceGroupItem {
   productId: number;

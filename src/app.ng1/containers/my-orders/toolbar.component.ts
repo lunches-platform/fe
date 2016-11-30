@@ -1,8 +1,8 @@
-import {IComponentOptions} from 'angular';
+import { IComponentOptions } from 'angular';
 
-import {RouterWrapper} from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/ng1';
 
-import {IUser, UserService} from '../../models/user';
+import { IUser, UserService } from '../../models/user';
 
 // internal types --------------------------------------------------------------
 interface ITriggerToggleSidebarEvent {

@@ -1,6 +1,6 @@
-import {IComponentOptions, IOnChangesObject} from 'angular';
+import { IComponentOptions, IOnChangesObject } from 'angular';
 
-import {ISelectorItem} from '../selector/selector.component';
+import { ISelectorItem } from '../selector/selector.component';
 
 // internal types --------------------------------------------------------------
 interface ITriggerSizeSelectEvent {

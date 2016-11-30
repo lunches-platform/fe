@@ -1,5 +1,5 @@
-import {isNil} from 'lodash';
-import {IScope, IComponentOptions, IOnChangesObject} from 'angular';
+import { isNil } from 'lodash';
+import { IScope, IComponentOptions, IOnChangesObject } from 'angular';
 
 // internal types --------------------------------------------------------------
 interface ITriggerSwitchEvent {

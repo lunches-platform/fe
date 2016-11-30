@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {SharedModule} from '../shared';
-import {WeekMenuRoutingModule} from './week-menu-routing.module';
+import { SharedModule } from '../shared';
+import { WeekMenuRoutingModule } from './week-menu-routing.module';
 
 import {
-  WeekMenuComponent,
+  WeekMenuDirective,
   WeekMenuContainerComponent
 } from './components';
 
@@ -14,7 +14,7 @@ import {
     WeekMenuRoutingModule
   ],
   declarations: [
-    WeekMenuComponent,
+    WeekMenuDirective,
     WeekMenuContainerComponent
   ],
   exports: [

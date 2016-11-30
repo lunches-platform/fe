@@ -1,14 +1,14 @@
-import {cloneDeep, sumBy} from 'lodash';
-import {ILogService} from 'angular';
+import { cloneDeep, sumBy } from 'lodash';
+import { ILogService } from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import {RouterWrapper} from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/ng1';
 
-import {IOrder, OrderService} from '../../models/order';
-import {IUser, UserService} from '../../models/user';
-import {ToastService} from '../../models/toast';
-import {IBasket, BasketService} from '../../models/basket';
+import { IOrder, OrderService } from '../../models/order';
+import { IUser, UserService } from '../../models/user';
+import { ToastService } from '../../models/toast';
+import { IBasket, BasketService } from '../../models/basket';
 
 export class BasketController {
   // bindings ------------------------------------------------------------------

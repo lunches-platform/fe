@@ -1,7 +1,7 @@
-import {IComponentOptions} from 'angular';
+import { IComponentOptions } from 'angular';
 
-import {ProductTypeUrls} from '../../models/product';
-import {IMenu, MenuService} from '../../models/menu';
+import { ProductTypeUrls } from '../../models/product';
+import { IMenu, MenuService } from '../../models/menu';
 
 export class ViewMenuController {
   constructor(private lMenuService: MenuService) {

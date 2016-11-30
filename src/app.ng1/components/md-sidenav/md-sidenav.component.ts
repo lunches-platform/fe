@@ -1,4 +1,4 @@
-import {IComponentOptions} from 'angular';
+import { IComponentOptions } from 'angular';
 
 export const MdSidenavComponent: IComponentOptions = {
   template: `

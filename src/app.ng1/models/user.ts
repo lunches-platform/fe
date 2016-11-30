@@ -1,10 +1,10 @@
 // third-party deps
-import {cloneDeep, isEqual, get, assign, omit} from 'lodash';
-import {ILogService, IHttpService, IPromise, IQService} from 'angular';
+import { cloneDeep, isEqual, get, assign, omit } from 'lodash';
+import { ILogService, IHttpService, IPromise, IQService } from 'angular';
 type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 // internal deps
-import {IState as IAppConfig, ConfigService} from '../../app/config';
+import { IState as IAppConfig, ConfigService } from '../../app/config';
 
 export interface IUser {
   id: string;

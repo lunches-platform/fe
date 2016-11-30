@@ -1,12 +1,12 @@
-import {ILogService} from 'angular';
+import { ILogService } from 'angular';
 
-import {RouterWrapper} from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/ng1';
 
-import {IOrder, OrderService} from '../../models/order';
-import {MenuType, MenuService} from '../../models/menu';
-import {IUser, UserService} from '../../models/user';
-import {IBasket, BasketService} from '../../models/basket';
-import {PriceService} from '../../models/price';
+import { IOrder, OrderService } from '../../models/order';
+import { MenuType, MenuService } from '../../models/menu';
+import { IUser, UserService } from '../../models/user';
+import { IBasket, BasketService } from '../../models/basket';
+import { PriceService } from '../../models/price';
 
 type ISidenavService = angular.material.ISidenavService;
 
