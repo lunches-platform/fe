@@ -2,7 +2,7 @@ import * as moment from 'moment';
 import { cloneDeep } from 'lodash';
 import { IScope, IComponentOptions, IOnChangesObject } from 'angular';
 
-import { RouterWrapper } from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/core';
 
 import { IMenu, MenuService } from '../../models/menu';
 import { IOrder, OrderService } from '../../models/order';

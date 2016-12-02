@@ -2,7 +2,7 @@ import { ILogService } from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import { RouterWrapper } from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/core';
 
 import { IMenu, MenuService } from '../../models/menu';
 import { IUser, UserService } from '../../models/user';

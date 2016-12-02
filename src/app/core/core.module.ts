@@ -3,27 +3,26 @@ import { HttpModule } from '@angular/http';
 
 import { RouterStoreModule } from '@ngrx/router-store';
 
-import { Ng1Module } from '../ng1';
 import { ConfigModule } from '../config';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
 import { RandomNumberService } from './random-number.service';
+import { RouterWrapper } from './router-wrapper';
 
 @NgModule({
   imports: [
     HttpModule,
     ConfigModule,
-    RouterStoreModule.connectRouter(),
-    Ng1Module
+    RouterStoreModule.connectRouter()
   ],
   providers: [
-    RandomNumberService
+    RandomNumberService,
+    RouterWrapper
   ],
   exports: [
     HttpModule,
-    ConfigModule,
-    Ng1Module
+    ConfigModule
   ]
 })
 export class CoreModule {

@@ -1,7 +1,7 @@
 import { isNil } from 'lodash';
 import { IComponentOptions } from 'angular';
 
-import { RouterWrapper } from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/core';
 
 import { MenuType } from '../../models/menu';
 import { IUser, UserService } from '../../models/user';

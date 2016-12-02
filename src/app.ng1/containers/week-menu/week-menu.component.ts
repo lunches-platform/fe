@@ -1,6 +1,6 @@
 import { ILogService } from 'angular';
 
-import { RouterWrapper } from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/core';
 
 import { IOrder, OrderService } from '../../models/order';
 import { MenuType, MenuService } from '../../models/menu';
