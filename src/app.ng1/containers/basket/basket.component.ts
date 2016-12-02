@@ -3,7 +3,7 @@ import { ILogService } from 'angular';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import { RouterWrapper } from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/core';
 
 import { IOrder, OrderService } from '../../models/order';
 import { IUser, UserService } from '../../models/user';

@@ -3,8 +3,8 @@ import * as moment from 'moment';
 
 type ISidenavService = angular.material.ISidenavService;
 
-import { RouterWrapper } from '../../../app/ng1';
-import { SHORT_DATE_FORMAT } from '../../../config';
+import { RouterWrapper } from '../../../app/core';
+import { SHORT_DATE_FORMAT } from '../../config';
 
 import { IOrder, OrderService } from '../../models/order';
 import { IUser, UserService } from '../../models/user';

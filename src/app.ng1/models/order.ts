@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 // internal deps
 import { IUser, UserService } from './user';
-import { uniqId } from '../../config';
+import { uniqId } from '../config';
 import { ILineItem, ILineItemRequestBody, LineItemService } from './line-item';
 import { IProduct } from './product';
 import { IMenu } from './menu';

@@ -1,6 +1,6 @@
 import { IComponentOptions } from 'angular';
 
-import { RouterWrapper } from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/core';
 
 import { IUser, UserService } from '../../models/user';
 // internal types --------------------------------------------------------------

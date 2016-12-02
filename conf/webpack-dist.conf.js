@@ -66,7 +66,7 @@ module.exports = {
     ]
   },
   entry: {
-    app: `./${conf.path.src('index')}`,
+    app: `./${conf.path.src('app/main')}`,
     vendor: Object.keys(pkg.dependencies)
   },
   ts: {

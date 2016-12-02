@@ -75,7 +75,7 @@ module.exports = {
       '.ts'
     ]
   },
-  entry: `./${conf.path.src('index')}`,
+  entry: `./${conf.path.src('app/main')}`,
   ts: {
     configFileName: 'tsconfig.json'
   },

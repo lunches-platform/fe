@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import { IComponentOptions, IOnChangesObject } from 'angular';
 
-import { RouterWrapper } from '../../../app/ng1';
+import { RouterWrapper } from '../../../app/core';
 
 import { IOrder } from '../../models/order';
 

@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { IHttpService, IPromise } from 'angular';
 
 // internal deps
-import { SHORT_DATE_FORMAT } from '../../config';
+import { SHORT_DATE_FORMAT } from '../config';
 import { IProduct } from './product';
 import { IState as IAppConfig, ConfigService } from '../../app/config';
 

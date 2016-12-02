@@ -6,7 +6,7 @@ type ILocalStorageService = angular.local.storage.ILocalStorageService;
 
 // internal deps
 import { ILineItem } from './line-item';
-import { SHORT_DATE_FORMAT } from '../../config';
+import { SHORT_DATE_FORMAT } from '../config';
 import { IState as IAppConfig, ConfigService } from '../../app/config';
 
 export interface IPriceGroupItem {

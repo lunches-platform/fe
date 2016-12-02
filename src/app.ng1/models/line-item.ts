@@ -1,6 +1,6 @@
 import { map, cloneDeep, find, filter } from 'lodash';
 
-import { uniqId } from '../../config';
+import { uniqId } from '../config';
 
 import { IProduct } from './product';
 
