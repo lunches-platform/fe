@@ -8,6 +8,7 @@ import {
   LMdToolbarDirective,
   LMdSidenavDirective,
   LMdIconDirective,
+  LMdProgressLinearDirective,
 
   ListDirective,
 
@@ -29,6 +30,7 @@ import {
     LMdToolbarDirective,
     LMdSidenavDirective,
     LMdIconDirective,
+    LMdProgressLinearDirective,
 
     // ng1 components
     ListDirective,
@@ -47,6 +49,7 @@ import {
     LMdToolbarDirective,
     LMdSidenavDirective,
     LMdIconDirective,
+    LMdProgressLinearDirective,
 
     // ng1 components
     ListDirective,
