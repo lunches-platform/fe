@@ -43,6 +43,7 @@ import { MdToolbarComponent } from './components/md-toolbar/md-toolbar.component
 import { MdSidenavComponent } from './components/md-sidenav/md-sidenav.component';
 import { MdIconComponent } from './components/md-icon/md-icon.component';
 import { MdProgressLinearComponent } from './components/md-progress-linear/md-progress-linear.component';
+import { MdCardComponent } from './components/md-card/md-card.component';
 
 // angular 1 app services
 import { MenuService } from './models/menu';
@@ -150,6 +151,7 @@ angular
   .component('lMdSidenav', MdSidenavComponent)
   .component('lMdIcon', MdIconComponent)
   .component('lMdProgressLinear', MdProgressLinearComponent)
+  .component('lMdCard', MdCardComponent)
 
   // angular 1 app services
   .service('lMenuService', MenuService)
