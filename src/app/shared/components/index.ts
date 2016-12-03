@@ -4,6 +4,7 @@ export * from './md-toolbar/md-toolbar.directive';
 export * from './md-sidenav/md-sidenav.directive';
 export * from './md-icon/md-icon.directive';
 export * from './md-progress-linear/md-progress-linear.directive';
+export * from './md-card/md-card.directive';
 
 export * from './list/list.directive';
 

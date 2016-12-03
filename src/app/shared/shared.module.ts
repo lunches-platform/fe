@@ -9,6 +9,7 @@ import {
   LMdSidenavDirective,
   LMdIconDirective,
   LMdProgressLinearDirective,
+  LMdCardDirective,
 
   ListDirective,
 
@@ -31,6 +32,7 @@ import {
     LMdSidenavDirective,
     LMdIconDirective,
     LMdProgressLinearDirective,
+    LMdCardDirective,
 
     // ng1 components
     ListDirective,
@@ -50,6 +52,7 @@ import {
     LMdSidenavDirective,
     LMdIconDirective,
     LMdProgressLinearDirective,
+    LMdCardDirective,
 
     // ng1 components
     ListDirective,
